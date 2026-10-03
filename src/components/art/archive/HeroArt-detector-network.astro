@@ -1,4 +1,9 @@
 ---
+/**
+ * Saved Fig. 1, October 2026. Detector tracks feed a small classifier, then a
+ * one-dimensional mass fit. Not imported anywhere. Restore by copying this file
+ * back over HeroArt.astro.
+ */
 type Pt = [number, number];
 const C: Pt = [232, 262];
 const rings = [44, 74, 98, 122, 146];
@@ -63,67 +68,22 @@ for (let k = 0; k < 40; k++) {
   );
 }
 
-const H = { x: 502, y: 36, s: 196, n: 14 };
-const cell = H.s / H.n;
-const mass = (i: number) => (i + 0.5) / H.n;
-const intensity = (i: number, j: number) => {
-  const x = mass(i);
-  const y = mass(j);
-  const comb = 0.34 * Math.exp(-1.35 * (x + y));
-  const peak = Math.exp(-((x - 0.5) ** 2 + (y - 0.5) ** 2) / (2 * 0.026 ** 2));
-  return Math.min(1, comb + 0.05 + peak);
-};
-const cells = Array.from({ length: H.n }, (_, i) =>
-  Array.from({ length: H.n }, (_, j) => {
-    const v = intensity(i, j);
-    return {
-      x: r1(H.x + i * cell + 0.7),
-      y: r1(H.y + (H.n - 1 - j) * cell + 0.7),
-      v,
-      hot: v > 0.55,
-    };
-  }),
-).flat();
-
-const box = (x0: number, x1: number, y0: number, y1: number) => ({
-  x: r1(H.x + x0 * H.s),
-  y: r1(H.y + (1 - y1) * H.s),
-  w: r1((x1 - x0) * H.s),
-  h: r1((y1 - y0) * H.s),
-});
-const signal = box(0.42, 0.58, 0.42, 0.58);
-const sidebands = [
-  box(0.26, 0.38, 0.42, 0.58),
-  box(0.62, 0.74, 0.42, 0.58),
-  box(0.42, 0.58, 0.26, 0.38),
-  box(0.42, 0.58, 0.62, 0.74),
+const layers = [
+  { x: 506, ys: [150, 196, 242, 288] },
+  { x: 584, ys: [128, 172, 216, 260, 304] },
+  { x: 662, ys: [186, 236] },
 ];
-
-const cx = H.x + 0.5 * H.s;
-const cy = H.y + 0.5 * H.s;
-const ellipse = (rx: number, ry: number) => {
-  const pts: string[] = [];
-  for (let k = 0; k <= 80; k++) {
-    const a = (k / 80) * Math.PI * 2;
-    pts.push(`${r1(cx + rx * Math.cos(a))} ${r1(cy + ry * Math.sin(a))}`);
+const edges: string[] = [];
+for (let l = 0; l < layers.length - 1; l++) {
+  for (const y0 of layers[l].ys) {
+    for (const y1 of layers[l + 1].ys) edges.push(`M${layers[l].x} ${y0}L${layers[l + 1].x} ${y1}`);
   }
-  return 'M' + pts.join('L') + 'Z';
-};
-const fitTight = ellipse(0.075 * H.s, 0.068 * H.s);
-const fitWide = ellipse(0.13 * H.s, 0.118 * H.s);
+}
+const feedSources = [-34, -14, 6, 26].map((a) => polar(rOut + 4, a));
+const feeds = feedSources.map((p, i) => `M${r1(p[0])} ${r1(p[1])}C${r1(p[0] + 60)} ${r1(p[1])} ${440} ${layers[0].ys[i]} ${layers[0].x - 8} ${layers[0].ys[i]}`);
 
-const feedSources = [-32, -12, 10, 30].map((a) => polar(rOut + 6, a));
-const feeds = feedSources.map((p, i) => {
-  const y = H.y + ((i + 0.5) / feedSources.length) * H.s;
-  return `M${r1(p[0])} ${r1(p[1])}C${r1(p[0] + 78)} ${r1(p[1])} ${H.x - 48} ${r1(y)} ${H.x} ${r1(y)}`;
-});
-
-const hx0 = 500;
-const hx1 = 710;
-const hy0 = 508;
-const hBins = 22;
+const hx0 = 470, hx1 = 712, hy0 = 470, hBins = 22;
 const bw = (hx1 - hx0) / hBins;
-const yScale = 1.2;
 const counts = Array.from({ length: hBins }, (_, i) => {
   const x = (i + 0.5) / hBins;
   const bg = 46 * Math.sqrt(x) * Math.exp(-1.6 * x) + 6;
@@ -131,35 +91,38 @@ const counts = Array.from({ length: hBins }, (_, i) => {
   const wiggle = [2, -3, 1, 3, -2, 0, 2, -1, -3, 1, 0, 2, -2, 1, 3, -1, 0, -2, 2, 1, -1, 0][i];
   return Math.max(2, bg + sig + wiggle);
 });
+const yScale = 1.65;
 let hist = `M${hx0} ${hy0}`;
 counts.forEach((c, i) => {
-  hist += `V${r1(hy0 - c * yScale)}H${r1(hx0 + (i + 1) * bw)}`;
+  const y = r1(hy0 - c * yScale);
+  hist += `V${y}H${r1(hx0 + (i + 1) * bw)}`;
 });
 hist += `V${hy0}`;
-const curve = (withSignal: boolean) => {
-  const pts: string[] = [];
-  const steps = withSignal ? 120 : 60;
-  for (let k = 0; k <= steps; k++) {
-    const x = k / steps;
-    const bg = 46 * Math.sqrt(x) * Math.exp(-1.6 * x) + 6;
-    const sig = withSignal ? 30 * Math.exp(-((x - 0.5) ** 2) / (2 * 0.045 ** 2)) : 0;
-    pts.push(`${r1(hx0 + x * (hx1 - hx0))} ${r1(hy0 - (bg + sig) * yScale)}`);
-  }
-  return 'M' + pts.join('L');
-};
-const fit = curve(true);
-const bgCurve = curve(false);
+const fitPts: string[] = [];
+for (let k = 0; k <= 120; k++) {
+  const x = k / 120;
+  const bg = 46 * Math.sqrt(x) * Math.exp(-1.6 * x) + 6;
+  const sig = 30 * Math.exp(-((x - 0.5) ** 2) / (2 * 0.045 ** 2));
+  fitPts.push(`${r1(hx0 + x * (hx1 - hx0))} ${r1(hy0 - (bg + sig) * yScale)}`);
+}
+const fit = 'M' + fitPts.join('L');
+const bgPts: string[] = [];
+for (let k = 0; k <= 60; k++) {
+  const x = k / 60;
+  const bg = 46 * Math.sqrt(x) * Math.exp(-1.6 * x) + 6;
+  bgPts.push(`${r1(hx0 + x * (hx1 - hx0))} ${r1(hy0 - bg * yScale)}`);
+}
+const bgCurve = 'M' + bgPts.join('L');
 const sx = (x: number) => r1(hx0 + x * (hx1 - hx0));
-const signalTop = hy0 - Math.max(...counts) * yScale;
 ---
 
-<svg class="hero-art draw" viewBox="0 0 740 540" role="img" aria-labelledby="hero-art-title hero-art-desc">
-  <title id="hero-art-title">Detector tracks and a two-dimensional mass fit</title>
+<svg class="hero-art draw" viewBox="0 0 740 520" role="img" aria-labelledby="hero-art-title hero-art-desc">
+  <title id="hero-art-title">Detector cross-section feeding a neural network</title>
   <desc id="hero-art-desc">
     Line drawing of a six-sector particle detector seen along the beam axis. Charged-particle tracks curve in the
-    magnetic field and leave hits in the detector layers. A neutral Lambda hyperon decays into a proton and a pion.
-    The two candidate masses fill a two-dimensional histogram. A flow continues into the one-dimensional
-    Lambda mass spectrum, where a fit separates the signal peak from the background.
+    magnetic field and leave hits in the detector layers; a neutral Lambda hyperon decays into a proton and a pion.
+    The hits feed a small neural network whose output is an invariant-mass histogram with a signal peak on top of
+    background.
   </desc>
 
   <g class="detector">
@@ -190,39 +153,31 @@ const signalTop = hy0 - Math.max(...counts) * yScale;
     <text class="anno" x="22" y="486">beam axis into the page</text>
   </g>
 
-  <g class="flow">
-    {feeds.map((d) => <path class="feed stroke d6" pathLength="1" d={d} />)}
-  </g>
-
-  <g class="hist2d">
-    <rect class="frame" x={H.x} y={H.y} width={H.s} height={H.s} />
-    {cells.filter((c) => c.v > 0.18).map((c) => (
-      <rect class:list={['cell fade d7', c.hot && 'hot']} x={c.x} y={c.y} width={cell - 2.2} height={cell - 2.2} opacity={c.hot ? 0.8 : 0.08 + c.v * 0.28} />
-    ))}
-    {sidebands.map((b) => <rect class="sideband fade d6" x={b.x} y={b.y} width={b.w} height={b.h} />)}
-    <rect class="window fade d6" x={signal.x} y={signal.y} width={signal.w} height={signal.h} />
-    <path class="fit-wide fade d8" d={fitWide} />
-    <path class="fit stroke d8" pathLength="1" d={fitTight} />
-    <text class="anno" x={H.x + H.s} y={H.y + H.s + 18} text-anchor="end">m(pπ⁻)₁</text>
-    <text class="anno y-label" x={H.x - 8} y={H.y + 4} text-anchor="end">m(pπ⁻)₂</text>
-    <text class="anno accent" x={cx} y={cy - 28} text-anchor="middle">ΛΛ</text>
-    <text class="anno small" x={H.x + 0.32 * H.s} y={H.y - 8} text-anchor="middle">sideband</text>
-    <text class="anno small" x={cx + 52} y={cy + 36} text-anchor="start">2D fit</text>
+  <g class="network">
+    {feeds.map((d) => <path class="feed fade d6" d={d} />)}
+    {edges.map((d) => <path class="edge fade d7" d={d} />)}
+    {layers.map((l, li) => l.ys.map((y) => <circle class:list={['node fade d7', li === 2 && 'out']} cx={l.x} cy={y} r="8" />))}
+    <text class="anno" x="490" y="98">features</text>
+    <text class="anno" x="566" y="98">hidden</text>
+    <text class="anno" x="642" y="98">classifier</text>
+    <text class="node-label" x="676" y="190">S</text>
+    <text class="node-label" x="676" y="240">B</text>
   </g>
 
   <g class="plot">
-    <path class="arrow stroke d7" pathLength="1" d={`M${r1(cx)} ${r1(H.y + H.s + 16)} C ${r1(cx + 8)} ${hy0 - 150}, ${sx(0.5) - 10} ${signalTop - 28}, ${sx(0.5)} ${r1(signalTop - 8)}`} />
-    <rect class="sideband fade d7" x={sx(0.18)} y={signalTop - 6} width={sx(0.34) - sx(0.18)} height={hy0 - (signalTop - 6)} />
-    <rect class="sideband fade d7" x={sx(0.66)} y={signalTop - 6} width={sx(0.82) - sx(0.66)} height={hy0 - (signalTop - 6)} />
-    <rect class="window fade d7" x={sx(0.43)} y={signalTop - 6} width={sx(0.57) - sx(0.43)} height={hy0 - (signalTop - 6)} />
-    <path class="axis stroke d6" pathLength="1" d={`M${hx0} ${r1(signalTop - 14)}V${hy0}H${hx1 + 6}`} />
+    <rect class="sideband fade d7" x={sx(0.18)} y={hy0 - 118} width={sx(0.34) - sx(0.18)} height="118" />
+    <rect class="sideband fade d7" x={sx(0.66)} y={hy0 - 118} width={sx(0.82) - sx(0.66)} height="118" />
+    <rect class="window fade d7" x={sx(0.43)} y={hy0 - 118} width={sx(0.57) - sx(0.43)} height="118" />
+    <path class="axis stroke d6" pathLength="1" d={`M${hx0} ${hy0 - 124}V${hy0}H${hx1 + 6}`} />
     <path class="hist stroke d7" pathLength="1" d={hist} />
     <path class="bg-curve fade d8" d={bgCurve} />
     <path class="fit stroke d8" pathLength="1" d={fit} />
-    <text class="anno" x={hx1 + 6} y={hy0 + 16} text-anchor="end">m(pπ⁻)</text>
-    <text class="anno small" x={sx(0.26)} y={signalTop - 18} text-anchor="middle">side</text>
-    <text class="anno small" x={sx(0.5)} y={signalTop - 18} text-anchor="middle">Λ</text>
-    <text class="anno small" x={sx(0.74)} y={signalTop - 18} text-anchor="middle">side</text>
+    <text class="anno" x={hx1 + 6} y={hy0 + 18} text-anchor="end">m(pπ⁻)</text>
+    <text class="anno small" x={sx(0.26)} y={hy0 - 124} text-anchor="middle">side</text>
+    <text class="anno small" x={sx(0.5)} y={hy0 - 124} text-anchor="middle">signal</text>
+    <text class="anno small" x={sx(0.74)} y={hy0 - 124} text-anchor="middle">side</text>
+    <path class="arrow fade d7" d="M662 262 C 670 300, 640 330, 612 344" />
+    <path class="arrow-head fade d7" d="M612 344 l 9 -1 M612 344 l 4 -8" />
   </g>
 </svg>
 
@@ -319,31 +274,24 @@ const signalTop = hy0 - Math.max(...counts) * yScale;
   .feed {
     fill: none;
     stroke: var(--art);
-    stroke-width: 1.15;
-    stroke-linecap: round;
-    opacity: 0.8;
+    stroke-width: 1;
+    stroke-dasharray: 2 3;
+    opacity: 0.75;
   }
-  .frame {
+  .edge {
     fill: none;
     stroke: var(--art);
-    stroke-width: 1.1;
+    stroke-width: 0.7;
+    opacity: 0.35;
   }
-  .cell {
-    fill: var(--art);
-    stroke: none;
+  .node {
+    fill: var(--paper);
+    stroke: var(--art);
+    stroke-width: 1.4;
   }
-  .cell.hot {
-    fill: var(--art-accent);
-  }
-  .fit-wide {
-    fill: none;
+  .node.out {
     stroke: var(--art-accent);
-    stroke-width: 1.2;
-    stroke-dasharray: 4 3;
-    opacity: 0.85;
-  }
-  .y-label {
-    font-size: 11.5px;
+    stroke-width: 1.8;
   }
   .axis {
     fill: none;
@@ -368,11 +316,11 @@ const signalTop = hy0 - Math.max(...counts) * yScale;
   }
   .sideband {
     fill: var(--accent-2);
-    opacity: 0.14;
+    opacity: 0.1;
   }
   .window {
     fill: var(--art-accent);
-    opacity: 0.12;
+    opacity: 0.1;
   }
   .arrow,
   .arrow-head {
