@@ -1,0 +1,33 @@
+---
+import HadesFigure from './art/HadesFigure.astro';
+import CuspFigure from './art/CuspFigure.astro';
+
+interface Props {
+  name: 'hades' | 'cusp';
+  caption?: string;
+  class?: string;
+}
+const { name, caption, class: className } = Astro.props;
+---
+
+<figure class:list={['research-figure blueprint', className]}>
+  <div class="frame">
+    {name === 'hades' ? <HadesFigure /> : <CuspFigure />}
+  </div>
+  {caption && <figcaption set:html={caption} />}
+</figure>
+
+<style>
+  .research-figure {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: clamp(0.8rem, 2.5vw, 1.6rem);
+    background-color: var(--paper);
+  }
+  .frame {
+    overflow-x: auto;
+  }
+  figcaption {
+    max-width: 80ch;
+  }
+</style>

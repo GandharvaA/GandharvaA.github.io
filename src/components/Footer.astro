@@ -1,0 +1,88 @@
+---
+import { links, photographyUrl, profile } from '../lib/site';
+import Email from './Email.astro';
+
+const updated = new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap grid">
+    <div class="who">
+      <p class="name">{profile.name}</p>
+      <p class="muted">{profile.currentPosition}<br />{profile.affiliation.department}, {profile.affiliation.name}</p>
+      <p><Email /></p>
+    </div>
+    <nav aria-label="Elsewhere" class="elsewhere">
+      <p class="label">Elsewhere</p>
+      <ul>
+        {links.map((l) => <li><a href={l.url} rel="me noopener">{l.label}</a></li>)}
+        {photographyUrl && <li><a href={photographyUrl} rel="me noopener">Photography</a></li>}
+        <li><a href="/cv/">Curriculum vitae</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="colophon">
+      <p class="label">Colophon</p>
+      <p class="muted">
+        No cookies, no tracking, no third-party requests. Hand-drawn SVG illustrations; set in Fraunces,
+        Source Serif 4 and JetBrains Mono.
+      </p>
+      <p class="muted mono">Last updated {updated}</p>
+    </div>
+  </div>
+  <div class="wrap base">
+    <span>© {year} {profile.name}</span>
+    <a href="#top" class="mono">Back to top ↑</a>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 4rem;
+    border-top: 1px solid var(--line);
+    background: var(--paper-2);
+    font-size: var(--step--1);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1.3fr;
+    gap: 2rem 3rem;
+    padding-block: 2.75rem 2rem;
+  }
+  .name {
+    font-family: var(--font-head);
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .muted {
+    color: var(--ink-soft);
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.4rem 0 0;
+  }
+  .label {
+    margin-bottom: 0.4rem;
+  }
+  .base {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1rem 1.5rem;
+    border-top: 1px solid var(--line);
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+  }
+  .base a {
+    color: var(--ink-soft);
+  }
+  @media (max-width: 760px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

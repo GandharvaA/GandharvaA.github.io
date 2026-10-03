@@ -1,0 +1,76 @@
+% Academic CV (full), rendered by scripts/build-cv.mjs.
+% Upper-case keys wrapped in double percent signs are replaced by generated LaTeX;
+% an IF block around a section is dropped when its key renders empty.
+\documentclass{cv-common}
+\cvsetsize{9.8pt}{12.9pt}
+\cvleftdates
+\hypersetup{
+  pdftitle={%%PDF_TITLE%%},
+  pdfauthor={%%NAME%%},
+  pdfsubject={%%PDF_SUBJECT%%},
+  pdfkeywords={%%PDF_KEYWORDS%%},
+}
+\cvfooter{%%NAME%%, curriculum vitae}{%%UPDATED%%}
+
+\begin{document}
+%%HEADER%%
+
+\cvsection{Profile}
+%%PROFILE%%
+
+\cvsection{Education}
+%%EDUCATION%%
+
+\cvsection{Research experience}
+%%RESEARCH%%
+
+%%IF ENGINEERING%%
+\cvsection{Industry \& engineering experience}
+%%ENGINEERING%%
+%%ENDIF%%
+
+%%IF PUBLICATIONS%%
+\cvsection{Publications}
+%%PUBLICATIONS%%
+%%ENDIF%%
+
+%%IF TALKS%%
+\cvsection{Conference talks}
+%%TALKS%%
+%%ENDIF%%
+
+%%IF COLLAB_TALKS%%
+\cvsection{Collaboration presentations}
+%%COLLAB_TALKS%%
+%%ENDIF%%
+
+%%IF TRAINING%%
+\cvsection{Schools, workshops \& experiments}
+%%TRAINING%%
+%%ENDIF%%
+
+%%IF TEACHING%%
+\cvsection{Teaching \& supervision}
+%%TEACHING%%
+%%ENDIF%%
+
+%%IF SERVICE%%
+\cvsection{Service \& leadership}
+%%SERVICE%%
+%%ENDIF%%
+
+%%IF GRANTS%%
+\cvsection{Grants \& awards}
+%%GRANTS%%
+%%ENDIF%%
+
+%%IF SKILLS%%
+\cvsection{Skills}
+%%SKILLS%%
+%%ENDIF%%
+
+%%IF LANGUAGES%%
+\cvsection{Languages}
+%%LANGUAGES%%
+%%ENDIF%%
+\end{document}

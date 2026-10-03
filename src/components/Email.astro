@@ -1,0 +1,25 @@
+---
+import { profile } from '../lib/site';
+
+interface Props {
+  class?: string;
+  label?: string;
+}
+const { class: className, label } = Astro.props;
+const { user, domain } = profile.email;
+---
+
+<span class:list={['email', className]} data-email-user={user} data-email-domain={domain} data-email-label={label}>
+  <span class="email-fallback">{user} [at] {domain.replace(/\./g, ' [dot] ')}</span>
+</span>
+
+<script>
+  for (const el of document.querySelectorAll<HTMLElement>('[data-email-user]')) {
+    const address = `${el.dataset.emailUser}@${el.dataset.emailDomain}`;
+    const a = document.createElement('a');
+    a.href = `mailto:${address}`;
+    a.textContent = el.dataset.emailLabel || address;
+    a.className = 'email-link';
+    el.replaceChildren(a);
+  }
+</script>

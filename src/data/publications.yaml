@@ -1,0 +1,69 @@
+# type: article | proceedings | thesis | collaboration | report
+# status: published | in-press | accepted | submitted | preprint | in-preparation
+# selected: true → shown on the home page and in the industry CV
+# Author lists: write the owner's name exactly as "G. Appagere" so it is highlighted.
+- id: hyp2025-proceedings
+  type: proceedings
+  authors: ["G. Appagere (for the HADES and CBM Collaborations)"]
+  title: "Investigating Double-Strange Systems at FAIR: ΛΛ interactions and neutron star cores"
+  venue: "JPS Conference Proceedings, 15th International Conference on Hypernuclear and Strange Particle Physics (HYP2025), Tokyo"
+  year: 2026
+  status: in-press # TODO verify: accepted vs in press; add DOI/volume when available
+  doi: ""
+  arxiv: ""
+  url: ""
+  selected: true
+  abstract: >-
+    We present a study of double-strangeness production in proton–proton collisions
+    performed using the HADES experiment at GSI, Darmstadt. The presented analysis
+    focuses on the inclusive reconstruction of the reaction pp→ΛΛK⁺K⁺, 240 MeV above
+    the production threshold. The results may provide constraints on hyperon–hyperon
+    interactions and serve as an essential baseline for future studies at FAIR. In
+    particular, they motivate dedicated measurements with the CBM experiment at SIS100,
+    where higher beam energies, higher luminosities and larger acceptance will enable
+    precision studies of hyperon–hyperon final-state interactions. The analysis
+    strategy, reconstruction performance, and current experimental status at HADES are
+    discussed. In addition, simulation-based feasibility studies to determine cusp
+    structures in the ΛΛ invariant-mass spectrum at CBM are outlined.
+
+- id: fair-whitepaper
+  type: collaboration
+  authors: ["J. G. Messchendorp", "F. Nerling", "…", "G. Appagere", "…", "et al."]
+  title: "Hadron Physics Opportunities at FAIR"
+  venue: "arXiv:2512.15986 [hep-ex]"
+  year: 2025
+  status: preprint # TODO verify: update when the journal version appears
+  arxiv: "2512.15986"
+  url: https://arxiv.org/abs/2512.15986
+  selected: true
+  note: Co-author; contributed the ΛΛ cusp feasibility study for CBM to the baryon–baryon interactions chapter.
+
+- id: licentiate-thesis
+  type: thesis
+  authors: ["G. Appagere"]
+  # Printed thesis title; the 2026 CV uses "Λ-Λ hyperon studies: Road to cross-section estimate from proton-proton collisions at √s = 3.46 GeV".
+  title: "Λ-Λ hyperons: the road to estimate the production cross-section in proton-proton collisions" # TODO verify: choose title wording
+  venue: "Licentiate thesis, Department of Physics, Stockholm University"
+  year: 2024
+  status: published
+  url: "" # TODO verify: add DiVA link if the thesis is public in DiVA
+  selected: true
+
+- id: fimp-paper
+  type: article
+  authors: ["M. Frank", "R. Mann", "P. Poulose", "G. Appagere"] # TODO verify: author order
+  title: "Radiatively generated dark matter and Higgs scalar masses in a minimal extension of the Standard Model" # TODO verify: current working title
+  venue: "Manuscript"
+  year: 2026 # TODO verify: year to show
+  status: in-preparation
+  selected: false
+
+- id: msc-thesis
+  type: thesis
+  authors: ["G. Appagere"]
+  title: "Can FIMPs be Dark Matter Candidates?"
+  venue: "MSc thesis, KTH Royal Institute of Technology (advisor: Prof. R. Mann)"
+  year: 2020
+  status: published
+  url: "" # TODO verify: add DiVA link if public
+  selected: false

@@ -1,0 +1,257 @@
+---
+type Pt = [number, number];
+const T: Pt = [150, 190];
+const r1 = (n: number) => Math.round(n * 10) / 10;
+const deg = Math.PI / 180;
+const TILT = 50;
+
+const at = (D: number, a: number, side: 1 | -1): Pt => {
+  const t = D / Math.cos((a - TILT) * deg);
+  return [T[0] + t * Math.cos(a * deg), T[1] - side * t * Math.sin(a * deg)];
+};
+const seg = (D: number, a0: number, a1: number, s: 1 | -1) => {
+  const p = at(D, a0, s), q = at(D, a1, s);
+  return `M${r1(p[0])} ${r1(p[1])}L${r1(q[0])} ${r1(q[1])}`;
+};
+const quad = (D0: number, D1: number, a0: number, a1: number, s: 1 | -1) => {
+  const pts = [at(D0, a0, s), at(D0, a1, s), at(D1, a1, s), at(D1, a0, s)];
+  return 'M' + pts.map((p) => `${r1(p[0])} ${r1(p[1])}`).join('L') + 'Z';
+};
+const mid = (D: number): Pt => at(D, TILT, 1);
+
+const sides = [1, -1] as const;
+const mdc = sides.flatMap((s) => [36, 50, 104, 118].map((D) => seg(D, 18, 85, s)));
+const magnet = sides.map((s) => quad(64, 92, 21, 82, s));
+const rpc = sides.map((s) => quad(130, 136, 18, 45, s));
+const tof = sides.map((s) => quad(136, 146, 45, 85, s));
+const acceptance = sides.flatMap((s) => [18, 85].map((a) => {
+  const p = at(160, a, s);
+  return `M${T[0]} ${T[1]}L${r1(p[0])} ${r1(p[1])}`;
+}));
+
+const straws = (x: number, half: number) => {
+  const out: Pt[] = [];
+  for (let col = 0; col < 2; col++) {
+    for (let y = 8; y <= half; y += 7.5) {
+      out.push([x + col * 7, T[1] - y - col * 3.2]);
+      out.push([x + col * 7, T[1] + y + col * 3.2]);
+    }
+  }
+  return out;
+};
+const sts1 = straws(560, 50);
+const sts2 = straws(632, 58);
+
+const callouts = [
+  { label: 'RPC · TOF walls', anchor: mid(141), y: 52 },
+  { label: 'MDC III–IV', anchor: mid(111), y: 76 },
+  { label: 'toroidal magnet', anchor: mid(78), y: 100 },
+  { label: 'MDC I–II', anchor: mid(43), y: 124 },
+];
+const CX = 372;
+
+const V1: Pt = [192, 179];
+const V2: Pt = [186, 201];
+---
+
+<svg class="hades-fig draw" viewBox="0 0 760 380" role="img" aria-labelledby="hades-title hades-desc">
+  <title id="hades-title">Schematic side view of the HADES spectrometer with the forward detector</title>
+  <desc id="hades-desc">
+    A proton beam enters from the left and hits a liquid-hydrogen target. Around it sit the LGAD start detector,
+    drift chambers before and after a toroidal magnet, and time-of-flight walls. Further downstream the forward
+    detector with straw-tube stations and a resistive plate chamber covers small angles. Two Lambda hyperons fly a
+    few centimetres before decaying into a proton and a negative pion; two kaons leave the target directly.
+  </desc>
+
+  <path class="beam stroke d1" pathLength="1" d={`M24 ${T[1]}H436M452 ${T[1]}H740`} />
+  <path class="break fade d1" d={`M432 ${T[1] + 8}l6 -16M448 ${T[1] + 8}l6 -16`} />
+  <path class="beam-arrow fade d1" d={`M58 ${T[1] - 5}l10 5l-10 5`} />
+  <text class="anno" x="16" y={T[1] - 12}>p beam 4.5 GeV</text>
+
+  <g class="acceptance fade d2">{acceptance.map((d) => <path d={d} />)}</g>
+
+  <g class="detectors">
+    {magnet.map((d) => <path class="magnet fade d2" d={d} />)}
+    {mdc.map((d) => <path class="mdc stroke d2" pathLength="1" d={d} />)}
+    {rpc.map((d) => <path class="rpc fade d3" d={d} />)}
+    {tof.map((d) => <path class="tof fade d3" d={d} />)}
+    <rect class="target fade d1" x={T[0] - 8} y={T[1] - 5} width="16" height="10" rx="5" />
+    <path class="lgad stroke d1" pathLength="1" d={`M${T[0] - 22} ${T[1] - 11}V${T[1] + 11}`} />
+    <g class="fwd fade d3">
+      {sts1.map((p) => <circle class="straw" cx={r1(p[0])} cy={r1(p[1])} r="3.1" />)}
+      {sts2.map((p) => <circle class="straw" cx={r1(p[0])} cy={r1(p[1])} r="3.1" />)}
+      <rect class="frpc" x="704" y={T[1] - 70} width="8" height="62" />
+      <rect class="frpc" x="704" y={T[1] + 8} width="8" height="62" />
+    </g>
+  </g>
+
+  <g class="tracks">
+    <path class="neutral fade d4" d={`M${T[0]} ${T[1]}L${V1[0]} ${V1[1]}`} />
+    <path class="neutral fade d4" d={`M${T[0]} ${T[1]}L${V2[0]} ${V2[1]}`} />
+    <path class="trk p stroke d5" pathLength="1" d={`M${V1[0]} ${V1[1]}Q 420 166 716 156`} />
+    <path class="trk pi stroke d5" pathLength="1" d={`M${V1[0]} ${V1[1]}Q 232 120 246 26`} />
+    <path class="trk p stroke d6" pathLength="1" d={`M${V2[0]} ${V2[1]}Q 272 236 322 262`} />
+    <path class="trk pi stroke d6" pathLength="1" d={`M${V2[0]} ${V2[1]}Q 206 280 176 356`} />
+    <path class="trk k stroke d5" pathLength="1" d={`M${T[0]} ${T[1]}Q 240 132 300 92`} />
+    <path class="trk k stroke d6" pathLength="1" d={`M${T[0]} ${T[1]}Q 238 268 266 340`} />
+    <circle class="vtx fade d5" cx={V1[0]} cy={V1[1]} r="3" />
+    <circle class="vtx fade d5" cx={V2[0]} cy={V2[1]} r="3" />
+  </g>
+
+  <g class="labels fade d7">
+    {
+      callouts.map((c) => (
+        <g>
+          <path class="leader" d={`M${r1(c.anchor[0])} ${r1(c.anchor[1])}L${CX - 6} ${c.y - 4}`} />
+          <circle class="anchor" cx={r1(c.anchor[0])} cy={r1(c.anchor[1])} r="1.8" />
+          <text class="anno" x={CX} y={c.y}>{c.label}</text>
+        </g>
+      ))
+    }
+    <text class="anno" x="70" y="226">LH₂ target</text>
+    <path class="leader" d={`M128 222L${T[0] - 6} ${T[1] + 4}`} />
+    <text class="anno" x="58" y="142">LGAD T0</text>
+    <path class="leader" d={`M96 146L${T[0] - 23} ${T[1] - 12}`} />
+    <text class="anno" x="540" y="84">Forward detector</text>
+    <text class="anno small" x="540" y="100">PANDA straw tubes STS1/STS2 + FRPC</text>
+    <text class="anno small" x="540" y="116">0.5° &lt; θ &lt; 7°</text>
+    <text class="anno accent" x="204" y="174">Λ</text>
+    <text class="anno accent" x="196" y="219">Λ</text>
+    <text class="anno" x="252" y="30">π⁻</text>
+    <text class="anno" x="722" y="152">p</text>
+    <text class="anno" x="306" y="94">K⁺</text>
+    <text class="anno" x="272" y="344">K⁺</text>
+    <text class="anno" x="328" y="266">p</text>
+    <text class="anno" x="160" y="364">π⁻</text>
+  </g>
+
+  <g class="legend fade d8">
+    <path class="neutral" d="M420 300h26" />
+    <text class="anno small" x="452" y="304">Λ flight (neutral, not detected)</text>
+    <path class="trk p" d="M420 320h26" />
+    <text class="anno small" x="452" y="324">Λ → p π⁻ decay products</text>
+    <path class="trk k" d="M420 340h26" />
+    <text class="anno small" x="452" y="344">K⁺ from the collision vertex</text>
+    <text class="anno small faint" x="420" y="366">not to scale · beam line shortened</text>
+  </g>
+</svg>
+
+<style>
+  .hades-fig {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+  .beam {
+    stroke: var(--art);
+    stroke-width: 1;
+    stroke-dasharray: 6 4;
+    fill: none;
+    opacity: 0.6;
+  }
+  .break,
+  .beam-arrow {
+    fill: none;
+    stroke: var(--art);
+    stroke-width: 1.2;
+  }
+  .acceptance path {
+    stroke: var(--art);
+    stroke-width: 0.6;
+    stroke-dasharray: 1 3;
+    opacity: 0.55;
+    fill: none;
+  }
+  .magnet {
+    fill: var(--paper-3);
+    stroke: var(--art);
+    stroke-width: 1;
+  }
+  .mdc {
+    stroke: var(--art);
+    stroke-width: 1.8;
+    fill: none;
+    stroke-linecap: round;
+  }
+  .rpc,
+  .tof {
+    fill: var(--paper-2);
+    stroke: var(--art);
+    stroke-width: 1;
+  }
+  .tof {
+    fill: var(--paper-3);
+  }
+  .target {
+    fill: var(--accent-2);
+    fill-opacity: 0.4;
+    stroke: var(--art);
+    stroke-width: 1;
+  }
+  .lgad {
+    stroke: var(--art-accent);
+    stroke-width: 2.4;
+    fill: none;
+  }
+  .straw {
+    fill: none;
+    stroke: var(--art);
+    stroke-width: 0.9;
+  }
+  .frpc {
+    fill: var(--paper-3);
+    stroke: var(--art);
+    stroke-width: 1;
+  }
+  .neutral {
+    stroke: var(--art-accent);
+    stroke-width: 1.4;
+    stroke-dasharray: 3 3;
+    fill: none;
+  }
+  .trk {
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+  .trk.p,
+  .trk.pi {
+    stroke: var(--art-accent);
+  }
+  .trk.pi {
+    stroke-width: 1.3;
+  }
+  .trk.k {
+    stroke: var(--accent-2);
+  }
+  .vtx {
+    fill: var(--paper);
+    stroke: var(--art-accent);
+    stroke-width: 1.4;
+  }
+  .anno {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    fill: var(--ink-soft);
+  }
+  .anno.small {
+    font-size: 10.5px;
+  }
+  .anno.faint {
+    font-style: italic;
+  }
+  .anno.accent {
+    fill: var(--art-accent);
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .leader {
+    stroke: var(--ink-soft);
+    stroke-width: 0.7;
+    fill: none;
+  }
+  .anchor {
+    fill: var(--ink-soft);
+  }
+</style>

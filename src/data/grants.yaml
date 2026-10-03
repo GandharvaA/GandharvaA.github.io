@@ -1,0 +1,55 @@
+# Grants, scholarships and awards. No amounts.
+# kind: grant | scholarship | award
+- id: liljevalch-2026
+  kind: grant
+  title: C F Liljevalch J:ors travel grant
+  issuer: Stockholm University
+  year: 2026
+  purpose: Conference travel
+  cv: both # TODO verify: awarded? (requisition form found, no decision letter)
+
+- id: donation-2025
+  kind: scholarship
+  title: Donation scholarship, Faculty of Science
+  issuer: Stockholm University
+  year: 2025
+  purpose: Travel to HYP2025, Tokyo
+  cv: both # TODO verify: awarded? (signed assurance form June 2025, no decision letter)
+
+- id: grundstrom-2022
+  kind: grant
+  title: Birger och Gurli Grundströms forskarstipendiefond i fysik, travel stipend
+  issuer: Department of Physics, Stockholm University
+  year: 2022
+  purpose: Participation in an experiment at the JYFL Accelerator Laboratory, Jyväskylä
+  cv: both # TODO verify: awarded? (assurance form signed, no decision letter)
+
+- id: donation-2022
+  kind: scholarship
+  title: Donation scholarship, Faculty of Science (August Emil Wilhelm Smitts stipendie- och understödsstiftelse)
+  issuer: Stockholm University
+  year: 2022
+  purpose: Travel to HADES collaboration meetings
+  cv: both
+
+- id: sae-ebaja
+  kind: award
+  title: "SAE E-Baja 2017: 3rd place in India, design review"
+  issuer: SAE India
+  year: 2017
+  cv: both
+
+- id: ieee-chong
+  kind: award
+  title: IEEE Darrel Chong Student Activity Award
+  issuer: IEEE
+  year: 2016 # TODO verify: year and exact award name
+  purpose: Special-interest-group activities teaching off-syllabus topics
+  cv: both
+
+- id: sae-aero
+  kind: award
+  title: "SAE Aero Design West 2015: 13th worldwide (team captain)"
+  issuer: SAE International, Van Nuys, CA
+  year: 2015
+  cv: both

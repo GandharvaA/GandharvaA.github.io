@@ -1,0 +1,125 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CapabilityCard from '../components/CapabilityCard.astro';
+import { profile } from '../lib/site';
+import { visible } from '../lib/data';
+
+const capabilities = await visible('capabilities');
+---
+
+<BaseLayout title="For industry" description={profile.positioning}>
+  <header class="page-head blueprint">
+    <div class="wrap">
+      <p class="eyebrow">For industry</p>
+      <h1>From the lab to industry</h1>
+    </div>
+  </header>
+
+  <section class="premise section" aria-labelledby="premise-title">
+    <div class="wrap premise-grid">
+      <p class="label" id="premise-title">The premise</p>
+      <blockquote>
+        <p>“{profile.positioning}”</p>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="section capabilities" aria-labelledby="cap-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="cap-title">What I bring</h2>
+        <p>Six capabilities I use every day in experimental physics, and where they apply outside academia.</p>
+      </div>
+      <ul class="cap-grid" role="list">
+        {capabilities.map((c, i) => <li><CapabilityCard cap={c} index={i} /></li>)}
+      </ul>
+      <p class="sectors">
+        <span class="label">Where this applies</span>
+        {profile.sectors.map((s, i) => <span class="sector">{s}{i < profile.sectors.length - 1 && <span class="sep" aria-hidden="true"> · </span>}</span>)}
+      </p>
+      {
+        profile.availability && (
+          <p class="availability mono">{profile.availability}</p>
+        )
+      }
+      <p class="cv-link">
+        <a class="btn primary" href="/cv/cv-industry.pdf" download>Industry CV · PDF</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .premise {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  }
+  .premise-grid {
+    display: grid;
+    grid-template-columns: 10rem 1fr;
+    gap: 1.5rem;
+    align-items: baseline;
+  }
+  blockquote {
+    margin: 0;
+    max-width: 50rem;
+    padding-left: clamp(1rem, 3vw, 2rem);
+    border-left: 2px solid var(--accent);
+  }
+  blockquote p {
+    font-family: var(--font-head);
+    font-size: var(--step-3);
+    line-height: 1.2;
+    font-weight: 450;
+    letter-spacing: -0.015em;
+    margin: 0;
+    font-variation-settings: 'SOFT' 60;
+  }
+  .capabilities {
+    padding-top: 1rem;
+  }
+  .cap-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  .cap-grid li {
+    margin: 0;
+  }
+  .sectors {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.4rem;
+    align-items: baseline;
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+  }
+  .sectors .label {
+    margin-right: 0.6rem;
+  }
+  .sector {
+    white-space: nowrap;
+  }
+  .availability {
+    margin-top: 1.5rem;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+  .cv-link {
+    margin-top: 1.5rem;
+  }
+  @media (max-width: 980px) {
+    .cap-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 720px) {
+    .premise-grid,
+    .cap-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

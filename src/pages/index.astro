@@ -1,0 +1,382 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroArt from '../components/art/HeroArt.astro';
+import Divider from '../components/art/Divider.astro';
+import PublicationItem from '../components/PublicationItem.astro';
+import TalkItem from '../components/TalkItem.astro';
+import ResearchFigure from '../components/ResearchFigure.astro';
+import { profile, settings } from '../lib/site';
+import { getTalks, visible } from '../lib/data';
+
+const pubs = (await visible('publications')).filter((p) => p.data.selected).slice(0, settings.home.selectedPublications);
+const talks = await getTalks();
+const selectedTalks = talks.conference.filter((t) => t.data.selected).slice(0, settings.home.selectedTalks);
+const research = (await getCollection('research', (r) => !r.data.draft)).sort((a, b) => a.data.order - b.data.order);
+const countries = new Set(talks.conference.map((t) => t.data.location?.split(',').pop()?.trim()));
+
+const facts = [
+  { value: '5 yrs', label: 'on a large accelerator experiment at GSI/FAIR' },
+  { value: '~155 TB', label: 'of collision data in my analysis' },
+  { value: String(talks.conference.length), label: `conference talks in ${countries.size} countries` },
+  { value: '3 yrs', label: 'as vice-chair, then chair, of the Fysikum PhD Council' },
+];
+---
+
+<BaseLayout description={profile.tagline}>
+  <section class="hero blueprint">
+    <div class="wrap hero-grid">
+      <div class="hero-text">
+        <p class="eyebrow">{profile.affiliation.name} · {profile.location}</p>
+        <h1>{profile.name}</h1>
+        <p class="role">{profile.role}</p>
+        <p class="lede">{profile.heroStatement}</p>
+        <div class="actions">
+          <a class="btn primary" href="/research/">Research</a>
+          <a class="btn" href="/cv/">Curriculum vitae</a>
+          <a class="btn" href="/contact/">Contact</a>
+        </div>
+      </div>
+      <figure class="hero-figure">
+        <HeroArt />
+        <figcaption>
+          <b>Fig. 1.</b> Charged tracks bend in the magnetic field and leave hits. A Λ decays into p π⁻. The hits
+          become features for a classifier, and a fit separates the signal peak from the background.
+        </figcaption>
+      </figure>
+    </div>
+    <div class="wrap">
+      <ul class="facts" aria-label="At a glance">
+        {facts.map((f) => <li><span class="fact-value">{f.value}</span><span class="fact-label">{f.label}</span></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="premise section" aria-labelledby="epigraph-title">
+    <div class="wrap premise-grid">
+      <p class="label" id="epigraph-title">{profile.epigraph.attribution}</p>
+      <blockquote>
+        <p>“{profile.epigraph.text}”</p>
+        <footer><cite>{profile.epigraph.source}</cite></footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="work-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="work-title">What I do</h2>
+        <p>{profile.work.intro}</p>
+      </div>
+      <ol class="work-list">
+        {
+          profile.work.items.map((item) => (
+            <li>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <div class="wrap"><Divider label="Research" /></div>
+
+  <section class="section research" aria-labelledby="research-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Research</p>
+        <h2 id="research-title">Strange matter, measured carefully</h2>
+        <p>
+          How do hyperons (particles containing a strange quark) interact? The answer shapes our picture of neutron
+          stars. I study this with data from the HADES experiment and with simulations for CBM at FAIR.
+        </p>
+      </div>
+      <div class="research-grid">
+        <ResearchFigure name="hades" class="research-fig" caption="<b>Fig. 2.</b> Schematic of HADES with its forward detector and a ΛΛ event." />
+        <ol class="research-list" role="list">
+          {
+            research.map((r) => (
+              <li>
+                <p class="label">{r.data.kicker}</p>
+                <h3><a href={`/research/${r.id}/`}>{r.data.title}</a></h3>
+                <p>{r.data.summary}</p>
+                <a class="more mono" href={`/research/${r.id}/`} aria-label={`Read more: ${r.data.title}`}>Read the project →</a>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section selected" aria-labelledby="selected-title">
+    <div class="wrap">
+      <h2 id="selected-title" class="visually-hidden">Selected publications and talks</h2>
+      <div class="two-col">
+        <div>
+          <div class="col-head">
+            <h3 class="label">Selected publications</h3>
+            <a class="mono small" href="/publications/">All publications →</a>
+          </div>
+          <ul class="entry-list">{pubs.map((p) => <li><PublicationItem pub={p} /></li>)}</ul>
+        </div>
+        <div>
+          <div class="col-head">
+            <h3 class="label">Recent talks</h3>
+            <a class="mono small" href="/talks/">All talks →</a>
+          </div>
+          <ul class="entry-list">{selectedTalks.map((t) => <li><TalkItem talk={t} /></li>)}</ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta" aria-labelledby="cta-title">
+    <div class="wrap">
+      <div class="cta-box blueprint">
+        <div>
+          <h2 id="cta-title">Curriculum vitae</h2>
+          <p>
+            A two-page CV and a full academic CV, with publications, talks, and teaching.
+          </p>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="/cv/cv-industry.pdf" download>Industry CV · PDF</a>
+          <a class="btn" href="/cv/cv-academic.pdf" download>Academic CV · PDF</a>
+          <a class="btn" href="/cv/">View online</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    border-bottom: 1px solid var(--line);
+    padding-block: clamp(2.5rem, 6vw, 5rem) 2.5rem;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  .hero h1 {
+    margin-bottom: 0.15em;
+  }
+  .role {
+    font-family: var(--font-mono);
+    font-size: clamp(0.82rem, 0.78rem + 0.25vw, 0.98rem);
+    letter-spacing: 0.04em;
+    color: var(--accent-ink);
+    margin-bottom: 1.4rem;
+  }
+  .hero .lede {
+    color: var(--ink);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-top: 1.8rem;
+  }
+  .hero-figure figcaption {
+    max-width: 60ch;
+  }
+  .facts {
+    list-style: none;
+    padding: 0;
+    margin: clamp(2rem, 5vw, 3.5rem) 0 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line);
+  }
+  .facts li {
+    margin: 0;
+    padding: 1.1rem 1.2rem 0.2rem 0;
+    display: grid;
+    gap: 0.2rem;
+  }
+  .facts li + li {
+    padding-left: 1.2rem;
+    border-left: 1px solid var(--line);
+  }
+  .fact-value {
+    font-family: var(--font-head);
+    font-size: var(--step-2);
+    font-weight: 600;
+    line-height: 1;
+  }
+  .fact-label {
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+    line-height: 1.35;
+  }
+
+  .premise {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  }
+  .premise-grid {
+    display: grid;
+    grid-template-columns: 10rem 1fr;
+    gap: 1.5rem;
+    align-items: baseline;
+  }
+  blockquote {
+    margin: 0;
+    max-width: 50rem;
+    padding-left: clamp(1rem, 3vw, 2rem);
+    border-left: 2px solid var(--accent);
+  }
+  blockquote p {
+    font-family: var(--font-head);
+    font-size: var(--step-3);
+    line-height: 1.2;
+    font-weight: 450;
+    letter-spacing: -0.015em;
+    margin: 0;
+    font-variation-settings: 'SOFT' 60;
+  }
+  blockquote footer {
+    margin-top: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+  blockquote cite {
+    font-style: italic;
+  }
+
+  .work-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.6rem 2.5rem;
+  }
+  .work-list li {
+    margin: 0;
+    padding-left: 1.1rem;
+    border-left: 2px solid var(--accent);
+  }
+  .work-list li:nth-child(even) {
+    border-left-color: var(--accent-2);
+  }
+  .work-list h3 {
+    margin: 0 0 0.35rem;
+    font-size: var(--step-1);
+  }
+  .work-list p {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+
+  .research-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: start;
+  }
+  .research-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 2rem;
+  }
+  .research-list li {
+    margin: 0;
+    padding-left: 1.2rem;
+    border-left: 2px solid var(--accent);
+  }
+  .research-list li + li {
+    border-left-color: var(--accent-2);
+  }
+  .research-list h3 {
+    margin: 0.35rem 0 0.5rem;
+  }
+  .research-list h3 a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .research-list h3 a:hover {
+    text-decoration: underline;
+  }
+  .research-list p:not(.label) {
+    color: var(--ink-soft);
+    margin-bottom: 0.5rem;
+  }
+  .more {
+    font-size: 0.8rem;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+  .col-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.8rem;
+  }
+  .col-head h3 {
+    margin: 0;
+  }
+
+  .cta-box {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    padding: clamp(1.5rem, 4vw, 2.75rem);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background-color: var(--paper-2);
+  }
+  .cta-box h2 {
+    font-size: var(--step-2);
+  }
+  .cta-box p {
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .cta-box .actions {
+    margin: 0;
+    justify-content: flex-end;
+  }
+
+  @media (max-width: 980px) {
+    .hero-grid,
+    .research-grid,
+    .cta-box {
+      grid-template-columns: 1fr;
+    }
+    .work-list {
+      grid-template-columns: 1fr;
+    }
+    .cta-box .actions {
+      justify-content: flex-start;
+    }
+  }
+  @media (max-width: 720px) {
+    .facts {
+      grid-template-columns: 1fr 1fr;
+    }
+    .facts li:nth-child(3) {
+      padding-left: 0;
+      border-left: 0;
+    }
+    .premise-grid,
+    .two-col {
+      grid-template-columns: 1fr;
+    }
+    .work-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,129 @@
+---
+interface Props {
+  name: 'detector' | 'calibration' | 'signal' | 'simulation' | 'ai' | 'compute';
+  class?: string;
+}
+const { name, class: className } = Astro.props;
+---
+
+<svg class:list={['icon', className]} viewBox="0 0 48 48" aria-hidden="true">
+  {
+    name === 'detector' && (
+      <g>
+        <circle cx="24" cy="24" r="20" />
+        <circle cx="24" cy="24" r="14" class="dash" />
+        <circle cx="24" cy="24" r="8" />
+        <path d="M24 4v6M24 38v6M6.7 14l5.2 3M36.1 31l5.2 3M6.7 34l5.2-3M36.1 17l5.2-3" class="thin" />
+        <path d="M24 24 A 18 18 0 0 1 41 30" class="hl" />
+        <circle cx="35.6" cy="27.6" r="1.8" class="dot" />
+        <circle cx="30.4" cy="25.6" r="1.8" class="dot" />
+      </g>
+    )
+  }
+  {
+    name === 'calibration' && (
+      <g>
+        <path d="M6 32a18 18 0 0 1 36 0" />
+        <path d="M9.5 21.5l3 2M17 14.5l1.6 3M24 12v3.4M31 14.5l-1.6 3M38.5 21.5l-3 2" class="thin" />
+        <path d="M24 32 L33 19" class="hl" />
+        <circle cx="24" cy="32" r="2.6" class="dot" />
+        <path d="M6 40h36M10 37v6M18 38.5v3M24 37v6M30 38.5v3M38 37v6" class="thin" />
+      </g>
+    )
+  }
+  {
+    name === 'signal' && (
+      <g>
+        <path d="M5 42V6M5 42h38" />
+        <path d="M7 36l3-2 2 3 3-4 2 2 3-3 2-6 2-12 2 12 2 6 3 2 2-2 3 3 2-1 3 2" class="thin" />
+        <path d="M7 37 C 16 33, 20 32, 24 31 S 34 33, 42 36" class="dash" />
+        <path d="M17 31 C 21 27, 22 10, 24 10 S 27 27, 31 31" class="hl" />
+      </g>
+    )
+  }
+  {
+    name === 'simulation' && (
+      <g>
+        <rect x="5" y="5" width="38" height="38" rx="2" class="thin" />
+        <path d="M5 38 C 15 36, 18 14, 26 12 S 38 22, 43 20" class="hl" />
+        <circle cx="12" cy="30" r="1.4" class="dot" />
+        <circle cx="16" cy="22" r="1.4" class="dot" />
+        <circle cx="21" cy="17" r="1.4" class="dot" />
+        <circle cx="27" cy="16" r="1.4" class="dot" />
+        <circle cx="32" cy="20" r="1.4" class="dot" />
+        <circle cx="37" cy="17" r="1.4" class="dot" />
+        <circle cx="19" cy="31" r="1.4" class="dot" />
+        <circle cx="30" cy="29" r="1.4" class="dot" />
+        <circle cx="10" cy="14" r="1.4" class="dot" />
+      </g>
+    )
+  }
+  {
+    name === 'ai' && (
+      <g>
+        <path d="M8 12L24 9M8 12L24 24M8 12L24 39M8 24L24 9M8 24L24 24M8 24L24 39M8 36L24 9M8 36L24 24M8 36L24 39M24 9L40 18M24 24L40 18M24 39L40 18M24 9L40 32M24 24L40 32M24 39L40 32" class="thin" />
+        <circle cx="8" cy="12" r="3.2" class="node" />
+        <circle cx="8" cy="24" r="3.2" class="node" />
+        <circle cx="8" cy="36" r="3.2" class="node" />
+        <circle cx="24" cy="9" r="3.2" class="node" />
+        <circle cx="24" cy="24" r="3.2" class="node" />
+        <circle cx="24" cy="39" r="3.2" class="node" />
+        <circle cx="40" cy="18" r="3.6" class="node hlnode" />
+        <circle cx="40" cy="32" r="3.6" class="node" />
+      </g>
+    )
+  }
+  {
+    name === 'compute' && (
+      <g>
+        <rect x="7" y="6" width="34" height="9" rx="1.5" />
+        <rect x="7" y="19.5" width="34" height="9" rx="1.5" />
+        <rect x="7" y="33" width="34" height="9" rx="1.5" />
+        <path d="M12 10.5h10M12 24h10M12 37.5h10" class="thin" />
+        <circle cx="35" cy="10.5" r="1.6" class="dot" />
+        <circle cx="35" cy="24" r="1.6" class="dot hldot" />
+        <circle cx="35" cy="37.5" r="1.6" class="dot" />
+        <circle cx="30" cy="24" r="1.6" class="dot" />
+      </g>
+    )
+  }
+</svg>
+
+<style>
+  .icon {
+    width: 3rem;
+    height: 3rem;
+    fill: none;
+    stroke: var(--art);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    overflow: visible;
+  }
+  .thin {
+    stroke-width: 1;
+    opacity: 0.75;
+  }
+  .dash {
+    stroke-dasharray: 2 2.5;
+    stroke-width: 1;
+  }
+  .hl {
+    stroke: var(--art-accent);
+    stroke-width: 2;
+  }
+  .dot {
+    fill: var(--art);
+    stroke: none;
+  }
+  .hldot {
+    fill: var(--art-accent);
+  }
+  .node {
+    fill: var(--paper);
+  }
+  .hlnode {
+    stroke: var(--art-accent);
+    stroke-width: 2;
+  }
+</style>

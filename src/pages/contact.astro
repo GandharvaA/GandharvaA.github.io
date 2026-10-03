@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Email from '../components/Email.astro';
+import { profile, links } from '../lib/site';
+---
+
+<BaseLayout title="Contact" description="How to reach Gandharva Appagere.">
+  <header class="page-head blueprint">
+    <div class="wrap">
+      <p class="eyebrow">Contact</p>
+      <h1>Contact</h1>
+      <p class="lede">
+        I am a PhD candidate at the Department of Physics, Stockholm University. Email is the best way to reach me.
+      </p>
+    </div>
+  </header>
+  <div class="wrap contact">
+    <dl class="details">
+      <div>
+        <dt class="label">Email</dt>
+        <dd class="email-big"><Email /></dd>
+      </div>
+      <div>
+        <dt class="label">Based in</dt>
+        <dd>{profile.location}</dd>
+      </div>
+      <div>
+        <dt class="label">Affiliation</dt>
+        <dd>{profile.affiliation.department}, {profile.affiliation.name}</dd>
+      </div>
+      {
+        links.length > 0 && (
+          <div>
+            <dt class="label">Profiles</dt>
+            <dd>
+              {links.map((l, i) => <>{i > 0 && ' · '}<a href={l.url} rel="me noopener">{l.label}</a></>)}
+            </dd>
+          </div>
+        )
+      }
+    </dl>
+    <p class="note mono">No contact form and no tracking. Your message goes straight to my inbox.</p>
+  </div>
+</BaseLayout>
+
+<style>
+  .contact {
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+    max-width: 52rem;
+    margin-inline: 0;
+  }
+  @media (min-width: 72rem) {
+    .contact {
+      margin-inline: auto;
+    }
+  }
+  .details {
+    margin: 0;
+    display: grid;
+    gap: 0;
+  }
+  .details > div {
+    display: grid;
+    grid-template-columns: 10rem 1fr;
+    gap: 1rem;
+    padding-block: 1.1rem;
+    border-top: 1px solid var(--line);
+  }
+  .details > div:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  dd {
+    margin: 0;
+  }
+  .email-big {
+    font-family: var(--font-head);
+    font-size: var(--step-1);
+    overflow-wrap: anywhere;
+  }
+  .note {
+    margin-top: 1.5rem;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 560px) {
+    .details > div {
+      grid-template-columns: 1fr;
+      gap: 0.3rem;
+    }
+  }
+</style>

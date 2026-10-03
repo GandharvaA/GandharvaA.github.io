@@ -1,0 +1,65 @@
+# "From the lab to industry" cards (home page + industry CV).
+# icon: one of detector | calibration | signal | simulation | ai | compute
+- id: detectors
+  icon: detector
+  title: Detectors & sensor systems
+  lab: >-
+    Took shifts operating the HADES spectrometer (drift chambers, straw-tube
+    trackers, resistive-plate and LGAD timing detectors) and understand how each
+    detector response shapes the data.
+  industry: >-
+    Specify, integrate and debug multi-sensor systems; reason from raw sensor
+    behaviour to system performance.
+
+- id: measurement
+  icon: calibration
+  title: Measurement, calibration & instrumentation
+  lab: >-
+    Developed a relative time-of-flight method that compensates start-detector
+    timing problems; ran the nuclear-physics student lab (HPGe detectors,
+    scintillators, radioactive sources).
+  industry: >-
+    Design calibration strategies, characterise instruments and keep measurements
+    traceable and reproducible.
+
+- id: inference
+  icon: signal
+  title: "Signal from noise: statistics & uncertainty"
+  lab: >-
+    Extract a rare two-particle signal from a large combinatorial background with
+    2D template likelihood fits, sideband methods, kinematic fitting and systematic
+    variations.
+  industry: >-
+    Robust inference, detection and estimation with honest uncertainty budgets for
+    decisions that depend on noisy data.
+
+- id: simulation
+  icon: simulation
+  title: Simulation & Monte Carlo
+  lab: >-
+    Wrote my own event generator for CBM feasibility studies; used PLUTO and
+    GEANT-based detector simulation to model acceptance and efficiency.
+  industry: >-
+    Build digital twins and synthetic data, run sensitivity and feasibility studies
+    before hardware exists.
+
+- id: ai
+  icon: ai
+  title: AI/ML & AI-assisted workflows
+  lab: >-
+    Trained multiclass ML classifiers (ROOT TMVA) to separate signal from
+    background; use AI coding assistants (Cursor, LLMs) to build and automate a
+    staged analysis pipeline.
+  industry: >-
+    Apply ML to physical and sensor data with domain understanding, and use modern
+    AI tools to ship analysis software faster.
+
+- id: compute
+  icon: compute
+  title: Large-scale data & HPC
+  lab: >-
+    Analysed a ~155 TB dataset with C++/ROOT and Python on the GSI Virgo cluster
+    (Slurm, containers, Lustre), with versioned code in Git.
+  industry: >-
+    Engineer data pipelines that scale from a notebook to a compute cluster, with
+    reproducible, reviewable code.

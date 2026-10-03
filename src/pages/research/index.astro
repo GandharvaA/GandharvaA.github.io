@@ -1,0 +1,101 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ResearchFigure from '../../components/ResearchFigure.astro';
+
+const research = (await getCollection('research', (r) => !r.data.draft)).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Research"
+  description="PhD research on hyperon–hyperon (ΛΛ) interactions with the HADES experiment at GSI and simulation studies for CBM at FAIR."
+>
+  <header class="page-head blueprint">
+    <div class="wrap">
+      <p class="eyebrow">Research</p>
+      <h1>How do strange particles interact?</h1>
+      <p class="lede">
+        Hyperons (baryons containing a strange quark) are expected deep inside neutron stars, but how they interact
+        with each other is barely known. My PhD tackles this from two sides: a measurement with existing HADES data,
+        and a feasibility study for the next-generation CBM experiment at FAIR.
+      </p>
+    </div>
+  </header>
+
+  <div class="wrap projects">
+    {
+      research.map((r, i) => (
+        <article class:list={['project', { flip: i % 2 === 1 }]}>
+          <div class="project-text">
+            <p class="label">
+              {r.data.kicker} · {r.data.period}
+            </p>
+            <h2>
+              <a href={`/research/${r.id}/`}>{r.data.title}</a>
+            </h2>
+            <p>{r.data.summary}</p>
+            <ul class="tags" aria-label="Topics">
+              {r.data.tags.map((t) => (
+                <li class="tag">{t}</li>
+              ))}
+            </ul>
+            <a class="btn" href={`/research/${r.id}/`}>
+              Read the project
+            </a>
+          </div>
+          <ResearchFigure name={r.data.illustration} caption={r.data.figureCaption} />
+        </article>
+      ))
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .projects {
+    display: grid;
+    gap: clamp(3rem, 7vw, 5rem);
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  }
+  .project {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: center;
+  }
+  .project.flip .project-text {
+    order: 2;
+  }
+  h2 {
+    font-size: var(--step-2);
+    margin: 0.5rem 0 0.8rem;
+  }
+  h2 a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+  h2 a:hover {
+    text-decoration: underline;
+  }
+  .project-text > p:not(.label) {
+    color: var(--ink-soft);
+  }
+  .tags {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .tags li {
+    margin: 0;
+  }
+  @media (max-width: 900px) {
+    .project {
+      grid-template-columns: 1fr;
+    }
+    .project.flip .project-text {
+      order: 0;
+    }
+  }
+</style>

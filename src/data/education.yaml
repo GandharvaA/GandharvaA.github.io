@@ -1,0 +1,61 @@
+# Dates: "YYYY" or "YYYY-MM". end: "present" allowed. expected: true marks a future end date.
+# cv: which CVs include the entry (both | academic | industry). hidden: true hides it everywhere.
+- id: phd
+  degree: PhD
+  field: Experimental Nuclear & Hadron Physics
+  institution: Stockholm University
+  department: Department of Physics (Fysikum)
+  location: Stockholm, Sweden
+  start: "2021-08"
+  end: "2027"
+  expected: true
+  thesis:
+    title: "Hyperon–hyperon interactions from proton–proton collisions with HADES and CBM" # TODO verify: working title; no final dissertation title found
+  supervisors:
+    - Prof. Per-Erik Tegnér (main supervisor since Dec 2024)
+    - Dr. María Doncel Monasterio (main supervisor 2021–2024, now co-supervisor)
+    - Dr. Jenny Taylor, GSI (co-supervisor since 2025) # TODO verify: name/affiliation as it should appear
+    - Dr. Michael Papenbrock, Uppsala University (co-supervisor 2022–2025)
+  details:
+    - Collaborations HADES and CBM at GSI/FAIR (Darmstadt, Germany); QCD at FAIR programme.
+  cv: both
+
+- id: licentiate
+  degree: Licentiate of Philosophy (Fil.lic.)
+  field: Physics
+  institution: Stockholm University
+  location: Stockholm, Sweden
+  start: "2021-08"
+  end: "2024-03"
+  thesis:
+    # The printed thesis title differs from the 2026 CV wording
+    # ("Λ-Λ hyperon studies: Road to cross-section estimate from proton-proton collisions at √s = 3.46 GeV").
+    title: "Λ-Λ hyperons: the road to estimate the production cross-section in proton-proton collisions" # TODO verify: choose between printed-thesis title and 2026 CV wording
+  details:
+    - Licentiate seminar 27 March 2024.
+  cv: both
+
+- id: msc
+  degree: MSc
+  field: Electromagnetics, Fusion and Space Engineering
+  institution: KTH Royal Institute of Technology
+  location: Stockholm, Sweden
+  start: "2018"
+  end: "2020" # TODO verify: 2024 CV says May 2020; 2021/22 CV says Jan 2021
+  thesis:
+    title: "Can FIMPs be Dark Matter Candidates?"
+    advisor: Prof. Robert Mann (Perimeter Institute / University of Waterloo)
+  details:
+    - Thesis on symmetry breaking with the Coleman–Weinberg effective potential at finite temperature.
+  cv: both
+
+- id: be
+  degree: BE
+  field: Electronics and Communication Engineering
+  institution: BMS College of Engineering
+  location: Bengaluru, India
+  start: "2013"
+  end: "2017"
+  thesis:
+    title: "CLAIRE: Cognitive Linguistic Analyser and Interpreter with Real-time Efficiency"
+  cv: both

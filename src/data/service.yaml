@@ -1,0 +1,108 @@
+# Service, leadership, lab responsibility, mentoring and outreach.
+# category: leadership | committee | lab | mentoring | outreach | student
+# cv: both | academic | industry ; hidden: true hides it everywhere
+- id: fysikum-council-chair
+  role: Chair
+  organisation: Fysikum PhD Council, Stockholm University
+  start: "2025"
+  end: "2026"
+  category: leadership
+  description: >-
+    Lead the department's doctoral-student council: run board and general meetings and
+    represent PhD students in departmental bodies.
+  cv: both
+
+- id: cdr-vice-chair
+  role: Vice-Chair
+  organisation: Central Doctoral Student Council (CDR), Stockholm University
+  start: "2024-12"
+  end: "2025"
+  category: leadership
+  description: University-wide representation of doctoral students; represented CDR in national doctoral-student bodies.
+  cv: both
+
+- id: nfr-vice-chair
+  role: Vice-Chair
+  organisation: Natural Sciences Faculty Doctoral Student Council (NFR), Stockholm University
+  start: "2024" # TODO verify: exact term (nominated Dec 2023; listed as Vice-Chair in Dec 2024 minutes; study plans say HT22–VT24)
+  end: "2024"
+  category: leadership
+  description: Faculty-level doctoral-student representation; frequently meeting secretary.
+  cv: both
+
+- id: fysikum-council-vice-chair
+  role: Vice-Chair
+  organisation: Fysikum PhD Council, Stockholm University
+  start: "2023"
+  end: "2025"
+  category: leadership
+  description: >-
+    Contributed to clearer departmental guidelines for changing supervisors and to an
+    improved half-time review process; started PhD-student meetings in the
+    Instrumentation division.
+  cv: both
+
+- id: fysikum-council-board
+  role: Board member
+  organisation: Fysikum PhD Council, Stockholm University
+  start: "2022"
+  end: "2023"
+  category: leadership
+  cv: academic
+
+- id: fysikum-board
+  role: Doctoral-student representative
+  organisation: Fysikum Department Board and committees (Research Education, Technical Division, Computer, Work Environment)
+  start: "2023"
+  end: "2026"
+  category: committee
+  description: Department Board member and committee seats on research education, technical-division and computing committees.
+  cv: both
+
+- id: nfr-debate
+  role: Co-organiser
+  organisation: NFR Debate Forum, Stockholm University
+  start: "2025"
+  end: "2025"
+  category: outreach
+  description: Oxford-style debates for doctoral students across the Faculty of Science. # TODO verify: title (co-founder vs co-organiser)
+  cv: academic
+
+- id: lab-responsible
+  role: Lab responsible
+  organisation: Nuclear physics student laboratory, Fysikum
+  start: "2021"
+  end: "2025"
+  category: lab
+  description: >-
+    Responsible for HPGe detectors, scintillators and the radioactive-source inventory;
+    lab rules and safety, a source booking and record system, and procurement of a
+    proportional counter.
+  cv: both
+
+- id: mentor-programme
+  role: Mentee
+  organisation: Industry mentor programme for doctoral students
+  start: "2024"
+  end: "2025"
+  category: mentoring
+  description: Paired with a senior industry mentor to prepare the transition from academia to industry. # TODO verify: programme name/organiser
+  cv: academic
+
+- id: hollywood-fysik
+  role: Contributor
+  organisation: "Fysikum outreach: \"Hollywood Fysik\" show"
+  start: "2022"
+  end: "2022"
+  category: outreach
+  description: Drafted material explaining the physics behind film scenes for a public outreach show.
+  hidden: true # TODO verify: was it delivered? set hidden: false to show
+  cv: academic
+
+- id: ieee-secretary
+  role: Executive Committee Secretary
+  organisation: IEEE Student Chapter, BMS College of Engineering
+  start: "2015"
+  end: "2015"
+  category: student
+  cv: academic

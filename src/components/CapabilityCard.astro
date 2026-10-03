@@ -1,0 +1,76 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Icon from './art/Icon.astro';
+
+interface Props {
+  cap: CollectionEntry<'capabilities'>;
+  index: number;
+}
+const { cap, index } = Astro.props;
+const d = cap.data;
+---
+
+<article class="cap card">
+  <div class="cap-head">
+    <Icon name={d.icon} />
+    <span class="cap-num mono">{String(index + 1).padStart(2, '0')}</span>
+  </div>
+  <h3>{d.title}</h3>
+  <dl>
+    <div>
+      <dt class="label">In the lab</dt>
+      <dd>{d.lab}</dd>
+    </div>
+    <div class="industry">
+      <dt class="label">In industry</dt>
+      <dd>{d.industry}</dd>
+    </div>
+  </dl>
+</article>
+
+<style>
+  .cap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    height: 100%;
+  }
+  .cap-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.4rem;
+  }
+  .cap-num {
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+  }
+  h3 {
+    font-size: 1.16rem;
+    margin: 0 0 0.3rem;
+  }
+  dl {
+    margin: 0;
+    display: grid;
+    gap: 0.8rem;
+  }
+  dt {
+    margin-bottom: 0.2rem;
+  }
+  dd {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+  .industry {
+    padding-top: 0.8rem;
+    border-top: 1px dashed var(--line);
+  }
+  .industry dt {
+    color: var(--accent-ink);
+  }
+  .industry dd {
+    color: var(--ink);
+  }
+</style>

@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SidebandDemo from '../components/demos/SidebandDemo.astro';
+import { settings } from '../lib/site';
+
+export function getStaticPaths() {
+  return settings.showDemos ? [{ params: { demos: 'demos' } }] : [];
+}
+---
+
+<BaseLayout title="Demos" description="Interactive demo: estimating a background from sidebands and extracting a small signal, as done in particle-physics analyses.">
+  <header class="page-head blueprint">
+    <div class="wrap">
+      <p class="eyebrow">Demos</p>
+      <h1>Signal from noise, interactively</h1>
+      <p class="lede">
+        A toy version of a technique I use every day: estimate the background under a peak from the regions beside it,
+        subtract it, and check how well the true signal is recovered.
+      </p>
+    </div>
+  </header>
+  <div class="wrap content">
+    <section aria-labelledby="sideband-title">
+      <h2 id="sideband-title">Sideband subtraction</h2>
+      <p>
+        A Λ hyperon decays into a proton and a pion. Combining every proton with every pion gives a mass spectrum in
+        which real Λs pile up in a narrow peak, on top of a smooth background of random pairings. The background under
+        the peak cannot be measured directly, so it is estimated from two <em>sidebands</em> on either side and
+        subtracted.
+      </p>
+      <p>
+        Move the sliders: with less signal, more background or worse detector resolution the estimate gets noisier
+        and the significance (S/√B) drops. The same reasoning applies to any measurement where a weak signal sits on a
+        background, from sensor data to quality control.
+      </p>
+      <SidebandDemo fig="D1" />
+      <p class="note">
+        Simulated data only; the numbers are illustrative and are not results from any experiment.
+      </p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .content {
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+    max-width: calc(52rem + 2 * var(--gutter));
+  }
+  h2 {
+    font-size: var(--step-1);
+    margin-bottom: 0.8rem;
+  }
+  p {
+    max-width: var(--measure);
+    margin-bottom: 1rem;
+  }
+  .note {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+</style>

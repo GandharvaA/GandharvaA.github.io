@@ -1,0 +1,56 @@
+# Schools, workshops, experiments and research visits (academic CV + About page).
+# Newest first (list order = display order).
+# kind: school | workshop | experiment | visit
+- id: juelich-2026
+  kind: visit
+  title: "Research visit: Forschungszentrum Jülich (theory) and GSI"
+  location: Jülich & Darmstadt, Germany
+  date: "2026-02"
+
+- id: hamp2025
+  kind: workshop
+  title: "HAMP2025: Hadron Physics using Antimatter Probes"
+  location: KEK Tokai, Japan
+  date: "2025-10"
+
+- id: qcd-fair-2025
+  kind: workshop
+  title: "QCD at FAIR workshop: contributions to the FAIR hadron-physics white paper"
+  location: Catania, Italy
+  date: "2025-06"
+
+- id: hades-pion-2025
+  kind: experiment
+  title: HADES pion-beam run
+  location: GSI, Darmstadt, Germany
+  date: "2025" # TODO verify: month of the 2025 pion-beam run
+
+- id: gsi-visits
+  kind: visit
+  title: Research visits to the GSI hyperon group (CBM feasibility studies)
+  location: Darmstadt, Germany
+  date: "2024–2025"
+
+- id: hasp2023
+  kind: school
+  title: HaSP / STRONG-2020 Hadron Spectroscopy Summer School
+  location: Salamanca, Spain
+  date: "2023-09"
+
+- id: jyfl-2023
+  kind: experiment
+  title: Nuclear-structure experiment JR160 at the JYFL Accelerator Laboratory (neutron-deficient Os isotopes)
+  location: Jyväskylä, Finland
+  date: "2023-02" # TODO verify: role in the experiment
+
+- id: radiation-safety
+  kind: school
+  title: Basic course in radiation safety, Stockholm University
+  location: Stockholm, Sweden
+  date: "2022-10"
+
+- id: hades-beamtime-2022
+  kind: experiment
+  title: "HADES proton beam time (pp at 4.5 GeV): detector shifts"
+  location: GSI, Darmstadt, Germany
+  date: "2022-02"

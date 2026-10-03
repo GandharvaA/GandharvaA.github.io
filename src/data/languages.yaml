@@ -1,0 +1,8 @@
+# Spoken languages.
+- id: english
+  name: English
+  level: Fluent (professional working proficiency) # TODO verify: preferred wording
+- id: swedish
+  name: Swedish
+  level: Basic (A2, studying) # TODO verify: current level
+# TODO verify: add native language(s), e.g. Kannada / Hindi; not found in any CV

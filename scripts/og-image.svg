@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <pattern id="minor" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M24 0H0V24" fill="none" stroke="#1d1b16" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+    <pattern id="major" width="120" height="120" patternUnits="userSpaceOnUse">
+      <path d="M120 0H0V120" fill="none" stroke="#1d1b16" stroke-opacity="0.11" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="#f6f1e7"/>
+  <rect width="1200" height="630" fill="url(#minor)"/>
+  <rect width="1200" height="630" fill="url(#major)"/>
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#1d1b16" stroke-opacity="0.35" stroke-width="1.5"/>
+
+  <g transform="translate(930 300)" fill="none" stroke="#1d1b16">
+    <circle r="62" stroke-opacity="0.5" stroke-width="1.5"/>
+    <circle r="104" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="3 6"/>
+    <circle r="146" stroke-opacity="0.5" stroke-width="1.5"/>
+    <circle r="196" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="3 6"/>
+    <circle r="226" stroke-opacity="0.5" stroke-width="7" stroke-dasharray="2 10"/>
+    <path d="M0 0 Q -60 -40 -150 -150" stroke-width="2.2"/>
+    <path d="M0 0 Q -70 30 -96 128" stroke-width="2.2"/>
+    <path d="M0 0 Q 40 -110 30 -226" stroke-width="2.2"/>
+    <path d="M0 0 Q 90 40 196 70" stroke-width="2.2"/>
+    <path d="M18 6 Q 80 -10 150 -150" stroke="#b03f27" stroke-width="2.6"/>
+    <path d="M18 6 Q 60 70 70 200" stroke="#b03f27" stroke-width="2.6"/>
+    <path d="M0 0 L18 6" stroke="#b03f27" stroke-width="2" stroke-dasharray="4 4"/>
+    <circle r="5" fill="#1d1b16" stroke="none"/>
+    <circle cx="18" cy="6" r="4.5" fill="#f6f1e7" stroke="#b03f27" stroke-width="2"/>
+  </g>
+  <text x="954" y="292" font-family="Iowan Old Style, Georgia, serif" font-size="22" fill="#b03f27">&#923;</text>
+
+  <text x="84" y="150" font-family="Menlo, monospace" font-size="19" letter-spacing="3" fill="#5d574b">STOCKHOLM UNIVERSITY &#183; GSI/FAIR</text>
+  <path d="M84 172 H140" stroke="#b03f27" stroke-width="3"/>
+  <text x="84" y="262" font-family="Iowan Old Style, Georgia, serif" font-size="78" font-weight="700" fill="#1d1b16">Gandharva</text>
+  <text x="84" y="346" font-family="Iowan Old Style, Georgia, serif" font-size="78" font-weight="700" fill="#1d1b16">Appagere</text>
+  <text x="84" y="410" font-family="Iowan Old Style, Georgia, serif" font-size="34" fill="#1d1b16">Experimental Physicist</text>
+  <text x="84" y="456" font-family="Menlo, monospace" font-size="24" letter-spacing="1" fill="#b03f27">Detectors &#183; Data &#183; AI</text>
+  <text x="84" y="540" font-family="Iowan Old Style, Georgia, serif" font-size="23" font-style="italic" fill="#5d574b">From faint signals in detector data to trustworthy measurements.</text>
+</svg>

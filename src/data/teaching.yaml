@@ -1,0 +1,60 @@
+# Teaching at Stockholm University (Fysikum). kind: course | supervision | training
+- id: fk7051
+  kind: course
+  code: FK7051
+  course: Nuclear Physics (MSc)
+  role: >-
+    Laboratory supervisor: lab introduction lecture, lab compendium, grading of lab
+    reports and oral presentations
+  terms: [HT2021, HT2023, HT2025]
+
+- id: fk4026
+  kind: course
+  code: FK4026
+  course: Programmering, numeriska metoder och statistik för fysiker
+  role: "Laboratory assistant: Python labs, numerical-methods part, project grading"
+  terms: [HT2021, HT2022, HT2023] # TODO verify: HT2021 was graded as "Numerical methods for physicists" (same course code?)
+
+- id: fk7056
+  kind: course
+  code: FK7056
+  course: Detector Physics (MSc)
+  role: "Laboratory supervisor: muon lifetime and HPGe gamma-spectroscopy labs"
+  terms: [HT2024]
+
+- id: fk5026
+  kind: course
+  code: FK5026
+  course: Project in Experimental Modern Physics
+  role: "Laboratory supervisor: Compton-scattering lab"
+  terms: [HT2024, HT2025]
+
+- id: fk5019
+  kind: course
+  code: FK5019
+  course: Elektromagnetism och vågor
+  role: Problem-solving sessions
+  terms: [VT2025]
+
+- id: waves-optics
+  kind: course
+  code: "" # TODO verify: course code for Vågrörelselära och optik
+  course: Vågrörelselära och optik (Waves and Optics)
+  role: Exercise-group leader and grading of hand-ins
+  terms: [HT2025]
+
+- id: bsc-supervision
+  kind: supervision
+  code: ""
+  course: Bachelor's thesis in Medical Radiation Physics
+  role: >-
+    Co-supervisor: Monte Carlo study of a high-resolution germanium (HPGe) detector at
+    the AlbaNova low-background laboratory
+  terms: [VT2022]
+
+- id: intro-teaching
+  kind: training
+  code: ""
+  course: Introduction to teaching (3 hp), Stockholm University
+  role: Higher-education teacher training
+  terms: ["2021"]

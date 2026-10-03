@@ -1,0 +1,156 @@
+# Core identity and positioning. Read by the website AND by scripts/build-cv.mjs.
+name: Gandharva Appagere
+givenName: Gandharva
+familyName: Appagere
+role: Experimental Physicist · Detectors, Data & AI
+currentPosition: PhD candidate in experimental nuclear & hadron physics
+affiliation:
+  name: Stockholm University
+  department: Department of Physics (Fysikum)
+  url: https://www.su.se/
+location: Stockholm, Sweden
+
+# Assembled client-side to deter scrapers.
+email:
+  user: gandharva.appagere
+  domain: fysik.su.se
+
+# Industry positioning. Shown on /industry and used by the industry CV, not on the public snapshot pages.
+positioning: >-
+  The combination of experimental instrumental knowledge and the tools of AI
+  makes an attractive skillset for industry to hire an experimental physicist.
+
+# Home-page epigraph. Not a self-description.
+epigraph:
+  text: Astronomy is a humbling and character-building experience.
+  attribution: Carl Sagan
+  source: Pale Blue Dot
+
+tagline: >-
+  Experimental physicist at Stockholm University, measuring ΛΛ production with
+  HADES at GSI and simulating ΛΛ cusps for CBM at FAIR.
+
+heroStatement: >-
+  PhD candidate in experimental nuclear and hadron physics. I measure ΛΛ
+  production with the HADES experiment at GSI, and I study whether the CBM
+  experiment at FAIR can extract ΛΛ interaction parameters from cusp structures.
+
+# Factual overview for the home-page "What I do" section.
+work:
+  intro: >-
+    The PhD is a measurement of double-Λ production with HADES and a simulation
+    study of ΛΛ cusps for CBM, together with the detector work and the analysis
+    that those projects need.
+  items:
+    - title: HADES ΛΛ measurement
+      text: >-
+        Main analysis of double-Λ production in proton-proton collisions with
+        the HADES spectrometer at GSI: reconstruction, particle identification,
+        likelihood fits, and systematic uncertainties.
+    - title: CBM cusp simulations
+      text: >-
+        Feasibility studies for the CBM experiment at FAIR. An event generator
+        and a detector-response model ask whether ΛΛ cusps can be resolved and
+        whether scattering parameters can be extracted.
+    - title: Detectors and analysis
+      text: >-
+        Detector shifts on HADES, timing and calibration, Monte Carlo simulation,
+        and machine-learning classifiers in a staged analysis pipeline on the
+        GSI computing cluster.
+    - title: Teaching and service
+      text: >-
+        Laboratory teaching at Fysikum since 2021, and service on the Fysikum
+        PhD Council (vice-chair, then chair).
+
+availability: Completing my PhD in 2027 and open to industry R&D and data roles. # TODO verify: preferred wording / availability date
+
+industrySummary: >-
+  Experimental physicist (PhD candidate, Stockholm University) with five years of
+  hands-on work on a large accelerator experiment at GSI/FAIR in Germany. Main
+  analysis responsibility for a rare-process measurement: detector operation,
+  calibration-aware particle identification, Monte Carlo simulation, statistical
+  inference with full uncertainty treatment, and machine-learning classification.
+  Applies modern AI tools (ML classifiers and AI coding assistants) on top of deep
+  instrumental expertise to build reproducible, automated analysis pipelines on HPC
+  clusters. Earlier industry experience in automotive radar algorithms (Robert Bosch)
+  and electromagnetic engineering. Experienced leader in university governance.
+
+academicSummary: >-
+  PhD candidate in experimental nuclear and hadron physics at Stockholm University,
+  studying hyperon–hyperon (ΛΛ) interactions with the HADES experiment at GSI and
+  simulation-based feasibility studies for the CBM experiment within the QCD at FAIR
+  programme.
+
+bio:
+  - >-
+    I am an experimental physicist finishing a PhD at Stockholm University. The
+    research asks how strange particles (hyperons) interact with each other, a
+    question that matters for the interior of neutron stars. The work uses the
+    HADES spectrometer at the GSI/FAIR accelerator centre in Darmstadt, Germany,
+    and simulations for the CBM experiment at FAIR.
+  - >-
+    Day to day this is the whole chain of a measurement: detector shifts during
+    beam time, timing and calibration, Monte Carlo simulation of the detector,
+    separation of a rare signal from a large background with likelihood fits and
+    machine-learning classifiers, and a full account of the uncertainties.
+    Analysis pipelines on the GSI computing cluster are built with the help of
+    AI coding assistants.
+  - >-
+    Before the PhD I trained as an electronics engineer, worked on automotive radar
+    algorithms at Robert Bosch, and designed electric propulsion for the KTH Hyperloop
+    team.
+  - >-
+    Alongside research I have chaired the Fysikum PhD Council, served as vice-chair of
+    the university's Central Doctoral Student Council, and been responsible for the
+    nuclear physics student laboratory.
+
+# Generic application sectors. Shown on /industry and the industry CV. Never name specific companies.
+sectors:
+  - Sensing & defence systems
+  - Measurement technology & metrology
+  - Medical technology & radiation
+  - Autonomous systems
+  - Applied R&D
+  - Quantitative analysis
+
+knowsAbout:
+  - Experimental nuclear and hadron physics
+  - Particle detectors and instrumentation
+  - Statistical data analysis and likelihood fitting
+  - Monte Carlo simulation
+  - Machine learning classification
+  - AI-assisted software development
+  - High-performance computing
+  - Hyperon physics
+
+alumniOf:
+  - name: KTH Royal Institute of Technology
+    url: https://www.kth.se/
+  - name: BMS College of Engineering
+    url: https://bmsce.ac.in/
+
+# Leave url empty ("") to hide a link everywhere (site, JSON-LD, CVs).
+links:
+  - id: github
+    label: GitHub
+    url: "" # TODO verify: create GitHub account, then add https://github.com/USERNAME
+  - id: linkedin
+    label: LinkedIn
+    url: "" # TODO verify: add LinkedIn profile URL
+  - id: orcid
+    label: ORCID
+    url: "" # TODO verify: add ORCID iD URL (https://orcid.org/0000-...)
+  - id: inspire
+    label: INSPIRE-HEP
+    url: "" # TODO verify: add INSPIRE-HEP author profile URL
+  - id: scholar
+    label: Google Scholar
+    url: "" # TODO verify: add Google Scholar profile URL if wanted
+  - id: gitlab
+    label: GitLab (SU)
+    url: "" # TODO verify: https://gitlab.fysik.su.se/gandharva.appagere is likely login-only; add only if public
+
+photographyUrl: "" # TODO verify: add URL of the photography site ("Beyond the lab"); empty hides the link
+
+# Production URL. Change after creating the GitHub Pages repo (see README).
+siteUrl: https://USERNAME.github.io # TODO verify: replace USERNAME with the GitHub username

@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PublicationItem from '../components/PublicationItem.astro';
+import { visible } from '../lib/data';
+import { links } from '../lib/site';
+
+const pubs = (await visible('publications')).sort((a, b) => b.data.year - a.data.year || a.data.order - b.data.order);
+const groups = [
+  { id: 'papers', title: 'Papers & proceedings', items: pubs.filter((p) => ['article', 'proceedings', 'collaboration', 'report'].includes(p.data.type)) },
+  { id: 'theses', title: 'Theses', items: pubs.filter((p) => p.data.type === 'thesis') },
+].filter((g) => g.items.length);
+const profiles = links.filter((l) => ['inspire', 'orcid', 'scholar'].includes(l.id));
+---
+
+<BaseLayout title="Publications" description="Publications, conference proceedings and theses by Gandharva Appagere.">
+  <header class="page-head blueprint">
+    <div class="wrap">
+      <p class="eyebrow">Publications</p>
+      <h1>Papers, proceedings & theses</h1>
+      <p class="lede">
+        Work from the HADES and CBM collaborations and the QCD at FAIR community, plus earlier theoretical work on dark
+        matter.
+      </p>
+      {
+        profiles.length > 0 && (
+          <p class="profiles mono">
+            Also on {profiles.map((p, i) => <>{i > 0 && ' · '}<a href={p.url}>{p.label}</a></>)}
+          </p>
+        )
+      }
+    </div>
+  </header>
+  <div class="wrap content">
+    {
+      groups.map((g) => (
+        <section aria-labelledby={g.id}>
+          <h2 id={g.id} class="group-title">{g.title}</h2>
+          <ul class="entry-list">
+            {g.items.map((p) => (
+              <li>
+                <PublicationItem pub={p} showAbstract />
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .content {
+    display: grid;
+    gap: 3rem;
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+    max-width: calc(var(--measure) + 2 * var(--gutter) + 8rem);
+    margin-inline: 0 auto;
+  }
+  @media (min-width: 72rem) {
+    .content {
+      margin-inline: auto;
+    }
+  }
+  .group-title {
+    font-size: var(--step-1);
+    margin-bottom: 0.8rem;
+  }
+  .profiles {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+  }
+</style>

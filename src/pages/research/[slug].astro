@@ -1,0 +1,175 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ResearchFigure from '../../components/ResearchFigure.astro';
+
+export async function getStaticPaths() {
+  const research = await getCollection('research', (r) => !r.data.draft);
+  return research.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const toc = headings.filter((h) => h.depth === 2);
+const all = (await getCollection('research', (r) => !r.data.draft)).sort((a, b) => a.data.order - b.data.order);
+const others = all.filter((r) => r.id !== entry.id);
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.summary} type="article">
+  <header class="page-head blueprint">
+    <div class="wrap">
+      <p class="eyebrow">{entry.data.kicker}</p>
+      <h1>{entry.data.title}</h1>
+      <p class="lede">{entry.data.summary}</p>
+      <p class="meta mono">{entry.data.period}</p>
+    </div>
+  </header>
+
+  <div class="wrap layout">
+    <aside class="toc no-print" aria-label="On this page">
+      <p class="label">On this page</p>
+      <ol>
+        {toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}
+      </ol>
+      <p class="label back"><a href="/research/">← All research</a></p>
+    </aside>
+    <div class="body">
+      <ResearchFigure name={entry.data.illustration} caption={entry.data.figureCaption} class="lead-fig" />
+      <div class="prose article">
+        <Content />
+      </div>
+      {
+        others.length > 0 && (
+          <nav class="next" aria-label="Other projects">
+            <p class="label">Also in my research</p>
+            {others.map((o) => (
+              <a href={`/research/${o.id}/`} class="next-link">
+                <span class="label">{o.data.kicker}</span>
+                <span class="next-title">{o.data.title} →</span>
+              </a>
+            ))}
+          </nav>
+        )
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .meta {
+    margin-top: 1rem;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 13rem minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+  }
+  .toc {
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+    font-size: var(--step--1);
+  }
+  .toc ol {
+    list-style: none;
+    padding: 0;
+    margin: 0.6rem 0 1.5rem;
+    border-left: 1px solid var(--line);
+  }
+  .toc li {
+    margin: 0;
+  }
+  .toc a {
+    display: block;
+    padding: 0.3rem 0 0.3rem 0.9rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+  .toc a:hover {
+    color: var(--ink);
+  }
+  .back a {
+    color: var(--ink-soft);
+  }
+  .lead-fig {
+    margin-bottom: 2.5rem;
+    max-width: 52rem;
+  }
+  .article :global(h2) {
+    font-size: var(--step-2);
+    margin-top: 2.6rem;
+    padding-top: 0.6rem;
+  }
+  .article :global(h2:first-child) {
+    margin-top: 0;
+  }
+  .article :global(li) {
+    margin-top: 0.45em;
+  }
+  .article :global(strong) {
+    font-weight: 650;
+  }
+  .article :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2rem 0 0.5rem;
+    font-size: var(--step--1);
+  }
+  .article :global(th),
+  .article :global(td) {
+    text-align: left;
+    vertical-align: top;
+    padding: 0.65rem 0.8rem 0.65rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .article :global(th) {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--ink);
+  }
+  .article :global(td:last-child) {
+    color: var(--accent-ink);
+  }
+  .article :global(em) {
+    font-style: italic;
+  }
+  .next {
+    margin-top: 3.5rem;
+    max-width: var(--measure);
+    display: grid;
+    gap: 0.7rem;
+  }
+  .next-link {
+    display: grid;
+    gap: 0.3rem;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--paper-2);
+  }
+  .next-link:hover {
+    border-color: var(--ink-soft);
+  }
+  .next-title {
+    font-family: var(--font-head);
+    font-size: var(--step-1);
+    font-weight: 560;
+  }
+  @media (max-width: 860px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+    .toc {
+      position: static;
+    }
+  }
+</style>

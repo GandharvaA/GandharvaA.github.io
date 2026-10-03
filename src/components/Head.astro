@@ -1,0 +1,71 @@
+---
+import { profile, links, titleSuffix } from '../lib/site';
+import themeInit from '../scripts/theme-init.js?raw';
+
+interface Props {
+  title?: string;
+  description?: string;
+  type?: 'website' | 'article' | 'profile';
+  noindex?: boolean;
+}
+
+const { title, description = profile.tagline, type = 'website', noindex = false } = Astro.props;
+const fullTitle = title ? `${title} · ${titleSuffix}` : titleSuffix;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og-image.png', Astro.site);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  givenName: profile.givenName,
+  familyName: profile.familyName,
+  jobTitle: profile.currentPosition,
+  description: profile.tagline,
+  url: new URL('/', Astro.site).href,
+  image: ogImage.href,
+  affiliation: {
+    '@type': 'CollegeOrUniversity',
+    name: profile.affiliation.name,
+    department: { '@type': 'Organization', name: profile.affiliation.department },
+    url: profile.affiliation.url,
+  },
+  alumniOf: profile.alumniOf.map((a) => ({ '@type': 'CollegeOrUniversity', name: a.name, url: a.url })),
+  knowsAbout: profile.knowsAbout,
+  address: { '@type': 'PostalAddress', addressLocality: 'Stockholm', addressCountry: 'SE' },
+  ...(links.length ? { sameAs: links.map((l) => l.url) } : {}),
+};
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<meta name="author" content={profile.name} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex" />}
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta name="color-scheme" content="light dark" />
+<meta name="theme-color" content="#f6f1e7" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0d1828" media="(prefers-color-scheme: dark)" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="sitemap" href="/sitemap-index.xml" />
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={profile.name} />
+<meta property="og:title" content={title ?? titleSuffix} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={`${profile.name}, ${profile.role}`} />
+<meta property="og:locale" content="en_GB" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title ?? titleSuffix} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<script is:inline set:html={themeInit.trim()} />
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

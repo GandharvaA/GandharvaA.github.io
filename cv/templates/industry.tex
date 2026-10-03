@@ -1,0 +1,55 @@
+% Industry CV (max. 2 pages), rendered by scripts/build-cv.mjs.
+% Upper-case keys wrapped in double percent signs are replaced by generated LaTeX;
+% an IF block around a section is dropped when its key renders empty.
+\documentclass{cv-common}
+\geometry{left=16mm,right=16mm,top=13mm,bottom=16mm}
+\cvsetsize{9.2pt}{11.85pt}
+\setlength\cvlabelcol{30mm}
+\setlength\cvsecbefore{7.5pt plus 3pt minus 1pt}
+\setlength\cventryskip{5pt plus 2pt minus 1pt}
+\cvrightdates
+\hypersetup{
+  pdftitle={%%PDF_TITLE%%},
+  pdfauthor={%%NAME%%},
+  pdfsubject={%%PDF_SUBJECT%%},
+  pdfkeywords={%%PDF_KEYWORDS%%},
+}
+\cvfooter{%%NAME%%, curriculum vitae}{%%UPDATED%%}
+
+\begin{document}
+%%HEADER%%
+
+\cvsection{Profile}
+%%PROFILE%%
+
+%%IF CAPABILITIES%%
+\cvsection{From the lab to industry}
+%%CAPABILITIES%%
+%%ENDIF%%
+
+\cvsection{Experience}
+%%EXPERIENCE%%
+
+\cvsection{Education}
+%%EDUCATION%%
+
+%%IF SKILLS%%
+\cvsection{Core skills}
+%%SKILLS%%
+%%ENDIF%%
+
+%%IF PUBLICATIONS_TALKS%%
+\cvsection{Selected publications \& talks}
+%%PUBLICATIONS_TALKS%%
+%%ENDIF%%
+
+%%IF LEADERSHIP%%
+\cvsection{Leadership \& responsibility}
+%%LEADERSHIP%%
+%%ENDIF%%
+
+%%IF AWARDS_LANGUAGES%%
+\cvsection{Awards \& languages}
+%%AWARDS_LANGUAGES%%
+%%ENDIF%%
+\end{document}

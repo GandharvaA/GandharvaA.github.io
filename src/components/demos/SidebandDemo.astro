@@ -1,0 +1,588 @@
+---
+interface Props {
+  seed?: number;
+  fig?: string;
+  class?: string;
+}
+const { seed = 1157, fig = 'D1', class: className } = Astro.props;
+const uid = `sb-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<figure class:list={['sb', className]} data-sideband-demo data-seed={seed}>
+  <div class="sb-plot">
+    <canvas
+      role="img"
+      aria-label="Simulated invariant-mass histogram of proton–pion pairs with a Lambda peak at 1.1157 GeV/c² on a smooth background, a shaded ±3σ signal window and two sideband windows."
+      aria-describedby={`${uid}-read`}></canvas>
+  </div>
+
+  <div class="sb-controls">
+    <div class="sb-ctl">
+      <label for={`${uid}-sig`}>Signal events</label>
+      <input id={`${uid}-sig`} type="range" min="0" max="3000" step="50" value="800" data-k="sig" />
+      <output for={`${uid}-sig`} data-o="sig">800</output>
+    </div>
+    <div class="sb-ctl">
+      <label for={`${uid}-bkg`}>Background events</label>
+      <input id={`${uid}-bkg`} type="range" min="2000" max="40000" step="1000" value="12000" data-k="bkg" />
+      <output for={`${uid}-bkg`} data-o="bkg">12000</output>
+    </div>
+    <div class="sb-ctl">
+      <label for={`${uid}-res`}>Resolution σ</label>
+      <input id={`${uid}-res`} type="range" min="1" max="4" step="0.1" value="2.5" data-k="res" />
+      <output for={`${uid}-res`} data-o="res">2.5 MeV/c²</output>
+    </div>
+    <div class="sb-ctl sb-btn">
+      <button type="button" data-new>New sample</button>
+      <span class="sb-seed" data-seed-out>seed {seed}</span>
+    </div>
+  </div>
+
+  <dl class="sb-read" id={`${uid}-read`}>
+    <div class="sb-main"><dt>Sideband-subtracted S</dt><dd data-r="s">–</dd></div>
+    <div><dt>True S in window</dt><dd data-r="t">–</dd></div>
+    <div><dt>Pull</dt><dd data-r="p">–</dd></div>
+    <div><dt>B from sidebands</dt><dd data-r="b">–</dd></div>
+    <div><dt>S/√B</dt><dd data-r="z">–</dd></div>
+  </dl>
+  <p class="sb-sr" aria-live="polite" data-live></p>
+
+  <figcaption>
+    Fig. {fig}. Toy p π⁻ invariant-mass spectrum. The background under the Λ peak is estimated from two
+    sidebands (6–9σ from the peak) scaled to the width of the ±3σ signal window and subtracted;
+    uncertainties are Poisson.
+  </figcaption>
+</figure>
+
+<style>
+  .sb {
+    margin: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius, 6px);
+    background-color: var(--paper-2);
+    padding: clamp(0.75rem, 2.5vw, 1.4rem);
+    color: var(--ink);
+    font-family: var(--font-body);
+  }
+  .sb-plot {
+    background-color: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: calc(var(--radius, 6px) - 2px);
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    min-height: 290px;
+  }
+  .sb-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 0.8rem 1.4rem;
+    margin-top: 1rem;
+    align-items: end;
+  }
+  .sb-ctl {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.25rem 0.5rem;
+    align-items: center;
+  }
+  .sb-ctl label {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+  .sb-ctl input {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: 100%;
+    margin: 0;
+    accent-color: var(--accent);
+  }
+  output,
+  .sb-seed,
+  .sb-read dd,
+  figcaption {
+    font-family: var(--font-mono);
+  }
+  output {
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .sb-btn {
+    grid-template-columns: auto 1fr;
+  }
+  button {
+    font: inherit;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 4px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+  }
+  button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  button:focus-visible,
+  input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .sb-seed {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+  .sb-read {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+    gap: 0.6rem 1rem;
+    margin: 1rem 0 0;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--line);
+  }
+  .sb-read dt {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+  .sb-read dd {
+    margin: 0.1rem 0 0;
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .sb-main dd {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .sb-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  figcaption {
+    margin-top: 0.9rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 80ch;
+  }
+</style>
+
+<script>
+  const M0 = 1.115683;
+  const MTH = 0.938272 + 0.13957;
+  const LO = 1.078;
+  const HI = 1.158;
+  const NB = 80;
+  const BW = (HI - LO) / NB;
+
+  type Win = { s: number[]; l: number[]; r: number[] };
+  type State = {
+    root: HTMLElement;
+    cv: HTMLCanvasElement;
+    seed: number;
+    sig: number;
+    bkg: number;
+    res: number;
+    u1: Float64Array;
+    u2: Float64Array;
+    b: Float64Array;
+    s: Float64Array;
+    n: Float64Array;
+    shown: Float64Array;
+    w: Win;
+    anim: number;
+    live: number;
+  };
+
+  const instances = new Set<State>();
+  const fmt = (x: number) => Math.round(x).toLocaleString('en-US');
+
+  function mulberry(a: number) {
+    return () => {
+      a = (a + 0x6d2b79f5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function erf(x: number) {
+    const sg = Math.sign(x);
+    x = Math.abs(x);
+    const t = 1 / (1 + 0.3275911 * x);
+    const y = ((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t;
+    return sg * (1 - y * Math.exp(-x * x));
+  }
+  const cdf = (z: number) => 0.5 * (1 + erf(z / Math.SQRT2));
+
+  // One fixed (u1, u2) pair per bin, so moving a slider rescales the same fluctuation pattern.
+  function poisson(l: number, u1: number, u2: number) {
+    if (l < 30) {
+      let p = Math.exp(-l), f = p, k = 0;
+      while (u1 > f && k < 200) {
+        k++;
+        p *= l / k;
+        f += p;
+      }
+      return k;
+    }
+    const g = Math.sqrt(-2 * Math.log(u1 || 1e-12)) * Math.cos(2 * Math.PI * u2);
+    return Math.max(0, Math.round(l + Math.sqrt(l) * g));
+  }
+
+  const bshape = (m: number) => {
+    const x = m - MTH;
+    return x > 0 ? Math.pow(x, 0.6) * Math.exp(-x / 0.03) : 0;
+  };
+
+  function reseed(st: State) {
+    const r = mulberry(st.seed);
+    for (let i = 0; i < NB; i++) {
+      st.u1[i] = r();
+      st.u2[i] = r();
+    }
+  }
+
+  function simulate(st: State) {
+    const sg = st.res / 1000;
+    let tot = 0;
+    for (let i = 0; i < NB; i++) tot += st.b[i] = bshape(LO + (i + 0.5) * BW);
+    const w: Win = { s: [], l: [], r: [] };
+    for (let i = 0; i < NB; i++) {
+      const lo = LO + i * BW;
+      st.b[i] *= st.bkg / tot;
+      st.s[i] = st.sig * (cdf((lo + BW - M0) / sg) - cdf((lo - M0) / sg));
+      st.n[i] = poisson(st.b[i] + st.s[i], st.u1[i], st.u2[i]);
+      const d = (lo + BW / 2 - M0) / sg;
+      if (Math.abs(d) <= 3) w.s.push(i);
+      else if (d >= -9 && d < -6) w.l.push(i);
+      else if (d > 6 && d <= 9) w.r.push(i);
+    }
+    st.w = w;
+  }
+
+  function estimate(st: State) {
+    const sum = (ix: number[], a: Float64Array) => ix.reduce((acc, i) => acc + a[i], 0);
+    const { s, l, r } = st.w;
+    const nw = sum(s, st.n);
+    const nsb = sum(l, st.n) + sum(r, st.n);
+    const k = s.length / (l.length + r.length);
+    const B = k * nsb;
+    const S = nw - B;
+    const err = Math.sqrt(nw + k * k * nsb);
+    return { S, err, B, T: sum(s, st.s), z: B > 0 ? S / Math.sqrt(B) : 0 };
+  }
+
+  function niceStep(span: number, n: number) {
+    const raw = span / n;
+    const p = 10 ** Math.floor(Math.log10(raw));
+    const f = raw / p;
+    return (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * p;
+  }
+
+  function draw(st: State) {
+    const cs = getComputedStyle(document.documentElement);
+    const v = (n: string, f: string) => cs.getPropertyValue(n).trim() || f;
+    const ink = v('--ink', '#1d1b16');
+    const soft = v('--ink-soft', '#5b5548');
+    const acc = v('--accent', '#b5432a');
+    const acc2 = v('--accent-2', '#2f6f73');
+    const line = v('--line', '#d8cfbd');
+    const grid = v('--grid', 'rgba(0,0,0,.06)');
+    const paper = v('--paper', '#fff');
+    const mono = v('--font-mono', 'monospace');
+
+    const cv = st.cv;
+    const W = cv.clientWidth;
+    const H = cv.clientHeight;
+    if (!W || !H) return;
+    const dpr = window.devicePixelRatio || 1;
+    if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) {
+      cv.width = Math.round(W * dpr);
+      cv.height = Math.round(H * dpr);
+    }
+    const c = cv.getContext('2d');
+    if (!c) return;
+    c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    c.clearRect(0, 0, W, H);
+
+    const fs = W < 480 ? 10 : 11;
+    const font = (sz = fs) => `${sz}px ${mono}`;
+    const L = 52, R = 12, T = 10, Bm = 40;
+    const pw = W - L - R, ph = H - T - Bm;
+    const legH = 4 * (fs + 5) + 10;
+
+    let top = 0;
+    for (let i = 0; i < NB; i++) top = Math.max(top, st.n[i] + Math.sqrt(st.n[i]), st.b[i] + st.s[i]);
+    let ymax = Math.max(10, top) * (ph / Math.max(ph * 0.3, ph - legH - 14));
+    const step = niceStep(ymax, ph < 240 ? 4 : 5);
+    ymax = Math.ceil(ymax / step) * step;
+    const X = (m: number) => L + ((m - LO) / (HI - LO)) * pw;
+    const Y = (y: number) => T + ph - (y / ymax) * ph;
+
+    c.lineWidth = 1;
+    c.font = font();
+    c.textBaseline = 'middle';
+    for (let y = 0; y <= ymax + 1e-9; y += step) {
+      c.strokeStyle = grid;
+      c.beginPath();
+      c.moveTo(L, Math.round(Y(y)) + 0.5);
+      c.lineTo(L + pw, Math.round(Y(y)) + 0.5);
+      c.stroke();
+      c.fillStyle = soft;
+      c.textAlign = 'right';
+      c.fillText(fmt(y), L - 6, Y(y));
+    }
+    c.textBaseline = 'top';
+    c.textAlign = 'center';
+    for (let k = 0; k <= 16; k++) {
+      const m = 1.08 + k * 0.005;
+      if (m > HI + 1e-9) break;
+      const major = k % 2 === 0;
+      const x = Math.round(X(m)) + 0.5;
+      if (major) {
+        c.strokeStyle = grid;
+        c.beginPath();
+        c.moveTo(x, T);
+        c.lineTo(x, T + ph);
+        c.stroke();
+        if (pw > 360 || k % 4 === 0) {
+          c.fillStyle = soft;
+          c.fillText(m.toFixed(2), x, T + ph + 6);
+        }
+      }
+      c.strokeStyle = ink;
+      c.beginPath();
+      c.moveTo(x, T + ph);
+      c.lineTo(x, T + ph + (major ? 5 : 3));
+      c.stroke();
+    }
+
+    const band = (ix: number[], col: string, label: string) => {
+      if (!ix.length) return;
+      const x0 = X(LO + ix[0] * BW), x1 = X(LO + (ix[ix.length - 1] + 1) * BW);
+      c.globalAlpha = 0.14;
+      c.fillStyle = col;
+      c.fillRect(x0, T, x1 - x0, ph);
+      c.globalAlpha = 1;
+      c.fillStyle = col;
+      c.font = font(fs - 1);
+      c.textBaseline = 'bottom';
+      c.fillText(label, (x0 + x1) / 2, T + ph - 4);
+    };
+    band(st.w.l, acc2, 'SB');
+    band(st.w.r, acc2, 'SB');
+    band(st.w.s, acc, pw > 360 ? 'Λ ±3σ' : 'Λ');
+    c.font = font();
+
+    const curve = (f: (i: number) => number, col: string, dash: number[], lw: number) => {
+      c.strokeStyle = col;
+      c.lineWidth = lw;
+      c.setLineDash(dash);
+      c.beginPath();
+      for (let i = 0; i < NB; i++) c[i ? 'lineTo' : 'moveTo'](X(LO + (i + 0.5) * BW), Y(f(i)));
+      c.stroke();
+      c.setLineDash([]);
+      c.lineWidth = 1;
+    };
+    curve((i) => st.b[i], soft, [5, 4], 1.2);
+    curve((i) => st.b[i] + st.s[i], acc, [], 1.6);
+
+    const mean = (ix: number[]) => ix.reduce((a, i) => a + st.n[i], 0) / ix.length;
+    const ctr = (ix: number[]) => LO + ((ix[0] + ix[ix.length - 1]) / 2 + 0.5) * BW;
+    const { l, r } = st.w;
+    if (l.length && r.length) {
+      c.strokeStyle = acc2;
+      c.lineWidth = 1.6;
+      c.setLineDash([2, 3]);
+      c.beginPath();
+      c.moveTo(X(ctr(l)), Y(mean(l)));
+      c.lineTo(X(ctr(r)), Y(mean(r)));
+      c.stroke();
+      c.setLineDash([]);
+      c.lineWidth = 1;
+    }
+
+    const rad = W < 480 ? 1.4 : 1.9;
+    c.strokeStyle = ink;
+    c.fillStyle = ink;
+    for (let i = 0; i < NB; i++) {
+      const n = st.shown[i];
+      const x = X(LO + (i + 0.5) * BW);
+      const e = Math.sqrt(Math.max(n, 0));
+      c.beginPath();
+      c.moveTo(x, Y(n + e));
+      c.lineTo(x, Y(Math.max(0, n - e)));
+      c.stroke();
+      c.beginPath();
+      c.arc(x, Y(n), rad, 0, 2 * Math.PI);
+      c.fill();
+    }
+
+    c.strokeStyle = ink;
+    c.beginPath();
+    c.moveTo(L + 0.5, T);
+    c.lineTo(L + 0.5, T + ph + 0.5);
+    c.lineTo(L + pw, T + ph + 0.5);
+    c.stroke();
+
+    c.fillStyle = ink;
+    c.textAlign = 'center';
+    c.textBaseline = 'bottom';
+    c.fillText('M(pπ⁻)  [GeV/c²]', L + pw / 2, H - 2);
+    c.save();
+    c.translate(11, T + ph / 2);
+    c.rotate(-Math.PI / 2);
+    c.textBaseline = 'middle';
+    c.fillText('Counts / (1 MeV/c²)', 0, 0);
+    c.restore();
+
+    const items: [string, (x: number, y: number) => void][] = [
+      ['Simulated data', (x, y) => {
+        c.strokeStyle = ink;
+        c.beginPath();
+        c.moveTo(x + 9, y - 5);
+        c.lineTo(x + 9, y + 5);
+        c.stroke();
+        c.beginPath();
+        c.arc(x + 9, y, rad, 0, 2 * Math.PI);
+        c.fill();
+      }],
+      ['Signal + background', (x, y) => seg(x, y, acc, [], 1.6)],
+      ['Background (true)', (x, y) => seg(x, y, soft, [5, 4], 1.2)],
+      ['Sideband interpolation', (x, y) => seg(x, y, acc2, [2, 3], 1.6)],
+    ];
+    function seg(x: number, y: number, col: string, dash: number[], lw: number) {
+      c!.strokeStyle = col;
+      c!.lineWidth = lw;
+      c!.setLineDash(dash);
+      c!.beginPath();
+      c!.moveTo(x, y);
+      c!.lineTo(x + 18, y);
+      c!.stroke();
+      c!.setLineDash([]);
+      c!.lineWidth = 1;
+    }
+    c.font = font();
+    const tw = Math.max(...items.map(([t]) => c.measureText(t).width));
+    const lw = tw + 38, lx = L + pw - lw - 6, ly = T + 6;
+    c.globalAlpha = 0.92;
+    c.fillStyle = paper;
+    c.fillRect(lx, ly, lw, legH);
+    c.globalAlpha = 1;
+    c.strokeStyle = line;
+    c.strokeRect(lx + 0.5, ly + 0.5, lw - 1, legH - 1);
+    c.textAlign = 'left';
+    c.textBaseline = 'middle';
+    items.forEach(([t, mark], k) => {
+      const y = ly + 5 + (k + 0.5) * (fs + 5);
+      c.fillStyle = ink;
+      mark(lx + 6, y);
+      c.fillStyle = ink;
+      c.fillText(t, lx + 30, y);
+    });
+  }
+
+  function report(st: State, announce: boolean) {
+    const e = estimate(st);
+    const q = (k: string) => st.root.querySelector(`[data-r="${k}"]`)!;
+    q('s').textContent = `${fmt(e.S)} ± ${fmt(e.err)}`;
+    q('t').textContent = fmt(e.T);
+    q('p').textContent = e.err > 0 ? `${((e.S - e.T) / e.err >= 0 ? '+' : '')}${((e.S - e.T) / e.err).toFixed(2)}σ` : '–';
+    q('b').textContent = fmt(e.B);
+    q('z').textContent = e.z.toFixed(1);
+    if (!announce) return;
+    clearTimeout(st.live);
+    st.live = window.setTimeout(() => {
+      st.root.querySelector('[data-live]')!.textContent =
+        `Sideband-subtracted signal ${fmt(e.S)} plus or minus ${fmt(e.err)} events; true signal in window ${fmt(e.T)}; S over root B ${e.z.toFixed(1)}.`;
+    }, 600);
+  }
+
+  function update(st: State, animate: boolean) {
+    const from = st.shown.slice();
+    simulate(st);
+    report(st, true);
+    cancelAnimationFrame(st.anim);
+    if (!animate || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      st.shown.set(st.n);
+      draw(st);
+      return;
+    }
+    const t0 = performance.now();
+    const tick = (t: number) => {
+      const p = Math.min(1, (t - t0) / 320);
+      const e = 1 - (1 - p) ** 3;
+      for (let i = 0; i < NB; i++) st.shown[i] = from[i] + (st.n[i] - from[i]) * e;
+      draw(st);
+      if (p < 1) st.anim = requestAnimationFrame(tick);
+    };
+    st.anim = requestAnimationFrame(tick);
+  }
+
+  function init(root: HTMLElement) {
+    if (root.dataset.ready) return;
+    root.dataset.ready = '1';
+    const z = () => new Float64Array(NB);
+    const st: State = {
+      root,
+      cv: root.querySelector('canvas')!,
+      seed: Number(root.dataset.seed) || 1157,
+      sig: 800, bkg: 12000, res: 2.5,
+      u1: z(), u2: z(), b: z(), s: z(), n: z(), shown: z(),
+      w: { s: [], l: [], r: [] },
+      anim: 0, live: 0,
+    };
+    const inputs = root.querySelectorAll<HTMLInputElement>('input[data-k]');
+    const read = () => {
+      inputs.forEach((el) => {
+        const k = el.dataset.k as 'sig' | 'bkg' | 'res';
+        st[k] = Number(el.value);
+        root.querySelector(`[data-o="${k}"]`)!.textContent = k === 'res' ? `${st.res.toFixed(1)} MeV/c²` : fmt(st[k]);
+      });
+    };
+    inputs.forEach((el) => el.addEventListener('input', () => {
+      read();
+      update(st, false);
+    }));
+    root.querySelector('[data-new]')!.addEventListener('click', () => {
+      st.seed++;
+      root.querySelector('[data-seed-out]')!.textContent = `seed ${st.seed}`;
+      reseed(st);
+      update(st, true);
+    });
+    read();
+    reseed(st);
+    simulate(st);
+    st.shown.set(st.n);
+    report(st, false);
+    let raf = 0;
+    new ResizeObserver(() => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => draw(st));
+    }).observe(st.cv);
+    instances.add(st);
+    draw(st);
+  }
+
+  const redrawAll = () => {
+    for (const st of instances) {
+      if (st.root.isConnected) draw(st);
+      else instances.delete(st);
+    }
+  };
+  new MutationObserver(redrawAll).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', redrawAll);
+  document.fonts?.ready.then(redrawAll);
+
+  const boot = () => document.querySelectorAll<HTMLElement>('[data-sideband-demo]').forEach(init);
+  boot();
+  document.addEventListener('astro:page-load', boot);
+</script>

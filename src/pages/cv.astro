@@ -1,0 +1,360 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Email from '../components/Email.astro';
+import { profile, links } from '../lib/site';
+import { formatRange, getTalks, visible, yearRange, OWNER, pubStatusLabel, formatDate } from '../lib/data';
+
+const [education, experience, pubs, skills, teaching, service, grants, languages] = await Promise.all([
+  visible('education'),
+  visible('experience'),
+  visible('publications'),
+  visible('skills'),
+  visible('teaching'),
+  visible('service'),
+  visible('grants'),
+  visible('languages'),
+]);
+const talks = await getTalks();
+const onCv = <T extends { data: { cv: string } }>(items: T[]) => items.filter((i) => i.data.cv !== 'none');
+const sortedPubs = [...pubs].sort((a, b) => b.data.year - a.data.year || a.data.order - b.data.order);
+const levelLabel: Record<string, string> = { expert: 'Expert', advanced: 'Advanced', working: 'Working', basic: 'Basic' };
+---
+
+<BaseLayout title="CV" description="Curriculum vitae of Gandharva Appagere, experimental physicist.">
+  <header class="page-head blueprint">
+    <div class="wrap head-grid">
+      <div>
+        <p class="eyebrow">Curriculum vitae</p>
+        <h1>{profile.name}</h1>
+        <p class="role mono">{profile.role}</p>
+        <p class="contact-line">
+          {profile.location} · <Email />
+          {links.map((l) => <> · <a href={l.url}>{l.label}</a></>)}
+        </p>
+      </div>
+      <div class="downloads no-print">
+        <a class="btn primary" href="/cv/cv-industry.pdf" download>Industry CV · 2 pages · PDF</a>
+        <a class="btn" href="/cv/cv-academic.pdf" download>Academic CV · full · PDF</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap cv">
+    <section class="cv-section" aria-labelledby="cv-profile">
+      <h2 id="cv-profile">Profile</h2>
+      <div>
+        <p class="summary">{profile.industrySummary}</p>
+      </div>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-skills">
+      <h2 id="cv-skills">Skills</h2>
+      <div class="skills">
+        {
+          skills.map((g) => (
+            <div class="skill-group">
+              <h3 class="label">{g.data.label}</h3>
+              <ul>
+                {g.data.items.map((s) => (
+                  <li>
+                    <span class="skill-name">{s.name}</span>
+                    {s.detail && <span class="skill-detail"> ({s.detail})</span>}
+                    {s.level && <span class="visually-hidden"> ({levelLabel[s.level]})</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-exp">
+      <h2 id="cv-exp">Experience</h2>
+      <ol class="cv-list">
+        {
+          onCv(experience).map((e) => (
+            <li class="timeline-row">
+              <span class="when">{formatRange(e.data.start, e.data.end)}</span>
+              <div>
+                <h3 class="entry-title">{e.data.title}</h3>
+                <p class="entry-meta">
+                  {e.data.organisation}
+                  {e.data.location && <> · {e.data.location}</>}
+                </p>
+                {e.data.summary && e.data.highlights.length === 0 && <p class="desc">{e.data.summary}</p>}
+                {e.data.highlights.length > 0 && (
+                  <ul class="highlights">
+                    {e.data.highlights.map((h) => (
+                      <li>{h}</li>
+                    ))}
+                  </ul>
+                )}
+                {e.data.advisors && <p class="desc small">Advisors: {e.data.advisors}</p>}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-edu">
+      <h2 id="cv-edu">Education</h2>
+      <ol class="cv-list">
+        {
+          onCv(education).map((e) => (
+            <li class="timeline-row">
+              <span class="when">{formatRange(e.data.start, e.data.end, e.data.expected)}</span>
+              <div>
+                <h3 class="entry-title">
+                  {e.data.degree}, {e.data.field}
+                </h3>
+                <p class="entry-meta">
+                  {e.data.institution}
+                  {e.data.location && <> · {e.data.location}</>}
+                </p>
+                {e.data.thesis && (
+                  <p class="desc">
+                    Thesis: <em>{e.data.thesis.title}</em>
+                    {e.data.thesis.advisor && <>, advisor {e.data.thesis.advisor}</>}
+                  </p>
+                )}
+                {e.data.supervisors.length > 0 && <p class="desc small">Supervisors: {e.data.supervisors.join('; ')}</p>}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-pubs">
+      <h2 id="cv-pubs">Publications</h2>
+      <ol class="cv-list numbered">
+        {
+          sortedPubs.map((p) => (
+            <li>
+              {p.data.authors.map((a, i) => (
+                <>
+                  {a.includes(OWNER) ? <strong>{a}</strong> : a}
+                  {i < p.data.authors.length - 1 ? ', ' : ''}
+                </>
+              ))}
+              , “{p.data.url ? <a href={p.data.url}>{p.data.title}</a> : p.data.title}”, <em>{p.data.venue}</em> ({p.data.year})
+              {pubStatusLabel[p.data.status] && <span class="tag accent">{pubStatusLabel[p.data.status]}</span>}
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-talks">
+      <h2 id="cv-talks">Conference talks</h2>
+      <div>
+        <ol class="cv-list compact">
+          {
+            talks.conference.map((t) => (
+              <li class="timeline-row">
+                <span class="when">{formatDate(t.data.date)}</span>
+                <span>
+                  <em>{t.data.title}</em>. {t.data.event}, {t.data.location}
+                </span>
+              </li>
+            ))
+          }
+        </ol>
+        <p class="desc small">
+          Plus {talks.collaboration.length} presentations at HADES and CBM collaboration meetings.
+          <a href="/talks/">See all talks</a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-lead">
+      <h2 id="cv-lead">Leadership & service</h2>
+      <ol class="cv-list compact">
+        {
+          onCv(service).map((s) => (
+            <li class="timeline-row">
+              <span class="when">{yearRange(s.data.start, s.data.end)}</span>
+              <span>
+                <strong>{s.data.role}</strong>, {s.data.organisation}
+                {s.data.description && <span class="desc-inline">. {s.data.description}</span>}
+              </span>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-teach">
+      <h2 id="cv-teach">Teaching</h2>
+      <ol class="cv-list compact">
+        {
+          teaching.map((t) => (
+            <li class="timeline-row">
+              <span class="when">{t.data.terms.join(', ')}</span>
+              <span>
+                <strong>
+                  {t.data.code && <>{t.data.code} </>}
+                  {t.data.course}
+                </strong>, {t.data.role}
+              </span>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-grants">
+      <h2 id="cv-grants">Grants & awards</h2>
+      <ol class="cv-list compact">
+        {
+          onCv(grants).map((g) => (
+            <li class="timeline-row">
+              <span class="when">{g.data.year}</span>
+              <span>
+                <strong>{g.data.title}</strong>, {g.data.issuer}
+                {g.data.purpose && <span class="desc-inline">: {g.data.purpose}</span>}
+              </span>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-lang">
+      <h2 id="cv-lang">Languages</h2>
+      <p>
+        {languages.map((l, i) => <>{i > 0 && ' · '}<strong>{l.data.name}</strong> ({l.data.level})</>)}
+      </p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .head-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2rem;
+    align-items: end;
+  }
+  .role {
+    color: var(--accent-ink);
+    margin-bottom: 0.8rem;
+  }
+  .contact-line {
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+    margin: 0;
+  }
+  .downloads {
+    display: grid;
+    gap: 0.6rem;
+  }
+  .cv {
+    padding-block: clamp(1.5rem, 4vw, 3rem);
+  }
+  .cv-section {
+    display: grid;
+    grid-template-columns: 11rem minmax(0, 1fr);
+    gap: 1.5rem;
+    padding-block: 1.8rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .cv-section > h2 {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    margin: 0;
+    padding-top: 0.25rem;
+  }
+  .summary {
+    font-size: var(--step-0);
+    max-width: var(--measure);
+  }
+  .skills {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1.5rem 2rem;
+  }
+  .skill-group h3 {
+    margin-bottom: 0.4rem;
+  }
+  .skill-group ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: var(--step--1);
+  }
+  .skill-name {
+    font-weight: 600;
+  }
+  .skill-detail {
+    color: var(--ink-soft);
+  }
+  .cv-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.4rem;
+  }
+  .cv-list li {
+    margin: 0;
+  }
+  .cv-list.compact {
+    gap: 0.6rem;
+    font-size: var(--step--1);
+  }
+  .cv-list.numbered {
+    list-style: decimal;
+    padding-left: 1.4rem;
+    gap: 0.8rem;
+    font-size: var(--step--1);
+  }
+  .cv-list.numbered .tag {
+    margin-left: 0.4rem;
+  }
+  .highlights {
+    margin: 0.5rem 0 0;
+    font-size: var(--step--1);
+  }
+  .desc {
+    margin: 0.35rem 0 0;
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+  .desc-inline {
+    color: var(--ink-soft);
+  }
+  .compact .when {
+    padding-top: 0.05rem;
+  }
+  @media (max-width: 760px) {
+    .head-grid,
+    .cv-section {
+      grid-template-columns: 1fr;
+    }
+    .cv-section {
+      gap: 0.8rem;
+    }
+  }
+  @media print {
+    .page-head {
+      padding: 0 0 0.5rem;
+      background: none;
+    }
+    .cv-section {
+      grid-template-columns: 8rem 1fr;
+      padding-block: 0.7rem;
+      break-inside: auto;
+    }
+    .timeline-row {
+      grid-template-columns: 7rem 1fr;
+      gap: 0.8rem;
+    }
+  }
+</style>

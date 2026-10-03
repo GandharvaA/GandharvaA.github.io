@@ -1,0 +1,16 @@
+# Feature flags. Read by the website and by the CV generator.
+
+# Interactive physics demo page (/demos). When false the page is not built,
+# not linked in the navigation and not listed in the sitemap.
+showDemos: false
+
+# Show the "Beyond the lab" photography link (also requires profile.photographyUrl).
+showPhotographyLink: true
+
+# No analytics by default. Keep null for a cookie-free, tracking-free site.
+analytics: null
+
+# Number of items shown in "selected" lists on the home page.
+home:
+  selectedPublications: 3
+  selectedTalks: 4

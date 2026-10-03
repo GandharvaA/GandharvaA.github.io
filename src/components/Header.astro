@@ -1,0 +1,230 @@
+---
+import { nav, profile } from '../lib/site';
+import Monogram from './art/Monogram.astro';
+
+const path = Astro.url.pathname.replace(/\/?$/, '/');
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label={`${profile.name}, home`}>
+      <Monogram class="brand-mark" />
+      <span class="brand-text">
+        <span class="brand-name">{profile.name}</span>
+        <span class="brand-role">Physics · Instruments · AI</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        {
+          nav.map((item) => (
+            <li class={item.href === '/' ? 'nav-home' : undefined}>
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch to dark theme" data-theme-toggle>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.2"></circle>
+        <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"></path>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1Z"></path>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<script>
+  const root = document.documentElement;
+  const button = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const media = matchMedia('(prefers-color-scheme: dark)');
+
+  const label = () => {
+    if (!button) return;
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    button.setAttribute('aria-label', `Switch to ${next} theme`);
+  };
+
+  const apply = (theme: string, persist: boolean) => {
+    root.dataset.theme = theme;
+    if (persist) {
+      try {
+        localStorage.setItem('theme', theme);
+      } catch {}
+    }
+    label();
+  };
+
+  button?.addEventListener('click', () => apply(root.dataset.theme === 'dark' ? 'light' : 'dark', true));
+
+  media.addEventListener('change', (e) => {
+    let stored: string | null = null;
+    try {
+      stored = localStorage.getItem('theme');
+    } catch {}
+    if (!stored) apply(e.matches ? 'dark' : 'light', false);
+  });
+
+  label();
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: saturate(140%) blur(10px);
+    -webkit-backdrop-filter: saturate(140%) blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    min-height: 4rem;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+    color: var(--ink);
+    margin-right: auto;
+  }
+  .brand :global(.brand-mark) {
+    width: 2.1rem;
+    height: 2.1rem;
+    flex: none;
+  }
+  .brand-text {
+    display: grid;
+    line-height: 1.1;
+  }
+  .brand-name {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1.06rem;
+    letter-spacing: -0.005em;
+  }
+  .brand-role {
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 0.2rem;
+  }
+  .nav ul {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav li {
+    margin: 0;
+  }
+  .nav a {
+    display: block;
+    padding: 0.45rem 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-radius: var(--radius);
+    position: relative;
+  }
+  .nav a:hover {
+    color: var(--ink);
+    background: var(--paper-2);
+  }
+  .nav a[aria-current='page'] {
+    color: var(--ink);
+  }
+  .nav a[aria-current='page']::after {
+    content: '';
+    position: absolute;
+    left: 0.6rem;
+    right: 0.6rem;
+    bottom: 0.15rem;
+    height: 2px;
+    background: var(--accent);
+  }
+  .theme-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    flex: none;
+  }
+  .theme-toggle:hover {
+    border-color: var(--ink-soft);
+  }
+  .theme-toggle svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+  .icon-moon {
+    display: none;
+  }
+  :global(:root[data-theme='dark']) .icon-sun {
+    display: none;
+  }
+  :global(:root[data-theme='dark']) .icon-moon {
+    display: block;
+  }
+
+  @media (max-width: 860px) {
+    .bar {
+      flex-wrap: wrap;
+      gap: 0 1rem;
+      padding-top: 0.55rem;
+    }
+    .nav {
+      order: 3;
+      width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
+      margin-inline: -0.6rem;
+      padding-bottom: 0.25rem;
+    }
+    .nav::-webkit-scrollbar {
+      display: none;
+    }
+    .nav ul {
+      gap: 0;
+    }
+    .nav a {
+      padding: 0.5rem 0.6rem;
+      white-space: nowrap;
+    }
+  }
+  @media (max-width: 480px) {
+    .nav-home {
+      display: none;
+    }
+    .brand-role {
+      display: none;
+    }
+    .nav a {
+      font-size: 0.76rem;
+      padding-inline: 0.5rem;
+    }
+  }
+</style>

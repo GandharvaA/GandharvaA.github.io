@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate, talkTypeLabel } from '../lib/data';
+
+interface Props {
+  talk: CollectionEntry<'talks'>;
+  compact?: boolean;
+}
+const { talk, compact = false } = Astro.props;
+const d = talk.data;
+---
+
+<article class:list={['talk', { compact }]}>
+  <p class="talk-meta label">
+    <time datetime={d.date}>{formatDate(d.date)}</time>
+    {!compact && <span class:list={['tag', { accent: d.type === 'invited' || d.type === 'contributed' }]}>{talkTypeLabel[d.type]}</span>}
+  </p>
+  <h3 class="entry-title">{d.title}</h3>
+  <p class="entry-meta">
+    {d.event}{d.location && <> · {d.location}</>}
+    {d.slidesUrl && <> · <a href={d.slidesUrl}>slides</a></>}
+  </p>
+</article>
+
+<style>
+  .talk-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 0.35rem;
+  }
+  .talk-meta .tag {
+    text-transform: none;
+    letter-spacing: 0.02em;
+  }
+  .compact .entry-title {
+    font-size: 0.98rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+  }
+</style>

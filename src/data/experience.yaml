@@ -1,0 +1,129 @@
+# Positions and projects, newest first (list order = display order).
+# category: research | industry | engineering | internship
+# cv: both | academic | industry ; hidden: true hides it everywhere
+- id: phd-su
+  title: Doctoral researcher (PhD candidate)
+  organisation: Stockholm University · HADES & CBM collaborations, GSI/FAIR
+  location: Stockholm, Sweden & Darmstadt, Germany
+  start: "2021-08"
+  end: present
+  category: research
+  summary: >-
+    Experimental hadron physics on the HADES spectrometer at GSI and simulation
+    studies for the CBM experiment at FAIR.
+  highlights:
+    - >-
+      Main analysis responsibility in the HADES collaboration for the ΛΛ channel in
+      proton–proton collisions (√s = 3.46 GeV): event selection, reconstruction,
+      simulation, signal extraction and systematic uncertainties.
+    # TODO verify: shift role in the 2025 pion-beam run
+    - >-
+      Took detector shifts during the five-week February 2022 proton beam time and a
+      2025 pion-beam run; worked with drift-chamber online quality assurance.
+    - >-
+      Developed a relative time-of-flight particle-identification method that
+      compensates start-detector timing problems, used with kinematic fitting and
+      2D template likelihood fits.
+    - >-
+      Trained multiclass machine-learning classifiers (ROOT TMVA) to separate ΛΛ
+      signal from background.
+    - >-
+      Built a staged (S0–S3) analysis pipeline with automated systematic variations
+      on the GSI batch farm (Slurm), developed with AI coding assistants (Cursor, LLMs).
+    - >-
+      Wrote an event generator and detector-response folding for CBM feasibility
+      studies of ΛΛ cusps; contributed to the QCD at FAIR white paper.
+    - >-
+      Hosted and minuted the weekly meetings of the HADES Λ-Reconstruction Task Force
+      and Kinematic-Fitting working group (2022–23).
+  skills: [C++, ROOT, Python, TMVA, Slurm, PLUTO, GEANT, KinFit, Git]
+  cv: both
+
+- id: kth-density-matrix
+  title: "Summer research project: density-matrix dynamics"
+  organisation: KTH Royal Institute of Technology
+  location: Stockholm, Sweden
+  start: "2019-06" # TODO verify: exact months (summer 2019)
+  end: "2019-08"
+  category: research
+  summary: Literature study on the dynamics of the density matrix and quantum entanglement.
+  advisors: Prof. Erik Aurell
+  cv: academic
+
+- id: kth-fte
+  title: "Research project: flux transfer events"
+  organisation: KTH Royal Institute of Technology, Space and Plasma Physics
+  location: Stockholm, Sweden
+  start: "2018-10"
+  end: "2019" # TODO verify: end date
+  category: research
+  summary: >-
+    Statistical study of flux transfer events near Earth's magnetosphere using ESA
+    Cluster spacecraft data, supported by NASA MMS data.
+  advisors: Asst. Prof. Anita Kullen, Prof. Tomas Karlsson
+  cv: academic
+
+- id: kth-hyperloop
+  title: Electric Propulsion Engineer
+  organisation: KTH Hyperloop team
+  location: Stockholm, Sweden
+  start: "2018-09"
+  end: "2019" # TODO verify: end date
+  category: engineering
+  summary: Linear induction motor for the SpaceX Hyperloop Pod Competition 2019.
+  highlights:
+    - >-
+      Designed a double-sided linear induction motor for the pod's propulsion;
+      electromagnetic finite-element simulations in COMSOL and ANSYS Maxwell, with
+      MATLAB.
+  skills: [COMSOL, ANSYS Maxwell, MATLAB]
+  cv: both
+
+- id: bosch
+  title: Associate Software Engineer
+  organisation: Robert Bosch Engineering and Business Solutions (RBEI)
+  location: Bengaluru, India
+  start: "2017-08"
+  end: "2018-07"
+  category: industry
+  summary: Algorithms for automotive radar sensors.
+  # TODO verify: add concrete specifics (language, toolchain, product area) if wanted
+  highlights:
+    - >-
+      Worked on signal-processing algorithms for automotive radar sensors used in
+      driver-assistance systems, in an industrial software-engineering environment.
+  cv: both
+
+- id: att
+  title: Intern, Network Engineering Facility
+  organisation: AT&T
+  location: Bengaluru, India # TODO verify: location
+  start: "2017-01"
+  end: "2017-07"
+  category: internship
+  summary: VPN order-management processes in a network-engineering organisation.
+  cv: both
+
+- id: bmsce-levitation
+  title: "Hybrid levitation for Hyperloop: engineering project"
+  organisation: BMS College of Engineering
+  location: Bengaluru, India
+  start: "2016-08"
+  end: "2017-06"
+  category: engineering
+  summary: >-
+    Design of air-bearing levitation combined with linear-induction-motor propulsion
+    for a Hyperloop concept.
+  cv: both
+
+- id: isro
+  title: Intern, Quality Assurance division
+  organisation: ISRO, Laboratory for Electro-Optics Systems (LEOS)
+  location: Bengaluru, India
+  start: "2015-07"
+  end: "2015-07"
+  category: internship
+  summary: >-
+    Circuit analysis of star, Earth and Sun sensors for the ASTROSAT and
+    Chandrayaan-2 missions.
+  cv: both

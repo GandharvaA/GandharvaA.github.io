@@ -1,0 +1,111 @@
+# Skill groups. Each item: name, optional level (expert | advanced | working | basic),
+# optional detail, and industry: true to feature it on the industry CV.
+- id: data-ml-ai
+  label: Data analysis, ML & AI
+  items:
+    - name: Statistical inference
+      detail: maximum-likelihood & template fits, least squares, sideband methods
+      level: expert
+      industry: true
+    - name: Uncertainty quantification
+      detail: systematic variations, correlated averages
+      level: advanced
+      industry: true
+    - name: Kinematic (constrained) fitting
+      detail: vertex and multi-constraint fits
+      level: advanced
+      industry: true
+    - name: Machine-learning classification
+      detail: multiclass classifiers in ROOT TMVA
+      level: working
+      industry: true
+    - name: AI-assisted development
+      detail: Cursor and LLM coding assistants for building and automating pipelines
+      level: advanced
+      industry: true
+    - name: Machine Learning for Physicists and Astronomers (PhD course, 7.5 hp)
+      level: working
+      industry: false # TODO verify: course completed?
+
+- id: programming
+  label: Programming & software
+  items:
+    - name: Python
+      detail: NumPy, SciPy, pandas, matplotlib, uproot, iminuit, Jupyter
+      level: expert
+      industry: true
+    - name: C++ & ROOT
+      detail: analysis frameworks, PyROOT, RooFit
+      level: expert
+      industry: true
+    - name: C
+      level: working
+      industry: false
+    - name: Git / GitLab
+      level: advanced
+      industry: true
+    - name: Bash & batch scripting
+      level: advanced
+      industry: false
+    - name: JavaScript, HTML, CSS
+      level: basic
+      industry: false
+    - name: LaTeX
+      level: advanced
+      industry: false
+
+- id: simulation
+  label: Simulation & modelling
+  items:
+    - name: Monte Carlo event generation
+      detail: PLUTO, UrQMD, own generator with final-state interactions
+      level: expert
+      industry: true
+    - name: Detector simulation
+      detail: GEANT3-based HGeant, CbmRoot
+      level: advanced
+      industry: true
+    - name: Finite-element electromagnetics
+      detail: COMSOL, ANSYS Maxwell
+      level: working
+      industry: true
+    - name: Mathematica, MATLAB
+      level: advanced
+      industry: false
+
+- id: instrumentation
+  label: Detectors & instrumentation
+  items:
+    - name: Tracking & timing detectors
+      detail: drift chambers, straw tubes, RPC, LGAD start detector, time of flight
+      level: advanced
+      industry: true
+    - name: Gamma spectroscopy
+      detail: HPGe detectors, scintillators, neutron activation
+      level: advanced
+      industry: true
+    - name: Beam-time operations & online data-quality monitoring
+      level: advanced
+      industry: true
+    - name: Radiation safety & radioactive-source handling
+      level: advanced
+      industry: true
+    - name: Automotive radar signal processing
+      level: working
+      industry: true
+
+- id: computing
+  label: Computing & HPC
+  items:
+    - name: HPC batch computing
+      detail: Slurm on the GSI Virgo cluster
+      level: advanced
+      industry: true
+    - name: Containers & software distribution
+      detail: Singularity/Apptainer, CVMFS
+      level: working
+      industry: true
+    - name: Large datasets
+      detail: ~155 TB raw data, Lustre, ROOT trees, HDF5
+      level: advanced
+      industry: true
