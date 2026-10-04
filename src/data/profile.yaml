@@ -27,13 +27,14 @@ epigraph:
   source: Pale Blue Dot
 
 tagline: >-
-  Experimental physicist at Stockholm University, measuring ΛΛ production with
-  HADES at GSI and simulating ΛΛ cusps for CBM at FAIR.
+  Experimental physicist at Stockholm University, studying how Λ hyperons
+  interact and what that means for the interior of neutron stars.
 
 heroStatement: >-
-  PhD candidate in experimental nuclear and hadron physics. I measure ΛΛ
-  production with the HADES experiment at GSI, and I study whether the CBM
-  experiment at FAIR can extract ΛΛ interaction parameters from cusp structures.
+  PhD candidate in experimental nuclear and hadron physics. I study how two Λ
+  hyperons interact. That double-strangeness force is one piece of the hyperon
+  puzzle: how neutron stars remain as massive as the ones we observe if their
+  cores contain strange particles.
 
 # Factual overview for the home-page "What I do" section.
 work:
@@ -57,9 +58,9 @@ work:
         Detector shifts on HADES, timing and calibration, Monte Carlo simulation,
         and machine-learning classifiers in a staged analysis pipeline on the
         GSI computing cluster.
-    - title: Teaching and service
+    - title: Teaching and leadership
       text: >-
-        Laboratory teaching at Fysikum since 2021, and service on the Fysikum
+        Teaching at Fysikum since 2021, and leadership of the Fysikum
         PhD Council (vice-chair, then chair).
 
 availability: Completing my PhD in 2027 and open to industry R&D and data roles. # TODO verify: preferred wording / availability date

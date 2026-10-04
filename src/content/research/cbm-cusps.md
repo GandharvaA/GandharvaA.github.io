@@ -47,7 +47,7 @@ make rare channels like this one accessible for the first time.
 The study is done with the GSI hyperon group and theorists at **Forschungszentrum Jülich**, within the
 **QCD at FAIR** programme. It is featured in the community white paper
 [*Hadron Physics Opportunities at FAIR*](https://arxiv.org/abs/2512.15986) (arXiv:2512.15986), of which I
-am a co-author, and I have presented it at HYP2025 (Tokyo), the DPG Spring Meeting 2026 (Erlangen), the
+am a co-author, and I have presented it at HYP2025 (Tokyo), an invited talk at the DPG Spring Meeting 2026 (Erlangen), the
 Nordic Meeting on Nuclear Physics 2026 (Visby) and NSTAR 2026 (Seville).
 
 The final part of the thesis will connect the extracted parameters to the **equation of state of

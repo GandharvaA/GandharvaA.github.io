@@ -115,7 +115,7 @@ const levelLabel: Record<string, string> = { expert: 'Expert', advanced: 'Advanc
                 </p>
                 {e.data.thesis && (
                   <p class="desc">
-                    Thesis: <em>{e.data.thesis.title}</em>
+                    {e.data.degree === 'MSc' ? "Master's thesis" : 'Thesis'}: <em>{e.data.thesis.title}</em>
                     {e.data.thesis.advisor && <>, advisor {e.data.thesis.advisor}</>}
                   </p>
                 )}
@@ -170,7 +170,7 @@ const levelLabel: Record<string, string> = { expert: 'Expert', advanced: 'Advanc
     </section>
 
     <section class="cv-section" aria-labelledby="cv-lead">
-      <h2 id="cv-lead">Leadership & service</h2>
+      <h2 id="cv-lead">Leadership</h2>
       <ol class="cv-list compact">
         {
           onCv(service).map((s) => (

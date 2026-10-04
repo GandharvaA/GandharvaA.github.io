@@ -17,10 +17,11 @@ tags: [HADES, hyperons, detector operation, likelihood fits, Monte Carlo, ML cla
 
 ## In short
 
-When two protons collide at high energy they can occasionally produce two **Λ hyperons**, heavier
-cousins of the proton that contain a *strange* quark. How often this happens, and how two Λs push or
-pull on each other, is poorly known. It matters because the same particles are expected to appear deep
-inside **neutron stars**, where they change how stiff (and therefore how heavy) a star can be.
+The channel pp → ΛΛK⁺K⁺ is open when the centre-of-mass energy is above the production threshold
+√s_th = 2(m_Λ + m_K⁺) ≈ 3.22 GeV. Each Λ is a uds baryon with strangeness S = −1. The near-threshold
+production cross section, and the ΛΛ final-state interaction it is sensitive to, are poorly constrained.
+That interaction enters the equation of state of **neutron-star** matter and changes the maximum mass
+a star can support.
 
 My job is to find these events in the data. Only a tiny fraction of collisions produce two Λs, and each
 Λ is invisible. It is only seen through the proton and pion it decays into. The task is therefore a
@@ -32,7 +33,7 @@ and separate a faint signal from a large background with a fully quantified unce
 [HADES](https://hades.gsi.de/) is a large spectrometer at the GSI/FAIR
 accelerator centre in Darmstadt, Germany. In **February 2022** it recorded proton–proton collisions with
 a 4.5 GeV proton beam on a liquid-hydrogen target (centre-of-mass energy √s = 3.46 GeV, only 240 MeV above
-the threshold for producing two Λs and two K⁺ mesons): a dataset of about 155 TB.
+the threshold for producing two Λs and two K⁺ mesons): a dataset of about 155 TB. I have worked on this experiment for five years, since the PhD began in August 2021.
 
 For this campaign HADES was upgraded with new instruments that are central to the analysis:
 
@@ -41,8 +42,9 @@ For this campaign HADES was upgraded with new instruments that are central to th
 - an **LGAD start detector** (low-gain avalanche diodes) giving the collision time (T0);
 - an **inner time-of-flight** detector.
 
-I took part in the five-week beam time, taking shifts and helping with drift-chamber online quality
-assurance. Seeing where the data come from has shaped every later analysis decision.
+I took part in the five-week beam time, taking shifts and doing online drift-chamber quality assurance. The
+detector configuration, calibration and data-quality criteria from that run are the inputs to the
+reconstruction, particle identification and systematic variations.
 
 ## My role
 
@@ -63,11 +65,8 @@ result:
   from the different background classes.
 - **Systematics and automation.** A staged analysis pipeline (stages S0–S3) that runs every selection and
   identification variation on the GSI batch farm, so that systematic uncertainties come out of one
-  reproducible workflow. I built and automate it with the help of **AI coding assistants** (Cursor and
-  large language models), which lets me iterate far faster on analysis code while I stay responsible for
-  the physics choices.
-- **Collaboration.** I hosted and minuted the weekly meetings of the HADES Λ-Reconstruction Task Force and
-  the kinematic-fitting working group (2022–23), and present progress regularly at collaboration meetings.
+  reproducible workflow. I built and automate it with large language models, which lets me iterate
+  faster on the analysis code while I stay responsible for the physics choices.
 
 The licentiate thesis (March 2024) established the analysis strategy and a first production estimate;
 the ongoing work refines the signal extraction and systematic uncertainties towards a collaboration

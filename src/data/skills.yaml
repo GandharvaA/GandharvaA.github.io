@@ -20,7 +20,7 @@
       level: working
       industry: true
     - name: AI-assisted development
-      detail: Cursor and LLM coding assistants for building and automating pipelines
+      detail: large language models for building and automating pipelines
       level: advanced
       industry: true
     - name: Machine Learning for Physicists and Astronomers (PhD course, 7.5 hp)

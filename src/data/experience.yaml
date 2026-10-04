@@ -2,7 +2,7 @@
 # category: research | industry | engineering | internship
 # cv: both | academic | industry ; hidden: true hides it everywhere
 - id: phd-su
-  title: Doctoral researcher (PhD candidate)
+  title: PhD Candidate (Doktorand)
   organisation: Stockholm University · HADES & CBM collaborations, GSI/FAIR
   location: Stockholm, Sweden & Darmstadt, Germany
   start: "2021-08"
@@ -14,28 +14,23 @@
   highlights:
     - >-
       Main analysis responsibility in the HADES collaboration for the ΛΛ channel in
-      proton–proton collisions (√s = 3.46 GeV): event selection, reconstruction,
-      simulation, signal extraction and systematic uncertainties.
+      proton–proton collisions at √s = 3.46 GeV.
     # TODO verify: shift role in the 2025 pion-beam run
     - >-
       Took detector shifts during the five-week February 2022 proton beam time and a
       2025 pion-beam run; worked with drift-chamber online quality assurance.
     - >-
       Developed a relative time-of-flight particle-identification method that
-      compensates start-detector timing problems, used with kinematic fitting and
-      2D template likelihood fits.
+      compensates start-detector timing problems.
     - >-
       Trained multiclass machine-learning classifiers (ROOT TMVA) to separate ΛΛ
       signal from background.
     - >-
       Built a staged (S0–S3) analysis pipeline with automated systematic variations
-      on the GSI batch farm (Slurm), developed with AI coding assistants (Cursor, LLMs).
+      on the GSI batch farm (Slurm), developed with large language models.
     - >-
       Wrote an event generator and detector-response folding for CBM feasibility
       studies of ΛΛ cusps; contributed to the QCD at FAIR white paper.
-    - >-
-      Hosted and minuted the weekly meetings of the HADES Λ-Reconstruction Task Force
-      and Kinematic-Fitting working group (2022–23).
   skills: [C++, ROOT, Python, TMVA, Slurm, PLUTO, GEANT, KinFit, Git]
   cv: both
 

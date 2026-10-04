@@ -217,7 +217,7 @@ function collaborationNames(talks) {
       if (!/^[IVXLCDM]+$/.test(m)) counts.set(m, (counts.get(m) ?? 0) + 1);
     }
   }
-  return [...counts.entries()].filter(([, c]) => c >= 2).sort((a, b) => b[1] - a[1]).map(([n]) => n);
+  return [...counts.entries()].filter(([, c]) => c >= 1).sort((a, b) => b[1] - a[1]).map(([n]) => n);
 }
 
 function listAnd(items) {
@@ -273,7 +273,8 @@ function renderIndustry(d) {
   const latestCompleted = education.filter((e) => !e.expected).sort(byDateDesc((e) => e.end))[0];
   v.EDUCATION = education.map((e) => {
     const line = `\\cvitem{${texDate(formatRange(e.start, e.end, { expected: e.expected, yearOnly: true }))}}{\\textbf{${tex(e.degree)}}, ${tex(e.field)}\\cvsep\\textit{${tex(e.institution)}}}`;
-    const thesis = e === latestCompleted && e.thesis?.title ? `\\cvnote{Thesis: “${tex(e.thesis.title)}”}\\par` : '';
+    const thesisLabel = e.degree === 'MSc' ? "Master's thesis" : 'Thesis';
+    const thesis = e === latestCompleted && e.thesis?.title ? `\\cvnote{${thesisLabel}: “${tex(e.thesis.title)}”}\\par` : '';
     return [line, thesis].filter(Boolean).join('\n');
   }).join('\n');
 
@@ -352,7 +353,7 @@ function renderAcademic(d) {
   v.EDUCATION = d.education.filter(keep).map((e) => {
     const org = [e.institution, e.department].filter(Boolean).map(tex).join(', ');
     const out = [`\\cventry{${tex(e.degree)}, ${tex(e.field)}}{${org}}{${texDate(formatRange(e.start, e.end, { expected: e.expected, yearOnly: true }))}}{${tex(e.location)}}`];
-    if (e.thesis?.title) out.push(`Thesis: “${tex(e.thesis.title)}”\\par`);
+    if (e.thesis?.title) out.push(`${e.degree === 'MSc' ? "Master's thesis" : 'Thesis'}: “${tex(e.thesis.title)}”\\par`);
     const notes = [];
     if (e.supervisors?.length) notes.push(`Supervisors: ${e.supervisors.map(tex).join('; ')}.`);
     if (e.thesis?.advisor) notes.push(`Thesis advisor: ${tex(e.thesis.advisor)}.`);

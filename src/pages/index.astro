@@ -13,14 +13,6 @@ const pubs = (await visible('publications')).filter((p) => p.data.selected).slic
 const talks = await getTalks();
 const selectedTalks = talks.conference.filter((t) => t.data.selected).slice(0, settings.home.selectedTalks);
 const research = (await getCollection('research', (r) => !r.data.draft)).sort((a, b) => a.data.order - b.data.order);
-const countries = new Set(talks.conference.map((t) => t.data.location?.split(',').pop()?.trim()));
-
-const facts = [
-  { value: '5 yrs', label: 'on a large accelerator experiment at GSI/FAIR' },
-  { value: '~155 TB', label: 'of collision data in my analysis' },
-  { value: String(talks.conference.length), label: `conference talks in ${countries.size} countries` },
-  { value: '3 yrs', label: 'as vice-chair, then chair, of the Fysikum PhD Council' },
-];
 ---
 
 <BaseLayout description={profile.tagline}>
@@ -44,11 +36,6 @@ const facts = [
           candidate masses fill a two-dimensional histogram, and a fit on the mass spectrum separates the signal from the background.
         </figcaption>
       </figure>
-    </div>
-    <div class="wrap">
-      <ul class="facts" aria-label="At a glance">
-        {facts.map((f) => <li><span class="fact-value">{f.value}</span><span class="fact-label">{f.label}</span></li>)}
-      </ul>
     </div>
   </section>
 
@@ -184,35 +171,6 @@ const facts = [
   }
   .hero-figure figcaption {
     max-width: 60ch;
-  }
-  .facts {
-    list-style: none;
-    padding: 0;
-    margin: clamp(2rem, 5vw, 3.5rem) 0 0;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    border-top: 1px solid var(--line);
-  }
-  .facts li {
-    margin: 0;
-    padding: 1.1rem 1.2rem 0.2rem 0;
-    display: grid;
-    gap: 0.2rem;
-  }
-  .facts li + li {
-    padding-left: 1.2rem;
-    border-left: 1px solid var(--line);
-  }
-  .fact-value {
-    font-family: var(--font-head);
-    font-size: var(--step-2);
-    font-weight: 600;
-    line-height: 1;
-  }
-  .fact-label {
-    font-size: var(--step--1);
-    color: var(--ink-soft);
-    line-height: 1.35;
   }
 
   .premise {
@@ -364,13 +322,6 @@ const facts = [
     }
   }
   @media (max-width: 720px) {
-    .facts {
-      grid-template-columns: 1fr 1fr;
-    }
-    .facts li:nth-child(3) {
-      padding-left: 0;
-      border-left: 0;
-    }
     .premise-grid,
     .two-col {
       grid-template-columns: 1fr;
