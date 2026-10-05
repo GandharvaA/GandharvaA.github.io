@@ -480,7 +480,7 @@ function renderAcademic(d) {
     if (e.thesis?.title) out.push(`${e.degree === 'MSc' ? "Master's thesis" : 'Thesis'}: “${tex(e.thesis.title)}”\\par`);
     const notes = [];
     if (e.supervisors?.length) notes.push(`Supervisors: ${e.supervisors.map(tex).join('; ')}.`);
-    if (e.thesis?.advisor) notes.push(`Thesis advisor: ${tex(e.thesis.advisor)}.`);
+    if (e.thesis?.advisor && !e.supervisors?.length) notes.push(`Thesis advisor: ${tex(e.thesis.advisor)}.`);
     for (const detail of e.details ?? []) notes.push(tex(ensurePeriod(detail)));
     if (notes.length) out.push(`\\cvnote{${notes.join(' ')}}\\par`);
     return out.join('\n');

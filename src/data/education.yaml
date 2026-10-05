@@ -12,10 +12,10 @@
   thesis:
     title: "Hyperon–hyperon interactions from proton–proton collisions with HADES and CBM" # TODO verify: working title; no final dissertation title found
   supervisors:
-    - Prof. Per-Erik Tegnér (main supervisor since Dec 2024)
-    - Dr. María Doncel Monasterio (main supervisor 2021–2024, now co-supervisor)
-    - Dr. Jenny Taylor, GSI (co-supervisor since 2025) # TODO verify: name/affiliation as it should appear
-    - Dr. Michael Papenbrock, Uppsala University (co-supervisor 2022–2025)
+    - Prof. Per-Erik Tegnér (main)
+    - Dr. María Doncel Monasterio
+    - Dr. Jenny Taylor (GSI)
+    - Dr. Michael Papenbrock (Uppsala University)
   details:
     - PANDA@HADES at GSI/FAIR (Darmstadt, Germany); simulation studies for CBM; QCD at FAIR programme.
   cv: both
@@ -44,7 +44,7 @@
   end: "2020" # TODO verify: 2024 CV says May 2020; 2021/22 CV says Jan 2021
   thesis:
     title: "Can FIMPs be Dark Matter Candidates?"
-    advisor: Prof. Robert Mann (Perimeter Institute / University of Waterloo)
+    advisor: Prof. Robert Mann
   details:
     - Thesis on symmetry breaking with the Coleman–Weinberg effective potential at finite temperature.
   cv: both

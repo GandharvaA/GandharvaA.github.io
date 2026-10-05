@@ -125,10 +125,12 @@ const levelLabel: Record<string, string> = { expert: 'Expert', advanced: 'Advanc
                 {e.data.thesis && (
                   <p class="desc">
                     {e.data.degree === 'MSc' ? "Master's thesis" : 'Thesis'}: <em>{e.data.thesis.title}</em>
-                    {e.data.thesis.advisor && <>, advisor {e.data.thesis.advisor}</>}
+                    {e.data.thesis.advisor && !e.data.supervisors.length && <>, advisor {e.data.thesis.advisor}</>}
                   </p>
                 )}
-                {e.data.supervisors.length > 0 && <p class="desc small">Supervisors: {e.data.supervisors.join('; ')}</p>}
+                {e.data.supervisors.length > 0 && (
+                  <p class="desc small">Supervisors: {e.data.supervisors.join('; ')}</p>
+                )}
               </div>
             </li>
           ))
