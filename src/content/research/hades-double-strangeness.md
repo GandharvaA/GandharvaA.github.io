@@ -2,15 +2,16 @@
 title: Double-strangeness production with HADES
 kicker: PhD project I · HADES at GSI, Darmstadt
 summary: >-
-  Measuring how often two Λ hyperons are produced together in proton–proton collisions, a rare
-  process buried in a large background, with the HADES spectrometer and its new forward detector.
+  Measuring two Λ hyperons produced together in proton–proton collisions, just above the energy
+  needed to create them, with the HADES spectrometer. Each Λ is reconstructed from the proton and
+  pion it decays into, and the new forward detector provides low polar angle acceptance.
 order: 1
 period: 2021 – present
 illustration: hades
 figureCaption: >-
   <b>Fig. 2.</b> Schematic side view of HADES (not to scale). The proton beam hits a liquid-hydrogen
   target; drift chambers before and after a toroidal magnet measure momenta, timing walls measure
-  flight times, and the forward detector built from PANDA straw tubes catches protons at small angles.
+  flight times, and the forward detector built from PANDA straw tubes adds acceptance at low polar angles.
   Each Λ flies a few centimetres before decaying into a proton and a π⁻.
 tags: [HADES, hyperons, detector operation, likelihood fits, Monte Carlo, ML classification, HPC]
 ---
@@ -38,7 +39,7 @@ the threshold for producing two Λs and two K⁺ mesons): a dataset of about 155
 For this campaign HADES was upgraded with new instruments that are central to the analysis:
 
 - a **forward detector** built from straw-tube tracking stations of the future PANDA experiment and a
-  resistive-plate chamber, covering very small angles where most protons from Λ decays end up;
+  resistive-plate chamber, giving acceptance at low polar angles, where most protons from Λ decays end up;
 - an **LGAD start detector** (low-gain avalanche diodes) giving the collision time (T0);
 - an **inner time-of-flight** detector.
 
@@ -48,13 +49,13 @@ reconstruction, particle identification and systematic variations.
 
 ## My role
 
-Within the HADES collaboration I hold the **main analysis responsibility for the ΛΛ channel**
+Within PANDA@HADES I hold the **main analysis responsibility for the ΛΛ channel**
 (pp → ΛΛK⁺K⁺, with each Λ → pπ⁻). That covers the full chain from raw reconstructed tracks to a physics
 result:
 
 - **Particle identification.** Start-detector timing issues made standard time-of-flight identification
   unreliable. I developed a **relative time-of-flight** method that uses a reference pion in the same
-  event to cancel the unknown start time, a distinctive approach within the collaboration.
+  event to cancel the unknown start time, a distinctive approach in this analysis.
 - **Reconstruction and selection.** Vertex reconstruction, distance-of-closest-approach and decay-length
   criteria, missing-mass selections, a π⁺ veto and **kinematic fitting** (vertex and multi-constraint fits
   with the KinFit package, which I regularly test and report issues for).
@@ -63,15 +64,14 @@ result:
   maximum-likelihood template fit** with simulated signal and background components.
 - **Machine learning.** Multiclass classifiers (ROOT **TMVA**) trained on simulation to separate ΛΛ signal
   from the different background classes.
-- **Systematics and automation.** A staged analysis pipeline (stages S0–S3) that runs every selection and
-  identification variation on the GSI batch farm, so that systematic uncertainties come out of one
-  reproducible workflow. I built and automate it with large language models, which lets me iterate
-  faster on the analysis code while I stay responsible for the physics choices.
+- **Systematics and automation.** An automated analysis pipeline that runs every selection and
+  identification variation on the GSI batch farm (Slurm / HPC), so that systematic uncertainties
+  come out of one reproducible workflow. I built and automate it with large language models, which
+  lets me iterate faster on the analysis code while I stay responsible for the physics choices.
 
 The licentiate thesis (March 2024) established the analysis strategy and a first production estimate;
-the ongoing work refines the signal extraction and systematic uncertainties towards a collaboration
-publication. Preliminary numbers are internal to the collaboration until approved, so they are not shown
-here.
+the ongoing work refines the signal extraction and systematic uncertainties towards publication.
+Preliminary numbers stay internal until approved, so they are not shown here.
 
 ## Methods in more depth
 

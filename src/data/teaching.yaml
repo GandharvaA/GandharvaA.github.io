@@ -3,16 +3,14 @@
   kind: course
   code: FK7051
   course: Nuclear Physics (MSc)
-  role: >-
-    Laboratory supervisor: lab introduction lecture, lab compendium, grading of lab
-    reports and oral presentations
+  role: "Laboratory supervisor: introduction lecture and the lab compendium"
   terms: [HT2021, HT2023, HT2025]
 
 - id: fk4026
   kind: course
   code: FK4026
   course: Programmering, numeriska metoder och statistik för fysiker
-  role: "Laboratory assistant: Python labs, numerical-methods part, project grading"
+  role: "Laboratory assistant: Python labs, numerical-methods part"
   terms: [HT2021, HT2022, HT2023] # TODO verify: HT2021 was graded as "Numerical methods for physicists" (same course code?)
 
 - id: fk7056
@@ -33,14 +31,14 @@
   kind: course
   code: FK5019
   course: Elektromagnetism och vågor
-  role: Problem-solving sessions
+  role: Lectures and tutorials on the concepts, with problem solving
   terms: [VT2025]
 
 - id: waves-optics
   kind: course
   code: "" # TODO verify: course code for Vågrörelselära och optik
   course: Vågrörelselära och optik (Waves and Optics)
-  role: Exercise-group leader and grading of hand-ins
+  role: "Responsibility for assisting in exercise groups (tutorials and problem solving) and in labs (workout sessions on upcoming assignments)"
   terms: [HT2025]
 
 - id: bsc-supervision

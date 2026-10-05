@@ -18,9 +18,7 @@ const capabilities = await visible('capabilities');
   <section class="premise section" aria-labelledby="premise-title">
     <div class="wrap premise-grid">
       <p class="label" id="premise-title">The premise</p>
-      <blockquote>
-        <p>“{profile.positioning}”</p>
-      </blockquote>
+      <p class="lede">{profile.positioning}</p>
     </div>
   </section>
 
@@ -43,7 +41,8 @@ const capabilities = await visible('capabilities');
         )
       }
       <p class="cv-link">
-        <a class="btn primary" href="/cv/cv-industry.pdf" download>Industry CV · PDF</a>
+        <a class="btn primary" href="/cv/cv-industry-1p.pdf" download>Industry CV · 1 page · PDF</a>
+        <a class="btn" href="/cv/cv-industry.pdf" download>Industry CV · 2 pages · PDF</a>
       </p>
     </div>
   </section>
@@ -59,19 +58,14 @@ const capabilities = await visible('capabilities');
     gap: 1.5rem;
     align-items: baseline;
   }
-  blockquote {
+  .premise .lede {
     margin: 0;
     max-width: 50rem;
-    padding-left: clamp(1rem, 3vw, 2rem);
-    border-left: 2px solid var(--accent);
-  }
-  blockquote p {
     font-family: var(--font-head);
-    font-size: var(--step-3);
-    line-height: 1.2;
+    font-size: var(--step-2);
+    line-height: 1.35;
     font-weight: 450;
-    letter-spacing: -0.015em;
-    margin: 0;
+    letter-spacing: -0.01em;
     font-variation-settings: 'SOFT' 60;
   }
   .capabilities {
@@ -110,6 +104,9 @@ const capabilities = await visible('capabilities');
   }
   .cv-link {
     margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
   }
   @media (max-width: 980px) {
     .cap-grid {

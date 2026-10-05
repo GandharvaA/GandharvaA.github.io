@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// Builds public/cv/cv-industry.pdf and public/cv/cv-academic.pdf from src/data/*.yaml.
-// Usage: node scripts/build-cv.mjs [--only industry|academic]
+// Builds public/cv/cv-industry.pdf (2 pages), public/cv/cv-industry-1p.pdf (1 page),
+// and public/cv/cv-academic.pdf from src/data/*.yaml.
+// Usage: node scripts/build-cv.mjs [--only industry|industry-onepage|academic]
 import { readFile, writeFile, mkdir, copyFile } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
@@ -18,11 +19,16 @@ const DATA_DIR = path.join(ROOT, 'src/data');
 const TEMPLATE_DIR = path.join(ROOT, 'cv/templates');
 const BUILD_DIR = path.join(ROOT, 'cv/build');
 const PUBLIC_DIR = path.join(ROOT, 'public/cv');
-const MAX_INDUSTRY_PAGES = 2;
 const OVERFULL_TOLERANCE_PT = 5;
 
 const DOCS = {
-  industry: { template: 'industry.tex', job: 'cv-industry', label: 'Industry CV' },
+  industry: { template: 'industry.tex', job: 'cv-industry', label: 'Industry CV (2 pages)', maxPages: 2 },
+  'industry-onepage': {
+    template: 'industry-onepage.tex',
+    job: 'cv-industry-1p',
+    label: 'Industry CV (1 page)',
+    maxPages: 1,
+  },
   academic: { template: 'academic.tex', job: 'cv-academic', label: 'Academic CV' },
 };
 const LISTS = ['capabilities', 'education', 'experience', 'publications', 'talks', 'teaching',
@@ -149,7 +155,7 @@ function summaryIsRedundant(e) {
   return contentWords(e.summary).every((w) => pool.has(w));
 }
 
-function experienceEntry(e, kind) {
+function experienceEntry(e, kind, { tools = true } = {}) {
   const text = kind === 'industry' ? industryText : (s) => s;
   const out = [`\\cventry{${tex(e.title)}}{${tex(e.organisation)}}{${texDate(formatRange(e.start, e.end))}}{${tex(e.location)}}`];
   if (e.summary && !summaryIsRedundant(e)) out.push(`${tex(text(e.summary))}\\par`);
@@ -157,7 +163,7 @@ function experienceEntry(e, kind) {
     out.push('\\begin{cvitems}', ...e.highlights.map((h) => `\\item ${tex(text(h))}`), '\\end{cvitems}');
   }
   if (kind === 'academic' && e.advisors) out.push(`\\cvnote{Supervision: ${tex(e.advisors)}}\\par`);
-  if (e.skills?.length) out.push(`\\cvtools{${join(e.skills.map(tex))}}`);
+  if (tools && e.skills?.length) out.push(`\\cvtools{${join(e.skills.map(tex))}}`);
   return out.join('\n');
 }
 
@@ -310,14 +316,16 @@ function renderIndustry(d) {
   }
   v.PUBLICATIONS_TALKS = ptItems.join('\n');
 
-  const leadership = [renderService(d.service.filter(inCv('industry')), { describe: (s) => s.category === 'lab' })];
+  const industryService = d.service.filter(inCv('industry'));
+  v.LABORATORY = renderService(industryService.filter((s) => s.category === 'lab'));
+  const leadership = [renderService(industryService.filter((s) => s.category !== 'lab'), { describe: () => false })];
   const courses = d.teaching.filter(inCv('industry')).filter((t) => t.kind === 'course');
   const supervision = d.teaching.filter(inCv('industry')).filter((t) => t.kind === 'supervision');
   if (courses.length) {
     const years = termYears([...courses, ...supervision].flatMap((t) => t.terms ?? []));
     const sup = supervision.length ? `; co-supervision of ${listAnd(supervision.map((s) => `a ${tex(s.course)}`))}` : '';
     const where = profile.affiliation?.name ? `, ${tex(profile.affiliation.name)}` : '';
-    leadership.push(`\\cvitem{${years}}{\\textbf{University teaching}${where}. Laboratory supervision, exercise classes and grading in ${courses.length} physics courses${sup}.}`);
+    leadership.push(`\\cvitem{${years}}{\\textbf{University teaching}${where}. Laboratory courses and classroom teaching, including lectures, tutorials and problem solving, in ${courses.length} physics courses${sup}.}`);
   }
   v.LEADERSHIP = leadership.filter(Boolean).join('\n');
 
@@ -333,6 +341,122 @@ function renderIndustry(d) {
     const issuers = [...new Set(funding.map((g) => String(g.issuer).split(',').at(-1).trim()))];
     const range = Math.min(...years) === Math.max(...years) ? `${years[0]}` : `${Math.min(...years)}–${Math.max(...years)}`;
     rows.push(`\\cvrow{Grants}{${funding.length} grants and scholarships for research travel and experiments (${tex(listAnd(issuers))}, ${range})}`);
+  }
+  if (d.languages.length) rows.push(`\\cvrow{Languages}{${join(d.languages.map((l) => `${tex(l.name)}: ${tex(l.level)}`))}}`);
+  v.AWARDS_LANGUAGES = rows.join('\n');
+
+  return v;
+}
+
+// ------------------------------------------------------------------ industry CV (1 page)
+
+function renderIndustryOnePage(d) {
+  const { profile } = d;
+  const me = ownName(profile);
+  const v = pdfMeta(profile, 'industry');
+  v.PDF_TITLE = tex(`${profile.name}, CV (1 page)`);
+
+  v.PROFILE = `\\cvprose{${tex(industryText(profile.industrySummary))}}`;
+
+  // Dense PhD bullets for the 1-page layout; full wording stays on the 2-page CV.
+  const phdShort = [
+    'ΛΛ analysis in PANDA@HADES: reconstruction, PID, fits and systematics.',
+    'Detector shifts (2022 proton and 2025 pion beam times); drift-chamber QA.',
+    'Relative time-of-flight PID for start-detector timing issues.',
+    'Multiclass ML classifiers (ROOT TMVA) for signal–background separation.',
+    'Automated analysis pipeline on the GSI batch farm (Slurm / HPC), with LLMs.',
+    'Event generator and detector-response folding for CBM ΞN-cusp studies.',
+  ];
+
+  const exp = d.experience.filter(inCv('industry'));
+  const phd = exp.find((e) => e.id === 'phd-su');
+  const other = exp.filter((e) => e.id !== 'phd-su');
+  const phdBlock = phd
+    ? [
+      `\\cventry{${tex(phd.title)}}{${tex(phd.organisation)}}{${texDate(formatRange(phd.start, phd.end))}}{${tex(phd.location)}}`,
+      `${tex(industryText(phd.summary))}\\par`,
+      '\\begin{cvitems}',
+      ...phdShort.map((h) => `\\item ${tex(h)}`),
+      '\\end{cvitems}',
+    ].join('\n')
+    : '';
+  v.EXPERIENCE = [
+    phdBlock,
+    other.length ? '\\cvsubsection{Earlier experience}' : '',
+    ...other.map(compactExperience),
+  ].filter(Boolean).join('\n\n');
+
+  const education = d.education.filter(inCv('industry'));
+  const latestCompleted = education.filter((e) => !e.expected).sort(byDateDesc((e) => e.end))[0];
+  v.EDUCATION = education.map((e) => {
+    const line = `\\cvitem{${texDate(formatRange(e.start, e.end, { expected: e.expected, yearOnly: true }))}}{\\textbf{${tex(e.degree)}}, ${tex(e.field)}\\cvsep\\textit{${tex(e.institution)}}}`;
+    const thesisLabel = e.degree === 'MSc' ? "Master's thesis" : 'Thesis';
+    const thesis = e === latestCompleted && e.thesis?.title ? `\\cvnote{${thesisLabel}: “${tex(e.thesis.title)}”}\\par` : '';
+    return [line, thesis].filter(Boolean).join('\n');
+  }).join('\n');
+
+  v.SKILLS = d.skills
+    .map((g) => ({ ...g, items: (g.items ?? []).filter((i) => i.industry === true && i.hidden !== true) }))
+    .filter((g) => g.items.length)
+    .map((g) => `\\cvrow{${tex(g.label)}}{${join(g.items.map((i) => tex(i.name)))}}`)
+    .join('\n');
+
+  const shownThesis = latestCompleted?.thesis?.title?.trim();
+  const pubs = sortPublications(d.publications.filter(inCv('industry'))
+    .filter((p) => p.selected && !(p.type === 'thesis' && p.title?.trim() === shownThesis)));
+  const talks = d.talks.filter(inCv('industry'));
+  const publicTalks = talks.filter((t) => PUBLIC_TALK_TYPES.has(t.type)).sort(byDateDesc((t) => t.date));
+  const selectedTalks = publicTalks.filter((t) => t.selected);
+  const ptItems = pubs.map((p) => {
+    const link = pubLink(p);
+    const title = link ? `\\href{${texUrl(link)}}{“${tex(p.title)}”}` : `“${tex(p.title)}”`;
+    const status = PUB_STATUS[p.status] ? `\\cvtag{${PUB_STATUS[p.status]}}` : '';
+    return `\\cvitem{${tex(p.year)}}{${title}.${status}}`;
+  });
+  if (publicTalks.length) {
+    const named = selectedTalks.slice(0, 3).map((t) => {
+      const ev = shortEvent(t.event);
+      const year = String(t.date).slice(0, 4);
+      return `${tex(ev)} (${year})`;
+    });
+    const years = publicTalks.map((t) => String(t.date).slice(0, 4)).sort();
+    const range = years[0] === years.at(-1) ? years[0] : `${years[0]}–${years.at(-1)}`;
+    ptItems.push(`\\cvitem{${range}}{\\textbf{${publicTalks.length} conference talks}${named.length ? `, including ${listAnd(named)}` : ''}.}`);
+  }
+  v.PUBLICATIONS_TALKS = ptItems.join('\n');
+
+  const industryService = d.service.filter(inCv('industry'));
+  const lab = industryService.filter((s) => s.category === 'lab');
+  const lead = industryService.filter((s) => s.category !== 'lab');
+  const courses = d.teaching.filter(inCv('industry')).filter((t) => t.kind === 'course' || t.kind === 'supervision');
+
+  // One dense section: each role and course stays its own line.
+  const serviceLines = [
+    ...lab.map((s) => `\\cvitem{${texDate(formatRange(s.start, s.end, { yearOnly: true }))}}{\\textbf{${tex(s.role)}}, ${tex(s.organisation)}.}`),
+    ...lead.map((s) => `\\cvitem{${texDate(formatRange(s.start, s.end, { yearOnly: true }))}}{\\textbf{${tex(s.role)}}, ${tex(s.organisation)}.}`),
+    ...courses.map((t) => {
+      const code = t.code ? ` (${tex(t.code)})` : '';
+      const role = String(t.role ?? '').split(':')[0].trim();
+      return `\\cvitem{${termYears(t.terms)}}{\\textbf{${tex(t.course)}}${code}\\cvsep ${tex(role)}}`;
+    }),
+  ];
+  v.LABORATORY = '';
+  v.TEACHING = '';
+  v.LEADERSHIP = serviceLines.join('\n');
+
+  const grants = d.grants.filter(inCv('industry'));
+  const awards = grants.filter((g) => g.kind === 'award').sort(byDateDesc((g) => String(g.year)));
+  const funding = grants.filter((g) => g.kind !== 'award');
+  const rows = [];
+  if (awards.length || funding.length) {
+    const bits = [];
+    if (awards.length) bits.push(awards.map((a) => `${tex(a.title)} (${tex(a.year)})`).join('; '));
+    if (funding.length) {
+      const years = funding.map((g) => Number(g.year)).filter(Boolean);
+      const range = Math.min(...years) === Math.max(...years) ? `${years[0]}` : `${Math.min(...years)}–${Math.max(...years)}`;
+      bits.push(`${funding.length} travel and research grants (${range})`);
+    }
+    rows.push(`\\cvrow{Awards \\& grants}{${bits.join('; ')}}`);
   }
   if (d.languages.length) rows.push(`\\cvrow{Languages}{${join(d.languages.map((l) => `${tex(l.name)}: ${tex(l.level)}`))}}`);
   v.AWARDS_LANGUAGES = rows.join('\n');
@@ -419,7 +543,9 @@ function renderAcademic(d) {
     })].join('\n');
   }).filter(Boolean).join('\n');
 
-  v.SERVICE = renderService(d.service.filter(keep));
+  const academicService = d.service.filter(keep);
+  v.LABORATORY = renderService(academicService.filter((s) => s.category === 'lab'));
+  v.SERVICE = renderService(academicService.filter((s) => s.category !== 'lab'));
 
   const grants = d.grants.filter(keep);
   const grantItem = (g) => {
@@ -539,7 +665,11 @@ async function main() {
   await mkdir(BUILD_DIR, { recursive: true });
   await mkdir(PUBLIC_DIR, { recursive: true });
 
-  const renderers = { industry: renderIndustry, academic: renderAcademic };
+  const renderers = {
+    industry: renderIndustry,
+    'industry-onepage': renderIndustryOnePage,
+    academic: renderAcademic,
+  };
   const results = [];
   let failed = false;
 
@@ -558,7 +688,7 @@ async function main() {
     const big = log.overfull.filter((o) => o.pt > OVERFULL_TOLERANCE_PT);
     const problems = [];
     if (log.missing.length) problems.push(`${log.missing.length} missing glyph(s): ${[...new Set(log.missing)].join('; ')}`);
-    if (kind === 'industry' && pages > MAX_INDUSTRY_PAGES) problems.push(`${pages} pages (limit ${MAX_INDUSTRY_PAGES})`);
+    if (doc.maxPages && pages > doc.maxPages) problems.push(`${pages} pages (limit ${doc.maxPages})`);
     for (const o of big) warn(`${doc.job}: ${o.text}`);
 
     if (problems.length) {

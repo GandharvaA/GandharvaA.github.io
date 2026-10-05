@@ -5,15 +5,14 @@ import Monogram from '../components/art/Monogram.astro';
 import { profile, photographyUrl } from '../lib/site';
 import { formatDate, formatRange, visible, yearRange } from '../lib/data';
 
-const [education, teaching, service, languages, training] = await Promise.all([
+const [education, teaching, service, training] = await Promise.all([
   visible('education'),
   visible('teaching'),
   visible('service'),
-  visible('languages'),
   visible('training'),
 ]);
-const leadership = service.filter((s) => ['leadership', 'committee', 'lab', 'mentoring'].includes(s.data.category));
-const outreach = service.filter((s) => s.data.category === 'outreach');
+const leadership = service.filter((s) => ['leadership', 'committee', 'mentoring'].includes(s.data.category));
+const labs = service.filter((s) => s.data.category === 'lab');
 const courses = teaching.filter((t) => t.data.kind !== 'training');
 const teacherTraining = teaching.filter((t) => t.data.kind === 'training');
 ---
@@ -64,7 +63,6 @@ const teacherTraining = teaching.filter((t) => t.data.kind === 'training');
                 <p class="label">{yearRange(s.data.start, s.data.end)}</p>
                 <p class="item-title">{s.data.role}</p>
                 <p class="item-meta">{s.data.organisation}</p>
-                {s.data.description && <p class="item-desc">{s.data.description}</p>}
               </li>
             ))
           }
@@ -72,11 +70,32 @@ const teacherTraining = teaching.filter((t) => t.data.kind === 'training');
       </section>
     </div>
 
+    {
+      labs.length > 0 && (
+        <section aria-labelledby="lab" class="block">
+          <h2 id="lab">Laboratory</h2>
+          <p class="intro">
+            Lab responsible for the nuclear physics student laboratory at Fysikum, 2021–2025.
+          </p>
+          <ul class="teach-grid">
+            {labs.map((s) => (
+              <li class="card">
+                <p class="label">{yearRange(s.data.start, s.data.end)}</p>
+                <p class="item-title">{s.data.role}</p>
+                <p class="item-meta">{s.data.organisation}</p>
+                {s.data.description && <p class="item-desc">{s.data.description}</p>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
     <section aria-labelledby="teach" class="block">
       <h2 id="teach">Teaching</h2>
       <p class="intro">
-        Teaching assistant at Fysikum since 2021, mostly laboratory teaching, where students meet real detectors for the
-        first time.
+        Teaching assistant at Fysikum since 2021. The responsibility covers laboratory teaching and also
+        lectures and tutorials.
       </p>
       <ul class="teach-grid">
         {
@@ -100,68 +119,33 @@ const teacherTraining = teaching.filter((t) => t.data.kind === 'training');
       }
     </section>
 
-    <div class="cols">
-      <section aria-labelledby="schools">
-        <h2 id="schools">Beam times, schools & visits</h2>
-        <ol class="plain compact">
-          {
-            training.map((t) => (
-              <li>
-                <span class="label">{/^\d{4}-\d{2}$/.test(t.data.date) ? formatDate(t.data.date) : t.data.date}</span>
-                <span class="item-title">{t.data.title}</span>
-                {t.data.location && <span class="item-meta"> · {t.data.location}</span>}
-              </li>
-            ))
-          }
-        </ol>
-      </section>
-
-      <div>
+    <section aria-labelledby="schools" class="block">
+      <h2 id="schools">Beam times, schools & visits</h2>
+      <ol class="plain compact spread">
         {
-          outreach.length > 0 && (
-            <section aria-labelledby="outreach">
-              <h2 id="outreach">Outreach & community</h2>
-              <ol class="plain">
-                {outreach.map((s) => (
-                  <li>
-                    <p class="label">{yearRange(s.data.start, s.data.end)}</p>
-                    <p class="item-title">
-                      {s.data.role}, {s.data.organisation}
-                    </p>
-                    {s.data.description && <p class="item-desc">{s.data.description}</p>}
-                  </li>
-                ))}
-              </ol>
-            </section>
-          )
+          training.map((t) => (
+            <li>
+              <span class="label">{/^\d{4}-\d{2}$/.test(t.data.date) ? formatDate(t.data.date) : t.data.date}</span>
+              <span class="item-title">{t.data.title}</span>
+              {t.data.location && <span class="item-meta"> · {t.data.location}</span>}
+            </li>
+          ))
         }
-        <section aria-labelledby="lang">
-          <h2 id="lang">Languages</h2>
-          <ul class="plain">
-            {
-              languages.map((l) => (
-                <li>
-                  <span class="item-title">{l.data.name}</span> <span class="item-meta">({l.data.level})</span>
-                </li>
-              ))
-            }
-          </ul>
+      </ol>
+    </section>
+    {
+      photographyUrl && (
+        <section aria-labelledby="beyond" class="beyond card">
+          <h2 id="beyond">Beyond the lab</h2>
+          <p class="item-desc">
+            When I am not chasing hyperons I take photographs, a different way of paying attention to light.
+          </p>
+          <a class="btn" href={photographyUrl} rel="me noopener">
+            See my photography →
+          </a>
         </section>
-        {
-          photographyUrl && (
-            <section aria-labelledby="beyond" class="beyond card">
-              <h2 id="beyond">Beyond the lab</h2>
-              <p class="item-desc">
-                When I am not chasing hyperons I take photographs, a different way of paying attention to light.
-              </p>
-              <a class="btn" href={photographyUrl} rel="me noopener">
-                See my photography →
-              </a>
-            </section>
-          )
-        }
-      </div>
-    </div>
+      )
+    }
   </div>
 </BaseLayout>
 
@@ -173,7 +157,7 @@ const teacherTraining = teaching.filter((t) => t.data.kind === 'training');
     align-items: center;
   }
   .head :global(.about-mark) {
-    width: clamp(5rem, 14vw, 9rem);
+    width: clamp(6.5rem, 18vw, 11.5rem);
     height: auto;
   }
   .about {
@@ -222,6 +206,10 @@ const teacherTraining = teaching.filter((t) => t.data.kind === 'training');
   .plain.compact li {
     display: grid;
     gap: 0.1rem;
+  }
+  .plain.compact.spread {
+    grid-template-columns: 1fr 1fr;
+    column-gap: clamp(2rem, 5vw, 4rem);
   }
   .plain.compact .item-title {
     font-family: var(--font-body);
@@ -274,7 +262,8 @@ const teacherTraining = teaching.filter((t) => t.data.kind === 'training');
     font-size: var(--step-1);
   }
   @media (max-width: 820px) {
-    .cols {
+    .cols,
+    .plain.compact.spread {
       grid-template-columns: 1fr;
     }
   }

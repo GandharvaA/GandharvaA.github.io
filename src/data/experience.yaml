@@ -3,7 +3,7 @@
 # cv: both | academic | industry ; hidden: true hides it everywhere
 - id: phd-su
   title: PhD Candidate (Doktorand)
-  organisation: Stockholm University · HADES & CBM collaborations, GSI/FAIR
+  organisation: Stockholm University · PANDA@HADES, GSI/FAIR
   location: Stockholm, Sweden & Darmstadt, Germany
   start: "2021-08"
   end: present
@@ -13,7 +13,7 @@
     studies for the CBM experiment at FAIR.
   highlights:
     - >-
-      Main analysis responsibility in the HADES collaboration for the ΛΛ channel in
+      Main analysis responsibility in PANDA@HADES for the ΛΛ channel in
       proton–proton collisions at √s = 3.46 GeV.
     # TODO verify: shift role in the 2025 pion-beam run
     - >-
@@ -26,11 +26,12 @@
       Trained multiclass machine-learning classifiers (ROOT TMVA) to separate ΛΛ
       signal from background.
     - >-
-      Built a staged (S0–S3) analysis pipeline with automated systematic variations
-      on the GSI batch farm (Slurm), developed with large language models.
+      Built an automated analysis pipeline with systematic variations on the GSI
+      batch farm (Slurm / HPC), developed with large language models.
     - >-
       Wrote an event generator and detector-response folding for CBM feasibility
-      studies of ΛΛ cusps; contributed to the QCD at FAIR white paper.
+      studies of the ΛΛ spectrum and the ΞN cusps; contributed to the QCD at FAIR
+      white paper.
   skills: [C++, ROOT, Python, TMVA, Slurm, PLUTO, GEANT, KinFit, Git]
   cv: both
 
@@ -65,10 +66,10 @@
   start: "2018-09"
   end: "2019" # TODO verify: end date
   category: engineering
-  summary: Linear induction motor for the SpaceX Hyperloop Pod Competition 2019.
+  summary: High-energy propulsion unit for the SpaceX Hyperloop Pod Competition 2019.
   highlights:
     - >-
-      Designed a double-sided linear induction motor for the pod's propulsion;
+      Helped design a high-energy propulsion unit, a double-sided linear induction motor for the pod;
       electromagnetic finite-element simulations in COMSOL and ANSYS Maxwell, with
       MATLAB.
   skills: [COMSOL, ANSYS Maxwell, MATLAB]

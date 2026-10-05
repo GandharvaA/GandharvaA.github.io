@@ -3,44 +3,61 @@ interface Props {
   class?: string;
 }
 const { class: className } = Astro.props;
+const rows = [16, 23.5, 31, 38.5, 46];
 ---
 
-<svg class:list={['monogram', className]} viewBox="0 0 40 40" aria-hidden="true">
-  <circle cx="20" cy="20" r="18.5" class="ring"></circle>
-  <circle cx="20" cy="20" r="14.5" class="ring dashed"></circle>
-  <path d="M20 20 A 13 13 0 0 1 33.6 27.4" class="track"></path>
-  <circle cx="33.6" cy="27.4" r="1.6" class="hit"></circle>
-  <text x="20" y="24.6" text-anchor="middle" class="letters">GA</text>
+<svg class:list={['monogram', className]} viewBox="0 0 64 64" aria-hidden="true">
+  <circle class="ring" cx="32" cy="32" r="28"></circle>
+  <rect class="gate" x="17" y="14" width="30" height="36" rx="2"></rect>
+  {
+    rows.map((y) => (
+      <rect class="hole" x="8.9" y={y} width="3.7" height="3.7" rx="0.45"></rect>
+    ))
+  }
+  {
+    rows.map((y, i) =>
+      i === rows.length - 1 ? (
+        <rect class="hole accent" x="51.4" y={y} width="3.7" height="3.7" rx="0.45"></rect>
+      ) : (
+        <rect class="hole" x="51.4" y={y} width="3.7" height="3.7" rx="0.45"></rect>
+      ),
+    )
+  }
+  <text class="letters" x="32" y="36" text-anchor="middle">GA</text>
 </svg>
 
 <style>
   .monogram {
     overflow: visible;
+    --gate: var(--accent-2);
+    --sprocket: var(--art);
+    --sprocket-hit: var(--accent);
+  }
+  :global(:root[data-theme='dark']) .monogram {
+    --gate: var(--accent);
+    --sprocket-hit: var(--accent-2);
   }
   .ring {
     fill: none;
     stroke: var(--art);
-    stroke-width: 1.2;
+    stroke-width: 1.5;
   }
-  .dashed {
-    stroke-dasharray: 1.5 2.2;
-    stroke-width: 0.9;
-    opacity: 0.7;
-  }
-  .track {
+  .gate {
     fill: none;
-    stroke: var(--art-accent);
-    stroke-width: 1.4;
-    stroke-linecap: round;
+    stroke: var(--gate);
+    stroke-width: 1.45;
   }
-  .hit {
-    fill: var(--art-accent);
+  .hole {
+    fill: var(--sprocket);
+  }
+  .hole.accent {
+    fill: var(--sprocket-hit);
   }
   .letters {
     font-family: var(--font-head);
     font-weight: 650;
-    font-size: 13px;
+    font-size: 15px;
     fill: var(--ink);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
   }
 </style>

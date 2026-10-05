@@ -16,6 +16,8 @@ const [education, experience, pubs, skills, teaching, service, grants, languages
 ]);
 const talks = await getTalks();
 const onCv = <T extends { data: { cv: string } }>(items: T[]) => items.filter((i) => i.data.cv !== 'none');
+const labService = onCv(service).filter((s) => s.data.category === 'lab');
+const leadershipService = onCv(service).filter((s) => s.data.category !== 'lab');
 const sortedPubs = [...pubs].sort((a, b) => b.data.year - a.data.year || a.data.order - b.data.order);
 const levelLabel: Record<string, string> = { expert: 'Expert', advanced: 'Advanced', working: 'Working', basic: 'Basic' };
 ---
@@ -33,7 +35,8 @@ const levelLabel: Record<string, string> = { expert: 'Expert', advanced: 'Advanc
         </p>
       </div>
       <div class="downloads no-print">
-        <a class="btn primary" href="/cv/cv-industry.pdf" download>Industry CV · 2 pages · PDF</a>
+        <a class="btn primary" href="/cv/cv-industry-1p.pdf" download>Industry CV · 1 page · PDF</a>
+        <a class="btn" href="/cv/cv-industry.pdf" download>Industry CV · 2 pages · PDF</a>
         <a class="btn" href="/cv/cv-academic.pdf" download>Academic CV · full · PDF</a>
       </div>
     </div>
@@ -173,7 +176,7 @@ const levelLabel: Record<string, string> = { expert: 'Expert', advanced: 'Advanc
       <h2 id="cv-lead">Leadership</h2>
       <ol class="cv-list compact">
         {
-          onCv(service).map((s) => (
+          leadershipService.map((s) => (
             <li class="timeline-row">
               <span class="when">{yearRange(s.data.start, s.data.end)}</span>
               <span>
@@ -185,6 +188,25 @@ const levelLabel: Record<string, string> = { expert: 'Expert', advanced: 'Advanc
         }
       </ol>
     </section>
+
+    {
+      labService.length > 0 && (
+        <section class="cv-section" aria-labelledby="cv-lab">
+          <h2 id="cv-lab">Laboratory</h2>
+          <ol class="cv-list compact">
+            {labService.map((s) => (
+              <li class="timeline-row">
+                <span class="when">{yearRange(s.data.start, s.data.end)}</span>
+                <span>
+                  <strong>{s.data.role}</strong>, {s.data.organisation}
+                  {s.data.description && <span class="desc-inline">. {s.data.description}</span>}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )
+    }
 
     <section class="cv-section" aria-labelledby="cv-teach">
       <h2 id="cv-teach">Teaching</h2>

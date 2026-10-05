@@ -1,32 +1,34 @@
 ---
-title: Probing ΛΛ interactions via cusps with CBM at FAIR
+title: The ΛΛ spectrum and ΞN cusps with CBM at FAIR
 kicker: PhD project II · CBM at FAIR · QCD at FAIR programme
 summary: >-
-  A simulation-driven feasibility study: can a sharp cusp in the ΛΛ mass spectrum reveal how two Λ
-  hyperons interact, and can the future CBM experiment measure it?
+  A simulation-driven feasibility study for CBM. The ΛΛ interaction comes from a fit of the mass
+  spectrum up to the first ΞN threshold. The cusps there constrain the cascade–nucleon interaction,
+  and the question is whether CBM can resolve both.
 order: 2
 period: 2025 – present
 illustration: cusp
 figureCaption: >-
-  <b>Fig. 3.</b> Schematic ΛΛ invariant-mass spectrum (illustrative shapes, not data). Where the
-  heavier Ξ⁰n and Ξ⁻p channels open, coupled-channel effects create sharp cusps. Their shape encodes
-  the ΛΛ scattering parameters, but finite detector resolution smears them out, which is exactly what a
-  feasibility study must quantify.
+  <b>Fig. 3.</b> Schematic ΛΛ invariant-mass spectrum (illustrative shapes, not data). A fit up to the
+  first ΞN threshold constrains the ΛΛ interaction. Where the heavier Ξ⁰n and Ξ⁻p channels open,
+  coupled-channel effects create sharp cusps, and those cusps constrain the cascade–nucleon
+  interaction. Finite detector resolution smears them out, which is what a feasibility study must quantify.
 tags: [CBM, FAIR, feasibility study, event generator, detector response, dispersion relations]
 ---
 
 ## In short
 
-The HADES measurement establishes *how often* two Λ hyperons are produced. The next question is *how
-they interact*. Two Λs can briefly turn into a heavier pair (a Ξ hyperon and a nucleon) and back. Right
-at the energy where that heavier channel opens, the ΛΛ mass spectrum develops a sharp kink, a **cusp**.
-The shape of the cusp carries information about the interaction, and reading it does not require
-assumptions about the size of the particle source, which limit other methods.
+The HADES measurement determines the near-threshold production of two Λ hyperons. The next question is
+how they interact. A fit of the ΛΛ mass spectrum up to the first ΞN threshold constrains the ΛΛ
+interaction. Above that threshold the two Λs can convert into a cascade and a nucleon (ΞN) and back.
+Where the ΞN channel opens, the spectrum develops a sharp kink, a **cusp**, and that cusp constrains
+the cascade–nucleon interaction rather than the ΛΛ interaction itself. Reading the spectrum this way
+does not require assumptions about the size of the particle source, which limit other methods.
 
 The **CBM experiment** at the new FAIR accelerator will deliver far higher collision rates and a larger
-acceptance than HADES. My work asks a practical engineering question before the hardware runs: **with
-realistic detector resolution, efficiency and statistics, can CBM see these cusps and extract the
-interaction parameters?**
+acceptance than HADES. My work asks a practical question before the hardware runs: **with realistic
+detector resolution, efficiency and statistics, can CBM extract the ΛΛ interaction below the first
+threshold and resolve the ΞN cusps?**
 
 ## What I build
 
@@ -35,8 +37,10 @@ interaction parameters?**
   by theory collaborators, with accept–reject unweighting.
 - **Detector-response folding**: the generated events are smeared with CBM resolution and efficiency and
   reconstructed with kinematic fitting, inside the CBM simulation framework (CbmRoot).
-- **Parameter extraction**: a dispersion-relation-based fit that recovers the **scattering length** and
-  **effective range** from the cusp region, with sensitivity studies versus statistics and resolution.
+- **Parameter extraction**: a dispersion-relation-based fit of the spectrum up to the first ΞN
+  threshold, recovering the ΛΛ **scattering length** and **effective range**, with sensitivity studies
+  versus statistics and resolution. The cusps themselves are the constraint on the cascade–nucleon
+  interaction.
 - Related studies of Σ⁺Σ⁺ systems with the same approach.
 
 The scenario studied is a 5 GeV proton beam at CBM/SIS100 with high interaction rates, conditions that

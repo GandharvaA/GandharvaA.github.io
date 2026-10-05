@@ -15,10 +15,13 @@ email:
   user: gandharva.appagere
   domain: fysik.su.se
 
-# Industry positioning. Shown on /industry and used by the industry CV, not on the public snapshot pages.
+# Industry positioning. Shown on /industry as the premise; not on the public snapshot pages.
+# This is polished page copy inspired by the original brief, not a literal quote of it.
 positioning: >-
-  The combination of experimental instrumental knowledge and the tools of AI
-  makes an attractive skillset for industry to hire an experimental physicist.
+  My work is experimental nuclear and hadron physics: how particles interact in
+  dense matter, and what accelerator data can say about that. That physics,
+  together with modern AI tools for analysis and software, is what I bring from the
+  accelerator lab into industrial R&D.
 
 # Home-page epigraph. Not a self-description.
 epigraph:
@@ -40,8 +43,8 @@ heroStatement: >-
 work:
   intro: >-
     The PhD is a measurement of double-Λ production with HADES and a simulation
-    study of ΛΛ cusps for CBM, together with the detector work and the analysis
-    that those projects need.
+    study for CBM of the ΛΛ spectrum and the ΞN cusps, together with the detector
+    work and the analysis that those projects need.
   items:
     - title: HADES ΛΛ measurement
       text: >-
@@ -51,13 +54,13 @@ work:
     - title: CBM cusp simulations
       text: >-
         Feasibility studies for the CBM experiment at FAIR. An event generator
-        and a detector-response model ask whether ΛΛ cusps can be resolved and
-        whether scattering parameters can be extracted.
+        and a detector-response model ask whether a fit up to the first ΞN
+        threshold can constrain the ΛΛ interaction, and whether the
+        cascade–nucleon cusps can be resolved.
     - title: Detectors and analysis
       text: >-
         Detector shifts on HADES, timing and calibration, Monte Carlo simulation,
-        and machine-learning classifiers in a staged analysis pipeline on the
-        GSI computing cluster.
+        and machine-learning classifiers on the GSI computing cluster (Slurm).
     - title: Teaching and leadership
       text: >-
         Teaching at Fysikum since 2021, and leadership of the Fysikum
@@ -66,21 +69,16 @@ work:
 availability: Completing my PhD in 2027 and open to industry R&D and data roles. # TODO verify: preferred wording / availability date
 
 industrySummary: >-
-  Experimental physicist (PhD candidate, Stockholm University) with five years of
-  hands-on work on a large accelerator experiment at GSI/FAIR in Germany. Main
-  analysis responsibility for a rare-process measurement: detector operation,
-  calibration-aware particle identification, Monte Carlo simulation, statistical
-  inference with full uncertainty treatment, and machine-learning classification.
-  Applies modern AI tools (ML classifiers and AI coding assistants) on top of deep
-  instrumental expertise to build reproducible, automated analysis pipelines on HPC
-  clusters. Earlier industry experience in automotive radar algorithms (Robert Bosch)
-  and electromagnetic engineering. Experienced leader in university governance.
+  Experimental physicist (PhD candidate, Stockholm University) working on a large
+  accelerator experiment at GSI/FAIR. Detector work, particle identification,
+  Monte Carlo simulation, statistical analysis, machine-learning classification, and
+  automated analysis pipelines on HPC. Earlier industry experience in automotive
+  radar algorithms and electromagnetic engineering.
 
 academicSummary: >-
-  PhD candidate in experimental nuclear and hadron physics at Stockholm University,
-  studying hyperon–hyperon (ΛΛ) interactions with the HADES experiment at GSI and
-  simulation-based feasibility studies for the CBM experiment within the QCD at FAIR
-  programme.
+  PhD candidate in experimental nuclear and hadron physics at Stockholm University.
+  Hyperon–hyperon (ΛΛ) interactions with HADES at GSI, and simulation studies for
+  CBM within the QCD at FAIR programme.
 
 bio:
   - >-
@@ -98,8 +96,8 @@ bio:
     AI coding assistants.
   - >-
     Before the PhD I trained as an electronics engineer, worked on automotive radar
-    algorithms at Robert Bosch, and designed electric propulsion for the KTH Hyperloop
-    team.
+    algorithms at Robert Bosch, and worked in the Electric Propulsion and Magnetics
+    team of KTH Hyperloop, a multidisciplinary project, helping to design a high-energy propulsion unit.
   - >-
     Alongside research I have chaired the Fysikum PhD Council, served as vice-chair of
     the university's Central Doctoral Student Council, and been responsible for the

@@ -58,7 +58,7 @@
   label: Simulation & modelling
   items:
     - name: Monte Carlo event generation
-      detail: PLUTO, UrQMD, own generator with final-state interactions
+      detail: PLUTO, own generator with final-state interactions
       level: expert
       industry: true
     - name: Detector simulation

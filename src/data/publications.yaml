@@ -4,7 +4,7 @@
 # Author lists: write the owner's name exactly as "G. Appagere" so it is highlighted.
 - id: hyp2025-proceedings
   type: proceedings
-  authors: ["G. Appagere (for the HADES and CBM Collaborations)"]
+  authors: ["G. Appagere (PANDA@HADES)"]
   title: "Investigating Double-Strange Systems at FAIR: ΛΛ interactions and neutron star cores"
   venue: "JPS Conference Proceedings, 15th International Conference on Hypernuclear and Strange Particle Physics (HYP2025), Tokyo"
   year: 2026
@@ -36,7 +36,7 @@
   arxiv: "2512.15986"
   url: https://arxiv.org/abs/2512.15986
   selected: true
-  note: Co-author; contributed the ΛΛ cusp feasibility study for CBM to the baryon–baryon interactions chapter.
+  note: Co-author; contributed the CBM feasibility study of the ΛΛ spectrum and the ΞN cusps to the baryon–baryon interactions chapter.
 
 - id: licentiate-thesis
   type: thesis

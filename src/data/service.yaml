@@ -15,7 +15,7 @@
 - id: cdr-vice-chair
   role: Vice-Chair
   organisation: Central Doctoral Student Council (CDR), Stockholm University
-  start: "2024-12"
+  start: "2025"
   end: "2025"
   category: leadership
   description: University-wide representation of doctoral students; represented CDR in national doctoral-student bodies.
@@ -24,10 +24,10 @@
 - id: nfr-vice-chair
   role: Vice-Chair
   organisation: Natural Sciences Faculty Doctoral Student Council (NFR), Stockholm University
-  start: "2024" # TODO verify: exact term (nominated Dec 2023; listed as Vice-Chair in Dec 2024 minutes; study plans say HT22–VT24)
+  start: "2023"
   end: "2024"
   category: leadership
-  description: Faculty-level doctoral-student representation; frequently meeting secretary.
+  description: Faculty-level doctoral-student representation.
   cv: both
 
 - id: fysikum-council-vice-chair
@@ -38,8 +38,7 @@
   category: leadership
   description: >-
     Contributed to clearer departmental guidelines for changing supervisors and to an
-    improved half-time review process; started PhD-student meetings in the
-    Instrumentation division.
+    improved half-time review process.
   cv: both
 
 - id: fysikum-council-board
@@ -66,6 +65,7 @@
   end: "2025"
   category: outreach
   description: Oxford-style debates for doctoral students across the Faculty of Science. # TODO verify: title (co-founder vs co-organiser)
+  hidden: true # The forum did not take the shape that was hoped for.
   cv: academic
 
 - id: lab-responsible
@@ -75,9 +75,10 @@
   end: "2025"
   category: lab
   description: >-
-    Responsible for HPGe detectors, scintillators and the radioactive-source inventory;
-    lab rules and safety, a source booking and record system, and procurement of a
-    proportional counter.
+    Handled the radioactive sources for the laboratory through these five years.
+    Responsible for HPGe detectors, scintillators and the source inventory; lab rules
+    and safety, a source booking and record system, and procurement of relevant
+    laboratory components, including detectors and NIM units.
   cv: both
 
 - id: mentor-programme
@@ -87,6 +88,7 @@
   end: "2025"
   category: mentoring
   description: Paired with a senior industry mentor to prepare the transition from academia to industry. # TODO verify: programme name/organiser
+  hidden: true
   cv: academic
 
 - id: hollywood-fysik

@@ -1,0 +1,52 @@
+% Industry CV (1 page), denser companion to industry.tex.
+% Same data, finer-grained entries, tighter typography.
+\documentclass{cv-common}
+\geometry{left=12mm,right=12mm,top=9mm,bottom=11mm}
+\cvsetsize{7.9pt}{9.7pt}
+\setlength\cvlabelcol{24mm}
+\setlength\cvdatecol{20mm}
+\setlength\cvsecbefore{4pt plus 1pt minus 1pt}
+\setlength\cvsecafter{2pt}
+\setlength\cventryskip{2.8pt plus 0.8pt minus 0.8pt}
+\setlength\cvitemskip{1.1pt plus 0.4pt}
+\cvrightdates
+\hypersetup{
+  pdftitle={%%PDF_TITLE%%},
+  pdfauthor={%%NAME%%},
+  pdfsubject={%%PDF_SUBJECT%%},
+  pdfkeywords={%%PDF_KEYWORDS%%},
+}
+\cvfooter{%%NAME%%, curriculum vitae (1 page)}{%%UPDATED%%}
+
+\begin{document}
+%%HEADER%%
+
+\cvsection{Profile}
+%%PROFILE%%
+
+\cvsection{Experience}
+%%EXPERIENCE%%
+
+\cvsection{Education}
+%%EDUCATION%%
+
+%%IF SKILLS%%
+\cvsection{Core skills}
+%%SKILLS%%
+%%ENDIF%%
+
+%%IF PUBLICATIONS_TALKS%%
+\cvsection{Selected publications \& talks}
+%%PUBLICATIONS_TALKS%%
+%%ENDIF%%
+
+%%IF LEADERSHIP%%
+\cvsection{Laboratory, teaching \& leadership}
+%%LEADERSHIP%%
+%%ENDIF%%
+
+%%IF AWARDS_LANGUAGES%%
+\cvsection{Awards \& languages}
+%%AWARDS_LANGUAGES%%
+%%ENDIF%%
+\end{document}

@@ -48,8 +48,8 @@
   title: AI/ML & AI-assisted workflows
   lab: >-
     Trained multiclass ML classifiers (ROOT TMVA) to separate signal from
-    background; use large language models to build and automate a
-    staged analysis pipeline.
+    background; use large language models to build and automate analysis
+    workflows on HPC.
   industry: >-
     Apply ML to physical and sensor data with domain understanding, and use modern
     AI tools to ship analysis software faster.
