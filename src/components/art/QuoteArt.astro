@@ -257,39 +257,40 @@ const stars = [
     fill: var(--accent-ink);
   }
 
+  /* Only hide-then-draw when JS opts in (.will-animate). Without JS the art stays visible. */
   @media (prefers-reduced-motion: no-preference) {
-    .quote-art:not(.inview) .stroke {
+    .quote-art.will-animate:not(.inview) .stroke {
       stroke-dasharray: 1;
       stroke-dashoffset: 1;
     }
-    .quote-art:not(.inview) .fade {
+    .quote-art.will-animate:not(.inview) .fade {
       opacity: 0;
     }
-    .quote-art.inview .stroke {
+    .quote-art.will-animate.inview .stroke {
       animation: draw-on 1.6s cubic-bezier(0.55, 0.1, 0.25, 1) forwards;
     }
-    .quote-art.inview .fade {
+    .quote-art.will-animate.inview .fade {
       animation: fade-in 0.8s ease both;
     }
-    .quote-art.inview .d1 { animation-delay: 0.15s; }
-    .quote-art.inview .d2 { animation-delay: 0.35s; }
-    .quote-art.inview .d3 { animation-delay: 0.6s; }
-    .quote-art.inview .d4 { animation-delay: 0.85s; }
-    .quote-art.inview .d5 { animation-delay: 1.1s; }
-    .quote-art.inview .d6 { animation-delay: 1.35s; }
-    .quote-art.inview .d7 { animation-delay: 1.6s; }
-    .quote-art.inview .d8 { animation-delay: 1.9s; }
+    .quote-art.will-animate.inview .d1 { animation-delay: 0.15s; }
+    .quote-art.will-animate.inview .d2 { animation-delay: 0.35s; }
+    .quote-art.will-animate.inview .d3 { animation-delay: 0.6s; }
+    .quote-art.will-animate.inview .d4 { animation-delay: 0.85s; }
+    .quote-art.will-animate.inview .d5 { animation-delay: 1.1s; }
+    .quote-art.will-animate.inview .d6 { animation-delay: 1.35s; }
+    .quote-art.will-animate.inview .d7 { animation-delay: 1.6s; }
+    .quote-art.will-animate.inview .d8 { animation-delay: 1.9s; }
   }
 </style>
 
-<script is:inline>
-  (function () {
-    var art = document.querySelector('.quote-art');
-    if (!art) return;
-    var start = function () { art.classList.add('inview'); };
-    var check = function () {
-      var box = art.getBoundingClientRect();
-      var line = window.innerHeight * 0.45;
+<script>
+  const art = document.querySelector('.quote-art');
+  if (art) {
+    art.classList.add('will-animate');
+    const start = () => art.classList.add('inview');
+    const check = () => {
+      const box = art.getBoundingClientRect();
+      const line = window.innerHeight * 0.45;
       if (box.top < line && box.bottom > 80) {
         start();
         window.removeEventListener('scroll', check);
@@ -297,5 +298,5 @@ const stars = [
     };
     check();
     window.addEventListener('scroll', check, { passive: true });
-  })();
+  }
 </script>

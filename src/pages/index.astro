@@ -143,13 +143,23 @@ const research = (await getCollection('research', (r) => !r.data.draft)).sort((a
         <div>
           <h2 id="cta-title">Curriculum vitae</h2>
           <p>
-            A one-page industry CV, a two-page industry CV, and a full academic CV.
+            {
+              settings.showIndustry
+                ? 'A one-page industry CV, a two-page industry CV, and a full academic CV.'
+                : 'A full academic CV, and an online overview of experience, publications and teaching.'
+            }
           </p>
         </div>
         <div class="actions">
-          <a class="btn primary" href="/cv/cv-industry-1p.pdf" download>Industry CV · 1 page</a>
-          <a class="btn" href="/cv/cv-industry.pdf" download>Industry CV · 2 pages</a>
-          <a class="btn" href="/cv/cv-academic.pdf" download>Academic CV · PDF</a>
+          {
+            settings.showIndustry && (
+              <>
+                <a class="btn primary" href="/cv/cv-industry-1p.pdf" download>Industry CV · 1 page</a>
+                <a class="btn" href="/cv/cv-industry.pdf" download>Industry CV · 2 pages</a>
+              </>
+            )
+          }
+          <a class="btn primary" href="/cv/cv-academic.pdf" download>Academic CV · PDF</a>
           <a class="btn" href="/cv/">View online</a>
         </div>
       </div>
