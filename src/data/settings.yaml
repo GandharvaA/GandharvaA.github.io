@@ -4,6 +4,10 @@
 # not linked in the navigation and not listed in the sitemap.
 showDemos: false
 
+# Industry pitch page (/industry). When false the page is not built,
+# not linked in the navigation and not listed in the sitemap. Source stays in the repo.
+showIndustry: false
+
 # Show the "Beyond the lab" photography link (also requires profile.photographyUrl).
 showPhotographyLink: true
 

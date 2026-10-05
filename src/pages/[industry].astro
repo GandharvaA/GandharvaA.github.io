@@ -1,16 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CapabilityCard from '../components/CapabilityCard.astro';
-import { profile } from '../lib/site';
+import { profile, settings } from '../lib/site';
 import { visible } from '../lib/data';
+
+export function getStaticPaths() {
+  return settings.showIndustry ? [{ params: { industry: 'industry' } }] : [];
+}
 
 const capabilities = await visible('capabilities');
 ---
 
-<BaseLayout title="For industry" description={profile.positioning}>
+<BaseLayout title="For Industry" description={profile.positioning}>
   <header class="page-head blueprint">
     <div class="wrap">
-      <p class="eyebrow">For industry</p>
+      <p class="eyebrow">For Industry</p>
       <h1>From the lab to industry</h1>
     </div>
   </header>

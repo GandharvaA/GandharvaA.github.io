@@ -34,6 +34,7 @@ const profileSchema = z.object({
 
 const settingsSchema = z.object({
   showDemos: z.boolean().default(false),
+  showIndustry: z.boolean().default(false),
   showPhotographyLink: z.boolean().default(true),
   analytics: z.unknown().nullish(),
   home: z
@@ -57,7 +58,7 @@ export const nav = [
   { href: '/cv/', label: 'CV' },
   { href: '/about/', label: 'About' },
   ...(settings.showDemos ? [{ href: '/demos/', label: 'Demos' }] : []),
-  { href: '/industry/', label: 'For industry' },
+  ...(settings.showIndustry ? [{ href: '/industry/', label: 'For Industry' }] : []),
 ];
 
 export const titleSuffix = `${profile.name} · Experimental physicist`;
