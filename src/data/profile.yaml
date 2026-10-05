@@ -7,7 +7,7 @@ currentPosition: PhD candidate in experimental nuclear & hadron physics
 affiliation:
   name: Stockholm University
   department: Department of Physics (Fysikum)
-  url: https://www.su.se/
+  url: https://www.su.se/english/divisions/department-of-physics
 location: Stockholm, Sweden
 
 # Assembled client-side to deter scrapers.
@@ -152,4 +152,4 @@ links:
 photographyUrl: "" # TODO verify: add URL of the photography site ("Beyond the lab"); empty hides the link
 
 # Production URL. Change after creating the GitHub Pages repo (see README).
-siteUrl: https://USERNAME.github.io # TODO verify: replace USERNAME with the GitHub username
+siteUrl: https://GandharvaA.github.io # TODO verify: the GitHub username
