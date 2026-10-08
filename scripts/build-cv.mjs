@@ -287,6 +287,11 @@ function renderIndustry(d) {
         `Thesis research at University of Waterloo \\& Perimeter Institute (Prof.\\ R.\\ Mann; local supervisor Dr.\\ C.\\ Qi, KTH).`,
       );
     }
+    if (e.degree === 'BE' && e.thesis?.title) {
+      notes.push(
+        `Bachelor's project CLAIRE: real-time voice interpreter (Python, TensorFlow, CUDA on NVIDIA Jetson TX2).`,
+      );
+    }
     const note = notes.length ? `\\cvnote{${notes.join(' ')}}\\par` : '';
     return [line, note].filter(Boolean).join('\n');
   }).join('\n');
@@ -405,6 +410,7 @@ function renderIndustryOnePage(d) {
         `Thesis research at University of Waterloo \\& Perimeter Institute (Prof.\\ R.\\ Mann; local supervisor Dr.\\ C.\\ Qi, KTH).`,
       );
     }
+    // Keep the one-page CV lean: CLAIRE detail lives on the web CV and academic/2-page PDFs.
     const note = notes.length ? `\\cvnote{${notes.join(' ')}}\\par` : '';
     return [line, note].filter(Boolean).join('\n');
   }).join('\n');

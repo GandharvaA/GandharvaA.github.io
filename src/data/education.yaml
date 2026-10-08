@@ -62,4 +62,9 @@
   end: "2017"
   thesis:
     title: "CLAIRE: Cognitive Linguistic Analyser and Interpreter with Real-time Efficiency"
+  details:
+    - >-
+      Real-time voice interpreter with speech input and spoken output (NLP), built in
+      Python and TensorFlow using Google speech and language resources; CUDA-accelerated
+      on an NVIDIA Jetson TX2.
   cv: both

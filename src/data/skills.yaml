@@ -19,6 +19,10 @@
       detail: multiclass classifiers in ROOT TMVA
       level: working
       industry: true
+    - name: Natural language processing & speech
+      detail: real-time voice interpreter (CLAIRE bachelor's project)
+      level: basic
+      industry: false
     - name: AI-assisted development
       detail: large language models for building and automating pipelines
       level: advanced
@@ -31,7 +35,7 @@
   label: Programming & software
   items:
     - name: Python
-      detail: NumPy, SciPy, pandas, matplotlib, uproot, iminuit, Jupyter
+      detail: NumPy, SciPy, pandas, matplotlib, uproot, iminuit, Jupyter; TensorFlow (earlier NLP work)
       level: expert
       industry: true
     - name: C++ & ROOT
@@ -40,6 +44,10 @@
       industry: true
     - name: C
       level: working
+      industry: false
+    - name: TensorFlow
+      detail: speech/NLP pipeline for the CLAIRE bachelor's project
+      level: basic
       industry: false
     - name: Git / GitLab
       level: advanced
@@ -100,6 +108,10 @@
     - name: HPC batch computing
       detail: Slurm on the GSI Virgo cluster
       level: advanced
+      industry: true
+    - name: CUDA / embedded GPU
+      detail: NVIDIA Jetson TX2 (CLAIRE bachelor's project)
+      level: basic
       industry: true
     - name: Containers & software distribution
       detail: Singularity/Apptainer, CVMFS
