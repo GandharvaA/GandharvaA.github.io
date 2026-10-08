@@ -54,3 +54,11 @@
   title: "HADES proton beam time (pp at 4.5 GeV): detector shifts"
   location: GSI, Darmstadt, Germany
   date: "2022-02"
+
+- id: waterloo-perimeter
+  kind: visit
+  title: >-
+    International Visiting Graduate Student programme: Master's thesis research on
+    feebly interacting dark matter (FIMPs), with Prof. Robert Mann
+  location: University of Waterloo & Perimeter Institute, Waterloo, Canada
+  date: "2019–2020" # TODO verify: exact months of the IVGS stay

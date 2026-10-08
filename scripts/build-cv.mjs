@@ -280,8 +280,15 @@ function renderIndustry(d) {
   v.EDUCATION = education.map((e) => {
     const line = `\\cvitem{${texDate(formatRange(e.start, e.end, { expected: e.expected, yearOnly: true }))}}{\\textbf{${tex(e.degree)}}, ${tex(e.field)}\\cvsep\\textit{${tex(e.institution)}}}`;
     const thesisLabel = e.degree === 'MSc' ? "Master's thesis" : 'Thesis';
-    const thesis = e === latestCompleted && e.thesis?.title ? `\\cvnote{${thesisLabel}: “${tex(e.thesis.title)}”}\\par` : '';
-    return [line, thesis].filter(Boolean).join('\n');
+    const notes = [];
+    if (e === latestCompleted && e.thesis?.title) notes.push(`${thesisLabel}: “${tex(e.thesis.title)}”.`);
+    if (e.degree === 'MSc' && e.thesis?.title) {
+      notes.push(
+        `Thesis research at University of Waterloo \\& Perimeter Institute (Prof.\\ R.\\ Mann; local supervisor Dr.\\ C.\\ Qi, KTH).`,
+      );
+    }
+    const note = notes.length ? `\\cvnote{${notes.join(' ')}}\\par` : '';
+    return [line, note].filter(Boolean).join('\n');
   }).join('\n');
 
   v.SKILLS = d.skills
@@ -391,8 +398,15 @@ function renderIndustryOnePage(d) {
   v.EDUCATION = education.map((e) => {
     const line = `\\cvitem{${texDate(formatRange(e.start, e.end, { expected: e.expected, yearOnly: true }))}}{\\textbf{${tex(e.degree)}}, ${tex(e.field)}\\cvsep\\textit{${tex(e.institution)}}}`;
     const thesisLabel = e.degree === 'MSc' ? "Master's thesis" : 'Thesis';
-    const thesis = e === latestCompleted && e.thesis?.title ? `\\cvnote{${thesisLabel}: “${tex(e.thesis.title)}”}\\par` : '';
-    return [line, thesis].filter(Boolean).join('\n');
+    const notes = [];
+    if (e === latestCompleted && e.thesis?.title) notes.push(`${thesisLabel}: “${tex(e.thesis.title)}”.`);
+    if (e.degree === 'MSc' && e.thesis?.title) {
+      notes.push(
+        `Thesis research at University of Waterloo \\& Perimeter Institute (Prof.\\ R.\\ Mann; local supervisor Dr.\\ C.\\ Qi, KTH).`,
+      );
+    }
+    const note = notes.length ? `\\cvnote{${notes.join(' ')}}\\par` : '';
+    return [line, note].filter(Boolean).join('\n');
   }).join('\n');
 
   v.SKILLS = d.skills

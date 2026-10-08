@@ -48,6 +48,9 @@ const teacherTraining = teaching.filter((t) => t.data.kind === 'training');
                   {e.data.degree}, {e.data.field}
                 </p>
                 <p class="item-meta">{e.data.institution}</p>
+                {e.data.details.slice(0, 1).map((d) => (
+                  <p class="item-desc">{d}</p>
+                ))}
               </li>
             ))
           }

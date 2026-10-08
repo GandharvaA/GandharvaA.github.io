@@ -125,6 +125,8 @@ knowsAbout:
 alumniOf:
   - name: KTH Royal Institute of Technology
     url: https://www.kth.se/
+  - name: University of Waterloo
+    url: https://uwaterloo.ca/
   - name: BMS College of Engineering
     url: https://bmsce.ac.in/
 

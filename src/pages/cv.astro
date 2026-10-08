@@ -131,6 +131,9 @@ const levelLabel: Record<string, string> = { expert: 'Expert', advanced: 'Advanc
                 {e.data.supervisors.length > 0 && (
                   <p class="desc small">Supervisors: {e.data.supervisors.join('; ')}</p>
                 )}
+                {e.data.details.map((d) => (
+                  <p class="desc small">{d}</p>
+                ))}
               </div>
             </li>
           ))
