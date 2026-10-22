@@ -1,0 +1,159 @@
+---
+import PlainLayout from '../layouts/PlainLayout.astro';
+import Divider from '../components/art/Divider.astro';
+import TwoParticles from '../components/art/plain/TwoParticles.astro';
+import StarCurve from '../components/art/plain/StarCurve.astro';
+import Collision from '../components/art/plain/Collision.astro';
+import DataBump from '../components/art/plain/DataBump.astro';
+import { plain, settings } from '../lib/site';
+
+// Same flag mechanism as /industry and /demos: no flag, no page.
+export function getStaticPaths() {
+  return settings.showPlain ? [{ params: { plain: 'plain' } }] : [];
+}
+
+const figures = {
+  'two-particles': TwoParticles,
+  'star-curve': StarCurve,
+  collision: Collision,
+  'data-bump': DataBump,
+};
+---
+
+<PlainLayout title={plain.title} description={plain.description}>
+  <header class="plain-hero blueprint">
+    <div class="wrap">
+      <h1>{plain.hero.title}</h1>
+      <p class="lede">{plain.hero.lede}</p>
+    </div>
+  </header>
+
+  {
+    plain.sections.map((s, i) => {
+      const Figure = figures[s.art];
+      return (
+        <section class="plain-section" aria-labelledby={`plain-${s.id}`}>
+          <div class="wrap">
+            <div class:list={['row', i % 2 === 1 && 'flip']}>
+              <div class="text">
+                <p class="label">{s.kicker}</p>
+                <h2 id={`plain-${s.id}`}>{s.title}</h2>
+                {s.paragraphs.map((p) => (
+                  <p>{p}</p>
+                ))}
+              </div>
+              <figure class="fig">
+                <Figure />
+                <figcaption set:html={s.caption} />
+              </figure>
+            </div>
+          </div>
+        </section>
+      );
+    })
+  }
+
+  <div class="wrap"><Divider label="And that is the short version" /></div>
+
+  <section class="plain-section closing" aria-labelledby="plain-closing">
+    <div class="wrap">
+      <h2 id="plain-closing">{plain.closing.title}</h2>
+      <div class="closing-cols">
+        {plain.closing.paragraphs.map((p, i) => <p class:list={[i === 0 ? 'body' : 'body muted']}>{p}</p>)}
+      </div>
+      <p class="cta">
+        <a class="btn primary" href="/">{plain.closing.linkLabel}</a>
+      </p>
+    </div>
+  </section>
+</PlainLayout>
+
+<style>
+  .plain-hero {
+    padding-block: clamp(2.5rem, 7vw, 5rem) clamp(2rem, 5vw, 3.5rem);
+    border-bottom: 1px solid var(--line);
+  }
+  .plain-hero h1 {
+    max-width: 22ch;
+    margin-bottom: 1.1rem;
+  }
+  .plain-hero .lede {
+    max-width: 46ch;
+    color: var(--ink);
+    font-size: var(--step-2);
+    line-height: 1.45;
+  }
+
+  .plain-section {
+    padding-block: clamp(2.75rem, 6vw, 4.5rem);
+    border-bottom: 1px solid var(--line);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+    gap: clamp(1.75rem, 4.5vw, 3.75rem);
+    align-items: center;
+  }
+  .row.flip {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1fr);
+  }
+  .row.flip .text {
+    order: 2;
+  }
+  .row.flip .fig {
+    order: 1;
+  }
+
+  .text h2 {
+    margin: 0.35rem 0 1rem;
+    max-width: 20ch;
+  }
+  .text p {
+    max-width: 54ch;
+    line-height: 1.7;
+  }
+  .text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .fig figcaption {
+    max-width: 44ch;
+  }
+
+  .closing h2 {
+    margin-bottom: 1.4rem;
+  }
+  .closing-cols {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem clamp(1.75rem, 4vw, 3rem);
+  }
+  .closing-cols .body {
+    max-width: 48ch;
+    margin: 0;
+    line-height: 1.7;
+  }
+  .muted {
+    color: var(--ink-soft);
+  }
+  .cta {
+    margin: 2rem 0 0;
+  }
+
+  @media (max-width: 900px) {
+    .row,
+    .row.flip {
+      grid-template-columns: 1fr;
+    }
+    .row.flip .text,
+    .row.flip .fig {
+      order: 0;
+    }
+    .fig {
+      order: -1;
+    }
+    .closing-cols {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,106 @@
+---
+const r1 = (n: number) => Math.round(n * 10) / 10;
+
+const x0 = 58;
+const x1 = 374;
+const base = 250;
+
+// Smooth background of random pairings, falling from left to right.
+const bg = (x: number) => 234 - (x - x0) * 0.2;
+// Real pairs gather in a narrow bump.
+const bump = (x: number) => 64 * Math.exp(-((x - 216) ** 2) / (2 * 33 ** 2));
+
+const line = (fn: (x: number) => number) => {
+  const pts: string[] = [];
+  for (let x = x0; x <= x1; x += 4) pts.push(`${r1(x)} ${r1(fn(x))}`);
+  return 'M' + pts.join('L');
+};
+
+const background = line(bg);
+const signal = line((x) => bg(x) - bump(x));
+
+// Candidate pairs: the bump sits under a scatter that also wobbles.
+const points = Array.from({ length: 29 }, (_, i) => {
+  const x = x0 + 4 + i * 11;
+  const jitter = 2.6 * Math.sin(i * 3.7) + 1.5 * Math.cos(i * 8.1);
+  return { x: r1(x), y: r1(bg(x) - bump(x) + jitter) };
+});
+---
+
+<svg class="draw data-bump" viewBox="0 0 420 300" role="img" aria-labelledby="db-title db-desc">
+  <title id="db-title">A bump of real pairs on a smooth background</title>
+  <desc id="db-desc">
+    A mass axis on the bottom and a count of pairs on the side. Small marks show how many candidate
+    pairs fall at each mass: they scatter around a smooth background that slopes downwards. In the
+    middle the marks rise into a narrow bump, which is where the real lambda pairs gather. A sketch
+    of the idea, not measured data.
+  </desc>
+
+  <path class="axis stroke d1" pathLength="1" d={`M${x0} 62 V${base} H${x1 + 6}`} />
+  <text class="anno fade d1" x={x0 - 8} y="66" text-anchor="end">pairs</text>
+  <text class="anno fade d1" x={x1 + 6} y={base + 20} text-anchor="end">mass of the pair</text>
+
+  <path class="background fade d2" d={background} />
+  <path class="signal stroke d2" pathLength="1" d={signal} />
+
+  {points.map((p, i) => (
+    <circle class:list={['cand', 'fade', `d${3 + (i % 3)}`]} cx={p.x} cy={p.y} r="2.4" />
+  ))}
+
+  <path class="leader fade d6" d="M216 118 V128" />
+  <text class="mark fade d6" x="216" y="110" text-anchor="middle">the real pairs</text>
+
+  <g class="fade d8">
+    <text class="anno" x="300" y="198">random pairs</text>
+    <path class="leader" d="M298 194 C 288 186, 282 180, 274 176" />
+  </g>
+</svg>
+
+<style>
+  .data-bump {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+  .axis,
+  .signal,
+  .leader {
+    fill: none;
+    stroke-linecap: round;
+  }
+  .axis {
+    stroke: var(--art);
+    stroke-width: 1.4;
+  }
+  .background {
+    fill: none;
+    stroke: var(--ink-soft);
+    stroke-width: 1.2;
+    stroke-dasharray: 5 4;
+  }
+  .signal {
+    stroke: var(--art-accent);
+    stroke-width: 2;
+  }
+  .cand {
+    fill: var(--art);
+    opacity: 0.72;
+  }
+  .leader {
+    stroke: var(--ink-soft);
+    stroke-width: 1;
+  }
+  .anno,
+  .mark {
+    font-family: var(--font-mono);
+  }
+  .anno {
+    font-size: 12px;
+    fill: var(--ink-soft);
+  }
+  .mark {
+    font-size: 13px;
+    fill: var(--accent-ink);
+  }
+</style>

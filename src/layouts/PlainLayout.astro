@@ -1,0 +1,149 @@
+---
+import '@fontsource-variable/fraunces/opsz.css';
+import '@fontsource-variable/source-serif-4/opsz.css';
+import '@fontsource-variable/source-serif-4/opsz-italic.css';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/global.css';
+import Head from '../components/Head.astro';
+import ModeToggle from '../components/ModeToggle.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import Monogram from '../components/art/Monogram.astro';
+import { profile } from '../lib/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const { title = 'The noob version', description, noindex } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <Head {title} {description} {noindex} />
+  </head>
+  <body id="top" class="plain-body">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="plain-bar">
+      <div class="wrap bar">
+        <a class="brand" href="/plain/" aria-label={`${profile.name}, the noob version`}>
+          <Monogram class="brand-mark" />
+          <span class="brand-text">
+            <span class="brand-name">{profile.name}</span>
+            <span class="brand-role">The Noob version</span>
+          </span>
+        </a>
+        <div class="controls">
+          <ModeToggle current="noob" />
+          <ThemeToggle />
+        </div>
+      </div>
+    </header>
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <footer class="plain-foot">
+      <div class="wrap foot">
+        <p>
+          {profile.name} · {profile.affiliation.department}, {profile.affiliation.name}
+        </p>
+        <p class="muted">No cookies, no tracking, no third-party requests.</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .plain-body {
+    background-color: var(--paper);
+  }
+  .plain-bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: saturate(140%) blur(10px);
+    -webkit-backdrop-filter: saturate(140%) blur(10px);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem 1rem;
+    min-height: 4rem;
+    flex-wrap: wrap;
+    padding-block: 0.5rem;
+  }
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .brand :global(.brand-mark) {
+    width: 2rem;
+    height: 2rem;
+    flex: none;
+  }
+  .brand-text {
+    display: grid;
+    line-height: 1.1;
+  }
+  .brand-name {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: -0.005em;
+  }
+  .brand-role {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 0.2rem;
+  }
+  .plain-foot {
+    margin-top: 3rem;
+    border-top: 1px solid var(--line);
+    background: var(--paper-2);
+    font-size: var(--step--1);
+  }
+  .foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.4rem 1.5rem;
+    padding-block: 1.5rem;
+  }
+  .foot p {
+    margin: 0;
+  }
+  .muted {
+    color: var(--ink-soft);
+  }
+  @media (max-width: 520px) {
+    .brand :global(.brand-mark) {
+      display: none;
+    }
+    .brand-name {
+      font-size: 0.98rem;
+    }
+  }
+  @media print {
+    .plain-bar,
+    .plain-foot {
+      display: none;
+    }
+  }
+</style>

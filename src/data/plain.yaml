@@ -1,0 +1,121 @@
+# Copy for the plain-language view (/plain). Read by src/pages/[plain].astro.
+# Keep it free of jargon, of measured numbers and of preliminary results.
+# No em dashes in prose a reader sees.
+
+title: The noob version
+description: >-
+  A short explanation of my research: what I study, why the force between two particles matters
+  for neutron stars, and how the measurement is made.
+
+hero:
+  title: Two particles, one force, and a star that has to hold itself up
+  lede: >-
+    I am a physicist at Stockholm University. The short version of my work: I study the force
+    between two heavy, strange particles, because whether it pulls or pushes helps decide how
+    massive a neutron star can be.
+
+sections:
+  - id: particles
+    kicker: First, the particles
+    title: Two particles that almost never meet
+    art: two-particles
+    caption: >-
+      <b>Fig. 1.</b> Two lambda particles, each carrying a strange quark. The force between them can
+      point either way: a weak pull, or a push. Both are allowed until a measurement decides. Sketch,
+      not to scale.
+    paragraphs:
+      - >-
+        Everything you touch is built from a small set of particles. Physicists have found a few
+        more, and one family is called hyperons. They behave like the proton and the neutron you may
+        have heard of, but they are heavier and they carry a property called strangeness.
+      - >-
+        The one I work with is the lambda. It lives for a tiny fraction of a second and then falls
+        apart into a proton and a pion, which a detector can see. Lambdas are rare in ordinary
+        matter, but a particle collision can produce them in pairs.
+      - >-
+        Two lambdas do not simply sit next to each other: there is a force between them. Theory
+        alone does not fix its sign. They may pull together, weakly, and in some models they push
+        apart. Which it is, and how strong, is the thing I measure, and it has taken many
+        experiments over several decades to get a handle on it.
+
+  - id: stars
+    kicker: Why it matters
+    title: How heavy can a star be?
+    art: star-curve
+    caption: >-
+      <b>Fig. 2.</b> A neutron star packs the mass of the Sun into a ball the size of a city. Beside
+      it, two outcomes for the heaviest mass such a star can support. If the lambdas push apart, the
+      matter stays stiff and the curve clears the heaviest stars we observe. If they pull together,
+      the matter softens and the curve turns over below them. Sketch.
+    paragraphs:
+      - >-
+        When a heavy star explodes, what is left can collapse into a neutron star. The mass of the
+        Sun ends up in a ball the size of a city, which makes the inside the densest matter we can
+        watch. Nobody can visit it, so the way to learn what it is made of is to compare the stars
+        we observe with the physics we can test on Earth.
+      - >-
+        A neutron star is dense enough for hyperons to appear in its core. In most models hyperons
+        make the matter softer, and softer matter means the star gives way under its own weight
+        earlier, at a lower mass. Yet astronomers keep finding stars that are very heavy. Explaining
+        how both can be true is called the hyperon puzzle.
+      - >-
+        The sign of the force between the lambdas then decides the answer. If they push apart, the
+        matter stays stiff, a star can be as heavy as the ones we observe, and the puzzle goes away.
+        If they pull together, the matter softens further, and the heaviest stars become hard to
+        explain. That is why a small measurement in a laboratory in Darmstadt speaks to an object we
+        can only watch from very far away.
+
+  - id: measurement
+    kicker: The measurement
+    title: Smash protons together and see what comes out
+    art: collision
+    caption: >-
+      <b>Fig. 3.</b> Protons hit a target. The detector layers around the target record what flies
+      out, and the curved lines are the paths of the particles that were produced. Sketch.
+    paragraphs:
+      - >-
+        The experiment is called HADES, at the GSI laboratory in Darmstadt, Germany. We send protons
+        into a thin target and record what comes out. Around the collision point sit layers of
+        detector. Each layer notes where a particle passed and when, and together they give the
+        path, the speed and finally the identity of each particle.
+      - >-
+        A lambda gives itself away when it falls apart. Two particles appear out of nowhere, a
+        proton and a pion, meeting at a point some way from the collision. When two lambdas break up
+        near each other we see four particles, and we can work backwards to the pair that produced
+        them.
+      - >-
+        A large part of my work looks unglamorous: calibrating the detector, keeping the timing
+        honest, and telling the few real lambdas apart from a big crowd of particles that only look
+        similar.
+
+  - id: signal
+    kicker: The signal
+    title: A small bump in a lot of noise
+    art: data-bump
+    caption: >-
+      <b>Fig. 4.</b> For every candidate pair we compute a mass. Real pairs gather at one value,
+      random pairs spread out evenly, so the signal is a bump on a smooth slope. Sketch of the idea.
+    paragraphs:
+      - >-
+        For every candidate pair we work out a mass. Pairs that really were two lambdas gather at
+        one particular value. Pairs that only happened to look right spread out smoothly. The signal
+        is therefore a narrow bump sitting on a wide slope, and the measurement is finding that bump
+        and saying how big it is with an honest uncertainty.
+      - >-
+        The next experiment, CBM at FAIR, does not exist yet. So we build it in software first: a
+        simulation creates the collisions, pushes the particles through a model of the detector, and
+        asks whether the bump would still be visible in the real thing. Part of my PhD is that
+        question.
+
+closing:
+  title: The rest of the job
+  paragraphs:
+    - >-
+      Research is not only analysis. I teach at the physics department, I look after the student
+      laboratory in nuclear physics, and I have chaired the PhD student council at Fysikum. Before
+      the PhD I trained as an electronics engineer and worked on radar algorithms and electric
+      propulsion.
+    - >-
+      If you want the details, the technical version of this site has the plots, the fits, the
+      uncertainty bands and the CV.
+  linkLabel: Back to the nerd version

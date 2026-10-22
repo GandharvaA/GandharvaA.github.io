@@ -1,0 +1,104 @@
+<svg class="draw two-particles" viewBox="0 0 480 210" role="img" aria-labelledby="tp-title tp-desc">
+  <title id="tp-title">Two lambda particles, with the force between them either a pull or a push</title>
+  <desc id="tp-desc">
+    Two panels, each showing two lambda particles as circles. On the left the arrows point from each
+    particle towards the other and the line between them sags, so the force is a weak pull. On the
+    right the arrows point away from each other and the line between them bows outwards, so the force
+    is a push. Both are possible until a measurement decides. A sketch, not to scale.
+  </desc>
+
+  <text class="pane fade d1" x="130" y="58" text-anchor="middle">attraction</text>
+  <text class="pane repel fade d1" x="346" y="58" text-anchor="middle">repulsion</text>
+  <text class="anno fade d1" x="238" y="130" text-anchor="middle">or</text>
+
+  <circle class="surface stroke d2" pathLength="1" cx="84" cy="126" r="26" />
+  <circle class="surface stroke d2" pathLength="1" cx="176" cy="126" r="26" />
+  <circle class="surface stroke d2" pathLength="1" cx="300" cy="126" r="26" />
+  <circle class="surface stroke d2" pathLength="1" cx="392" cy="126" r="26" />
+
+  <text class="glyph fade d2" x="84" y="134" text-anchor="middle">Λ</text>
+  <text class="glyph fade d2" x="176" y="134" text-anchor="middle">Λ</text>
+  <text class="glyph fade d2" x="300" y="134" text-anchor="middle">Λ</text>
+  <text class="glyph fade d2" x="392" y="134" text-anchor="middle">Λ</text>
+
+  <path class="pull stroke d3" pathLength="1" d="M112 126 H138" />
+  <path class="pull stroke d3" pathLength="1" d="M138 126 l-9 -5 M138 126 l-9 5" />
+  <path class="pull stroke d3" pathLength="1" d="M148 126 H122" />
+  <path class="pull stroke d3" pathLength="1" d="M122 126 l9 -5 M122 126 l9 5" />
+  <path class="well fade d4" d="M110 126 C 120 152, 140 152, 150 126" />
+  <path class="well-line stroke d4" pathLength="1" d="M110 126 C 120 152, 140 152, 150 126" />
+
+  <path class="push stroke d5" pathLength="1" d="M272 126 H246" />
+  <path class="push stroke d5" pathLength="1" d="M246 126 l9 -5 M246 126 l9 5" />
+  <path class="push stroke d5" pathLength="1" d="M420 126 H446" />
+  <path class="push stroke d5" pathLength="1" d="M446 126 l-9 -5 M446 126 l-9 5" />
+  <path class="bow fade d6" d="M326 126 C 336 100, 356 100, 366 126" />
+  <path class="bow-line stroke d6" pathLength="1" d="M326 126 C 336 100, 356 100, 366 126" />
+</svg>
+
+<style>
+  .two-particles {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+  .surface {
+    fill: var(--paper);
+    stroke: var(--art);
+    stroke-width: 1.5;
+  }
+  .glyph {
+    font-family: var(--font-head);
+    font-size: 22px;
+    fill: var(--art);
+  }
+  .pull,
+  .push,
+  .well-line,
+  .bow-line {
+    fill: none;
+    stroke-linecap: round;
+  }
+  .pull {
+    stroke: var(--art-accent);
+    stroke-width: 2;
+  }
+  .push {
+    stroke: var(--accent-2);
+    stroke-width: 2;
+  }
+  .well {
+    fill: var(--art-accent);
+    fill-opacity: 0.18;
+    stroke: none;
+  }
+  .well-line {
+    stroke: var(--art-accent);
+    stroke-width: 2;
+  }
+  .bow {
+    fill: var(--accent-2);
+    fill-opacity: 0.18;
+    stroke: none;
+  }
+  .bow-line {
+    stroke: var(--accent-2);
+    stroke-width: 2;
+  }
+  .pane,
+  .anno {
+    font-family: var(--font-mono);
+  }
+  .pane {
+    font-size: 14px;
+    fill: var(--accent-ink);
+  }
+  .pane.repel {
+    fill: var(--accent-2);
+  }
+  .anno {
+    font-size: 12px;
+    fill: var(--ink-soft);
+  }
+</style>

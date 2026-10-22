@@ -1,0 +1,107 @@
+---
+const r1 = (n: number) => Math.round(n * 10) / 10;
+
+const cx = 155;
+const cy = 150;
+const R = 128;
+
+// Right half-circles: the detector layers around the target.
+const layer = (r: number) => `M${cx} ${cy - r} A${r} ${r} 0 0 1 ${cx} ${cy + r}`;
+
+// Tracks leave the collision point, bend gently, and stop in the outer layer.
+const start: [number, number] = [161, 150];
+const spread = [
+  { deg: 58, bend: 13 },
+  { deg: 30, bend: -9 },
+  { deg: 0, bend: 11 },
+  { deg: -30, bend: -13 },
+  { deg: -58, bend: 9 },
+];
+
+const tracks = spread.map(({ deg, bend }) => {
+  const a = (deg * Math.PI) / 180;
+  const end: [number, number] = [cx + R * Math.cos(a), cy - R * Math.sin(a)];
+  const dx = end[0] - start[0];
+  const dy = end[1] - start[1];
+  const len = Math.hypot(dx, dy) || 1;
+  const perp: [number, number] = [-dy / len, dx / len];
+  const ctrl: [number, number] = [start[0] + dx / 2 + perp[0] * bend, start[1] + dy / 2 + perp[1] * bend];
+  return {
+    d: `M${start[0]} ${start[1]} Q${r1(ctrl[0])} ${r1(ctrl[1])} ${r1(end[0])} ${r1(end[1])}`,
+    end: [r1(end[0]), r1(end[1])] as [number, number],
+  };
+});
+---
+
+<svg class="draw collision" viewBox="0 0 420 300" role="img" aria-labelledby="co-title co-desc">
+  <title id="co-title">Protons hitting a target inside a detector</title>
+  <desc id="co-desc">
+    Protons arrive from the left and hit a small target. Two curved layers of detector sit around the
+    collision point. Five lines leave the target, bend outwards and stop where the outermost layer
+    recorded a hit. A sketch, not to scale.
+  </desc>
+
+  <path class="layer fade d1" d={layer(R)} />
+  <path class="layer fade d1" d={layer(100)} />
+
+  <path class="beam stroke d2" pathLength="1" d="M42 150 H134" />
+  <path class="beam stroke d2" pathLength="1" d="M134 150 l-10 -5 M134 150 l-10 5" />
+  <text class="anno fade d2" x="44" y="138">protons</text>
+
+  <circle class="target fade d3" cx={cx} cy={cy} r="6" />
+  <text class="anno fade d3" x="132" y="184" text-anchor="end">target</text>
+
+  {tracks.map((t) => <path class="track stroke d4" pathLength="1" d={t.d} />)}
+  {tracks.map((t) => <circle class="hit fade d5" cx={t.end[0]} cy={t.end[1]} r="3.4" />)}
+
+  <g class="fade d6">
+    <path class="leader" d="M300 92 C 296 106, 292 120, 288 136" />
+    <text class="anno" x="304" y="86">detector layers</text>
+  </g>
+</svg>
+
+<style>
+  .collision {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+  .layer,
+  .track,
+  .beam,
+  .leader {
+    fill: none;
+    stroke-linecap: round;
+  }
+  .layer {
+    stroke: var(--ink-soft);
+    stroke-width: 1.1;
+    stroke-dasharray: 5 4;
+    opacity: 0.85;
+  }
+  .track {
+    stroke: var(--art);
+    stroke-width: 1.5;
+  }
+  .beam {
+    stroke: var(--art-accent);
+    stroke-width: 2;
+  }
+  .target {
+    fill: var(--art-accent);
+    stroke: none;
+  }
+  .hit {
+    fill: var(--art);
+  }
+  .leader {
+    stroke: var(--ink-soft);
+    stroke-width: 1;
+  }
+  .anno {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    fill: var(--ink-soft);
+  }
+</style>

@@ -28,10 +28,13 @@ src/
     skills.yaml         grouped skills with level + industry relevance
     languages.yaml
     training.yaml       beam times, schools, workshops, research visits
+    plain.yaml          copy for the plain-language view (/plain)
   content/research/     one Markdown file per research project
   content.config.ts     schemas (validation errors show up at build time)
   components/           layout pieces; components/art/ = hand-made SVG figures
+  components/art/plain/ sketches for the plain-language view
   components/demos/     optional interactive demo (behind the showDemos flag)
+  layouts/              BaseLayout (site) and PlainLayout (no nav, plain view)
   pages/                routes (index, research, publications, talks, cv, about, industry, contact)
   lib/                  site config + data helpers
   styles/global.css     design tokens (colours, type scale) for both themes
@@ -119,9 +122,23 @@ npm run build:all                           # CVs, then the website
 | Flag | Default | Effect |
 | --- | --- | --- |
 | `showDemos` | `false` | `true` generates `/demos/` (interactive sideband-subtraction demo), adds it to the nav and sitemap. `false` = page not built at all. |
+| `showPlain` | `true` | builds `/plain/`, the plain-language version, reached from the Nerd/Noob pill in the header of every page. `false` = page not built and pill hidden. |
 | `showPhotographyLink` | `true` | shows a "Photography" link in the footer and on the About page **if** `photographyUrl` in `profile.yaml` is set |
 | `analytics` | `null` | reserved; no analytics code exists. If you ever add one, also extend the CSP in `astro.config.mjs` and update the privacy note in the footer. |
 | `home.selectedPublications` / `home.selectedTalks` | 3 / 4 | how many items the homepage shows |
+
+### The plain-language view
+
+`/plain/` is the same work told without jargon: one page, four short sections, four sketches. It uses
+its own layout (`src/layouts/PlainLayout.astro`), which carries no site navigation, so the only ways
+out are the Nerd pill in its top bar and the closing button. It is reached from the Nerd/Noob pill
+that sits in the header of every other page.
+
+- Copy: `src/data/plain.yaml`, validated by `plainSchema` in `src/lib/site.ts`.
+- Sketches: `src/components/art/plain/`, reusing the `.draw` / `.stroke` animation in `global.css`.
+- Keep that copy free of jargon, of measured numbers and of preliminary results. It is a different
+  explanation of the same work, not a second results page.
+- No JavaScript and no CSP change is involved: the pill is a plain link.
 
 ## 6. Deploying to GitHub Pages (step by step)
 

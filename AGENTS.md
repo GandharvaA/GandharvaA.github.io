@@ -27,6 +27,11 @@ See README.md for the full workflow.
   (never inside a folded `>-` block, where it would become visible text).
 - Strict CSP: no inline `style=""` attributes, no `define:vars`, no external
   requests (fonts are self-hosted via @fontsource).
+- The plain-language view (`/plain`) is a separate layout with no site nav. Its copy
+  lives only in `src/data/plain.yaml`, its sketches in `src/components/art/plain/`.
+  It explains the same work without jargon, without numbers and without preliminary
+  results, and the Nerd/Noob pill is its only exit. The pill sits in the site header,
+  so every page carries a way in.
 - SVG draw-on animation: elements with class `stroke` need `pathLength="1"`; dashed
   lines must use class `fade` instead. Do not use `vector-effect: non-scaling-stroke`
   on animated elements (it breaks `pathLength`).

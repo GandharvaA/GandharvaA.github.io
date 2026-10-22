@@ -2,6 +2,7 @@ import { z } from 'astro/zod';
 import { parse } from 'yaml';
 import profileRaw from '../data/profile.yaml?raw';
 import settingsRaw from '../data/settings.yaml?raw';
+import plainRaw from '../data/plain.yaml?raw';
 
 const profileSchema = z.object({
   name: z.string(),
@@ -35,6 +36,7 @@ const profileSchema = z.object({
 const settingsSchema = z.object({
   showDemos: z.boolean().default(false),
   showIndustry: z.boolean().default(false),
+  showPlain: z.boolean().default(true),
   showPhotographyLink: z.boolean().default(true),
   analytics: z.unknown().nullish(),
   home: z
@@ -42,8 +44,33 @@ const settingsSchema = z.object({
     .default({ selectedPublications: 3, selectedTalks: 4 }),
 });
 
+const plainSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  hero: z.object({
+    title: z.string(),
+    lede: z.string(),
+  }),
+  sections: z.array(
+    z.object({
+      id: z.string(),
+      kicker: z.string(),
+      title: z.string(),
+      art: z.enum(['two-particles', 'star-curve', 'collision', 'data-bump']),
+      caption: z.string(),
+      paragraphs: z.array(z.string()),
+    }),
+  ),
+  closing: z.object({
+    title: z.string(),
+    paragraphs: z.array(z.string()),
+    linkLabel: z.string(),
+  }),
+});
+
 export const profile = profileSchema.parse(parse(profileRaw));
 export const settings = settingsSchema.parse(parse(settingsRaw));
+export const plain = plainSchema.parse(parse(plainRaw));
 
 export const links = profile.links.filter((l): l is { id: string; label: string; url: string } => !!l.url);
 export const photographyUrl =
